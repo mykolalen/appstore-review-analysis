@@ -184,7 +184,20 @@ Complaint-unit check: precision **98.5%**, recall **60.3%**.
 
 Theme-threshold check: selected threshold **none met the precision target**.
 
-Issue-category precision audit: **not audited**.
+Issue-category precision audit:
+
+| Category | Audited matches | Precision | 95% CI |
+| --- | --- | --- | --- |
+| ads_interruptions | 2 | 100.0% | 34.2% to 100.0% |
+| billing_charges | 11 | 90.9% | 62.3% to 98.4% |
+| bugs_stability | 2 | 100.0% | 34.2% to 100.0% |
+| content_accuracy_relevance | 4 | 75.0% | 30.1% to 95.4% |
+| customer_support | 5 | 100.0% | 56.6% to 100.0% |
+| pricing_paywall | 13 | 69.2% | 42.4% to 87.3% |
+| refunds | 5 | 100.0% | 56.6% to 100.0% |
+| scam_trust | 11 | 100.0% | 74.1% to 100.0% |
+| service_responsiveness | 2 | 0.0% | 0.0% to 65.8% |
+| subscription_cancellation | 9 | 66.7% | 35.4% to 87.9% |
 
 ## Keywords and phrases in negative reviews
 
@@ -240,7 +253,7 @@ Recurring complaints are grouped into fixed issue categories first; semantic clu
 
 Categories use a fixed, app-agnostic whole-token lexicon over complaint sentences. A review can match multiple categories, so category shares overlap.
 
-Category precision audit: **not audited**.
+Category precision audit: **run**. Precision estimates are reported in the evaluation section and remain separate from sampling uncertainty.
 
 | Category | Reviews | Share and 95% CI | Mean stars | Recent (last 12 months) | Evidence IDs |
 | --- | --- | --- | --- | --- | --- |
@@ -417,7 +430,7 @@ Investigate scam: 9 of 43 complaint reviews (20.9%, 95% CI 11.4%-35.2%), for exa
 - No evaluated theme distance threshold met the 0.80 same-issue precision target.
 - Issue categories are lexicon-based heuristics with a fixed generic vocabulary; they are not learned from this app and can miss paraphrases or ambiguous uses.
 - Issue-category shares are multi-label and may overlap; they must not be summed to 100%.
-- Issue-category precision has not been measured; the optional human audit has not been run.
+- Issue-category precision was measured on 64 human-labelled category matches: overall 82.8% (95% CI 71.8% to 90.1%). Categories below 80% precision: content_accuracy_relevance 75.0% (3/4), pricing_paywall 69.2% (9/13), service_responsiveness 0.0% (0/2), subscription_cancellation 66.7% (6/9); their shares may be overstated.
 - Fewer than half of complaint units or complaint reviews are represented in supported themes, so theme conclusions are necessarily partial.
 
 ## Methodology

@@ -302,3 +302,59 @@ def test_report_renders_structured_evaluation_without_json_dump(
     assert "Issue-category precision audit:" in markdown
     assert "billing_charges" in markdown
     assert '"benchmark"' not in markdown
+
+
+def _category_audit(*, pricing_correct: int) -> dict[str, object]:
+    return {
+        "status": "run",
+        "n": 20,
+        "categories": [
+            {
+                "category": "billing_charges",
+                "n": 10,
+                "correct": 9,
+                "precision": {"value": 0.9, "low": 0.6, "high": 0.98},
+            },
+            {
+                "category": "pricing_paywall",
+                "n": 10,
+                "correct": pricing_correct,
+                "precision": {"value": pricing_correct / 10, "low": 0.3, "high": 0.9},
+            },
+        ],
+        "overall_precision": {"value": 0.8, "low": 0.6, "high": 0.92},
+    }
+
+
+def test_limitations_report_measured_category_precision_and_name_weak_categories(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    analysis = _pipeline_analysis(monkeypatch)
+
+    markdown = render_report(
+        analysis,
+        population=_population(),
+        evaluation={"issue_categories": _category_audit(pricing_correct=6)},
+        chart_links=_chart_links(),
+    )
+
+    assert "measured on 20 human-labelled category matches: overall 80.0%" in markdown
+    assert "Categories below 80% precision: pricing_paywall 60.0% (6/10)" in markdown
+    assert "billing_charges 90.0%" not in markdown.split("## Limitations", 1)[1]
+    assert "has not been measured; the optional human audit" not in markdown
+
+
+def test_limitations_state_when_no_audited_category_is_below_target(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    analysis = _pipeline_analysis(monkeypatch)
+
+    markdown = render_report(
+        analysis,
+        population=_population(),
+        evaluation={"issue_categories": _category_audit(pricing_correct=9)},
+        chart_links=_chart_links(),
+    )
+
+    assert "No audited category fell below 80% precision." in markdown
+    assert "Categories below" not in markdown

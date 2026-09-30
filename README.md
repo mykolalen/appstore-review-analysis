@@ -332,7 +332,10 @@ A review counts once per category, categories may overlap, and only categories s
 complaint reviews are displayed. Each category reports `k of N`, a Wilson 95% interval for sampling
 uncertainty, mean stars, recency, matched phrases, evidence review IDs/excerpts and an author-written
 `Check whether ...` investigation hypothesis. The categories are generic heuristics, not learned from the
-demo app. Their precision is reported only if the optional human audit has been labelled and validated.
+demo app. Their precision comes from a human audit of every category match in the demo sample: 53 of 64
+matches were judged correct (82.8%, Wilson 95% CI 71.8%-90.1%), but only 9 of 13 for Pricing and paywall, 6 of 9
+for Subscription and cancellation, 3 of 4 for Content accuracy and 0 of 2 for Service responsiveness, so those
+shares may be overstated (see `evaluation/results.md`).
 
 Accepted complaint units are embedded by pinned `all-MiniLM-L6-v2`, then clustered with cosine/average
 agglomerative clustering and an adaptive minimum-support policy. The clustering distance threshold is
@@ -374,12 +377,13 @@ The Tabularis comparator is Apache-2.0 licensed. The pre-written model decision 
 switch only when an eligible licence-clean 3-class challenger has a paired-bootstrap negative-F1
 difference interval excluding zero in its favour; on a tie, retain the better-documented model.
 
-The complaint-unit and theme-distance evaluations are included; the issue-category precision audit is optional.
-When an evaluation file does not exist, both `evaluation/results.md` and the demo report explicitly state which
+The complaint-unit, theme-distance and issue-category precision evaluations are included. When an
+evaluation file does not exist, both `evaluation/results.md` and the demo report explicitly state which
 evaluation was not run.
-The issue-category audit is human-only: generate `evaluation/category_audit_sheet.csv`, label every
-`human_label` as `correct` or `incorrect`, then validate it. No category precision is claimed before that
-sheet is labelled.
+The issue-category audit is human-only. `evaluation/category_audit_sheet.csv` holds every category match in the
+demo sample (one best-matching sentence per review and category), each labelled `correct` or `incorrect`; the
+validator turns it into per-category precision with Wilson intervals. To repeat it on another analysis, generate a
+fresh sheet (the command refuses to overwrite an existing one), label every `human_label`, then validate it:
 
 ```powershell
 uv run reviews audit-categories `
@@ -494,7 +498,6 @@ The decision record is in [`docs/decisions.md`](docs/decisions.md); the componen
 [`docs/architecture.md`](docs/architecture.md). The repository currently does not include:
 
 - a public Cloud Run deployment (the public-mode code and deployment instructions are included);
-- an issue-category precision audit (the sheet and validator are included; the report states it has not been run);
 - a published demo recording;
 - RAG, a vector database or agents.
 
@@ -510,8 +513,11 @@ The decision record is in [`docs/decisions.md`](docs/decisions.md); the componen
   primary negative-class F1 metric, but the neutral class has only three examples and the evaluation is
   too small to establish broad domain-general performance.
 - Issue categories use a fixed generic phrase lexicon over complaint units. They are heuristic rather than
-  learned from this app; category shares can overlap, and lexical precision is unknown until the optional
-  human category audit is labelled and validated.
+  learned from this app; category shares can overlap. The human audit found 82.8% precision overall, with
+  Pricing and paywall, Subscription and cancellation, Content accuracy and Service responsiveness below 80%.
+  Typical false positives are a bare `pay`, `paid` or `subscription` with no complaint, `Apple Pay`, and
+  email non-response matched as Service responsiveness. The lexicon was not re-tuned on these audit labels,
+  so the figures describe the shipped lexicon as it is.
 - SQLite + one uvicorn worker is appropriate for the take-home. A production ingestion system should use
   scheduled ingestion, a durable queue, Postgres, rolling aggregates, alerting and provider-specific
   credentials/secrets.

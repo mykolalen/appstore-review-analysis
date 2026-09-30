@@ -19,6 +19,8 @@ from appstore_review_analysis.report.constants import (
 from appstore_review_analysis.report.contracts import ReportAnalysisContract
 from appstore_review_analysis.report.population import interval_covers, simulate_ci_coverage
 
+_CATEGORY_PRECISION_TARGET = 0.80
+
 _PREPROCESSING_DENOMINATORS = (
     ("n_all", "All sampled reviews"),
     ("n_analysable", "Analysable reviews"),
@@ -883,6 +885,36 @@ def _coverage_summary(themes: dict[str, Any]) -> list[str]:
     return lines
 
 
+def _category_audit_limitation(audit: dict[str, Any]) -> str:
+    text = (
+        f"Issue-category precision was measured on {_integer(audit.get('n'))} human-labelled "
+        "category matches"
+    )
+    overall = _dict(audit.get("overall_precision"))
+    if _number(overall.get("value")) is not None:
+        text += (
+            f": overall {_fmt_pct(overall.get('value'))} (95% CI {_fmt_ci(overall, percent=True)})"
+        )
+    text += "."
+    weak: list[str] = []
+    for raw in _list(audit.get("categories")):
+        row = _dict(raw)
+        value = _number(_dict(row.get("precision")).get("value"))
+        if value is not None and value < _CATEGORY_PRECISION_TARGET:
+            weak.append(
+                f"{row.get('category', 'unknown')} {value:.1%} "
+                f"({_integer(row.get('correct'))}/{_integer(row.get('n'))})"
+            )
+    if weak:
+        text += (
+            f" Categories below {_CATEGORY_PRECISION_TARGET:.0%} precision: {', '.join(weak)}; "
+            "their shares may be overstated."
+        )
+    else:
+        text += f" No audited category fell below {_CATEGORY_PRECISION_TARGET:.0%} precision."
+    return text
+
+
 def _limitations(
     population: dict[str, Any] | None,
     evaluation: dict[str, Any] | None,
@@ -957,6 +989,8 @@ def _limitations(
             "Issue-category precision has not been measured; the optional human audit has not "
             "been run."
         )
+    else:
+        bullets.append(_category_audit_limitation(category_audit))
     coverage = _dict(themes.get("coverage"))
     coverage_values = [
         _number(coverage.get("unit_share")),

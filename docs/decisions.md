@@ -219,7 +219,10 @@ at least two complaint reviews. Report support with Wilson 95% sampling interval
 matched phrases, review IDs and excerpts. Pair every category with a static `Check whether ...`
 investigation hypothesis rather than asserting a cause. Keep semantic themes unchanged as emerging
 clusters, and report uncategorised complaint reviews explicitly. Category precision is reported only
-after the optional human audit is labelled and validated.
+from a human audit; the audit covered every category match in the demo sample (64 matches) and found
+82.8% overall precision, with Pricing and paywall (9/13), Subscription and cancellation (6/9), Content
+accuracy (3/4) and Service responsiveness (0/2) below 80%. The lexicon was deliberately not re-tuned on
+those labels; the weak categories are disclosed in the report limitations instead.
 
 ### Rejected alternatives
 Lowering the clustering threshold without labelled pair evidence; learning categories from the demo app;
@@ -229,4 +232,6 @@ as causal findings; hiding unmatched complaints.
 ### Evidence
 [`analysis/issue_categories.py`](../src/appstore_review_analysis/analysis/issue_categories.py),
 [`analysis/evidence.py`](../src/appstore_review_analysis/analysis/evidence.py), and
-[`tests/unit/test_issue_categories.py`](../tests/unit/test_issue_categories.py).
+[`tests/unit/test_issue_categories.py`](../tests/unit/test_issue_categories.py), and the labelled audit in
+[`evaluation/category_audit_sheet.csv`](../evaluation/category_audit_sheet.csv) with its per-category
+precision in [`evaluation/results.md`](../evaluation/results.md).

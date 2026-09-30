@@ -1,0 +1,65 @@
+category,review_id,matched_phrase,sentence,human_label
+ads_interruptions,11075169965,ad,Deceiving ad - when you click on the free 3 day trial you are automatically taken to Apple Pay and once you click submit to activate the three day trial you are charged the monthly fee - what a rip off!,correct
+ads_interruptions,4696528106,ads,"The ads for this app are not only definite lies but once you download the app and get through the whole personalized astrology experience, you can’t even use the features with out paying over $10 per month.",correct
+billing_charges,10836437501,charged,Trial period was not free my card was charged the same day and NO trial period was offered,correct
+billing_charges,11075169965,charge,I will be reporting the charge with my bank as fraudulent!,correct
+billing_charges,12128656296,charge,They manage to still charge you another $29.99.,correct
+billing_charges,12491998074,charge,Definitely a scam charge even after cancellation!!!!!,correct
+billing_charges,12708833838,charged,I was charged $45 WITHOUT WARNING and for NO REASON!,correct
+billing_charges,12733964744,charge,After downloading this app and not subscribing to anything I received a random charge for $45.,correct
+billing_charges,13228610177,charge,They will not accept your cancellation but it won’t show up on the app and they will continue to charge you despite having cancelled.,correct
+billing_charges,13616064815,charged,But after deleting the app is was charged 50 dollars for no reason.,correct
+billing_charges,13793435927,charge,Do not download this app I’ve had to order multiple debit cards because they charge your Apple account and there’s no way to cancel the subscription in the app nor does it show under your Apple subscription list,correct
+billing_charges,6782509379,charge,I guess the only good thing is that since I did the lifetime they can’t charge me again unlike some of these other poor souls on here.,incorrect
+billing_charges,9208166980,charged,Been trying to get my money back you guys have yet to respond to my request I was charged for no reason please give my 50 $ back you are terrible for that,correct
+bugs_stability,11099954190,does not work,"Your app doesn’t work, especially the compatibility, it’s just a frozen screen and automatically switched to annual when I checked out for a week option.",correct
+bugs_stability,5300736312,stuck,I downloaded it twice and both times it was stuck on the loading screen.,correct
+content_accuracy_relevance,12164829797,vague,Not only that but the horoscopes are very vague and negative.,correct
+content_accuracy_relevance,5911315356,wrong,I downloaded this app maybe 5 minutes ago and immediately it gave me the wrong ascendant.,correct
+content_accuracy_relevance,6782509379,generic,When you contact nebula’s support they give you a generic answer (exactly like the ones on all of the 1 star ratings) that they’re sorry you didn’t read their terms and conditions on what you’re buying (you never get the chance to before clicking) and that they can’t offer you a refund.,incorrect
+content_accuracy_relevance,8506856576,not accurate,Not accurate and a waste of money.,correct
+customer_support,12351110123,customer service,When you write to their customer service no solution will be offered.,correct
+customer_support,12829278222,customer service,The customer service is horrible.,correct
+customer_support,12971587569,support,"When I logged into the app to try to figure out how and to contact support I can’t seem to find the option, as if it’s not there or very well hidden.",correct
+customer_support,6782509379,support,When you contact nebula’s support they give you a generic answer (exactly like the ones on all of the 1 star ratings) that they’re sorry you didn’t read their terms and conditions on what you’re buying (you never get the chance to before clicking) and that they can’t offer you a refund.,correct
+customer_support,6904797208,support team,After 4 emails and prof I paid them I have been left on read by the support team.,correct
+pricing_paywall,10836437501,not free,Trial period was not free my card was charged the same day and NO trial period was offered,correct
+pricing_paywall,11075169965,pay,Deceiving ad - when you click on the free 3 day trial you are automatically taken to Apple Pay and once you click submit to activate the three day trial you are charged the monthly fee - what a rip off!,incorrect
+pricing_paywall,11117533220,paid,"Hi I paid 2.99 (85% offer) for chatting with a psychic, I sent her two messages and she did not answer and my 100 credits is gone!!!",incorrect
+pricing_paywall,11264084319,paid,I paid for all these supposed features and then had to pay more for a reading waste of 60.00,correct
+pricing_paywall,12164829797,pay,New update is basically pay to play.,correct
+pricing_paywall,12196916604,have to pay,On top of the subscription you STILL have to pay for readings.,correct
+pricing_paywall,12467337584,pay,Scam I only allowed one dollar to come out of my Apple Pay and it took almost $100 out of my account through Apple Pay and I don’t understand how it did that but it did without my permission without my authorization 3×3 different times .,incorrect
+pricing_paywall,12672294275,pay,As soon as I asked 2 questions they wanted me to pay $99.99 NOT COOL,correct
+pricing_paywall,13238168680,need to pay,I can’t even see my own birth chart without it telling me I need to pay.,correct
+pricing_paywall,13524060324,pay,I couldn’t even see anything after downloading it because everytime I opened it it wanted me to pay pay pay.,correct
+pricing_paywall,14079993573,cost,"If you’re going to make the app unusable without a subscription, you might as well just make the app cost money in the App Store.",correct
+pricing_paywall,14162858916,cost,The only thing I dislike about it is the cost.,correct
+pricing_paywall,6904797208,paid,After 4 emails and prof I paid them I have been left on read by the support team.,incorrect
+refunds,11449927296,refund,I want a refund and i want this to never happen to other people.,correct
+refunds,12467337584,refund,They would not refund me.,correct
+refunds,6782509379,refund,When you contact nebula’s support they give you a generic answer (exactly like the ones on all of the 1 star ratings) that they’re sorry you didn’t read their terms and conditions on what you’re buying (you never get the chance to before clicking) and that they can’t offer you a refund.,correct
+refunds,6904797208,no refund,"No answer received, no refund just left on read!!!",correct
+refunds,9208166980,money back,Been trying to get my money back you guys have yet to respond to my request I was charged for no reason please give my 50 $ back you are terrible for that,correct
+scam_trust,11075169965,fraudulent,I will be reporting the charge with my bank as fraudulent!,correct
+scam_trust,11099954190,scam,Scam.,correct
+scam_trust,12467337584,scam,Scam I only allowed one dollar to come out of my Apple Pay and it took almost $100 out of my account through Apple Pay and I don’t understand how it did that but it did without my permission without my authorization 3×3 different times .,correct
+scam_trust,12491998074,scam,Definitely a scam charge even after cancellation!!!!!,correct
+scam_trust,12688614586,fraud,Reporting as fraud,correct
+scam_trust,12708833838,scam,SCAM.,correct
+scam_trust,12829278222,scam,Total scam.,correct
+scam_trust,13325807478,scam,This is a scam,correct
+scam_trust,13616064815,scam,This is a scam.,correct
+scam_trust,6444787269,scam,SCAM.,correct
+scam_trust,6782509379,scam,I agree this app is a SCAM.,correct
+service_responsiveness,11075169965,no response,I reached out via email with no response just a screen shot of frequently asked questions.,incorrect
+service_responsiveness,6444787269,no response,Tried contacting these people through email and no response.,incorrect
+subscription_cancellation,12196916604,subscription,On top of the subscription you STILL have to pay for readings.,incorrect
+subscription_cancellation,12304942988,cancel,I tried to cancel and their Bot gave me the run around.,correct
+subscription_cancellation,12491998074,cancellation,Definitely a scam charge even after cancellation!!!!!,correct
+subscription_cancellation,12733964744,subscription,My phone is showing no active subscription for this app.,incorrect
+subscription_cancellation,12971587569,canceled,I canceled the free subscription and then saw how it was still pulling from my card.,correct
+subscription_cancellation,13228610177,cancellation,They will not accept your cancellation but it won’t show up on the app and they will continue to charge you despite having cancelled.,correct
+subscription_cancellation,13325807478,subscribed,I never subscribed and they keep charging me $50.,correct
+subscription_cancellation,13793435927,cancel,Do not download this app I’ve had to order multiple debit cards because they charge your Apple account and there’s no way to cancel the subscription in the app nor does it show under your Apple subscription list,correct
+subscription_cancellation,14079993573,subscription,"If you’re going to make the app unusable without a subscription, you might as well just make the app cost money in the App Store.",incorrect

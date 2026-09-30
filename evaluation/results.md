@@ -129,4 +129,17 @@ Selected threshold: **none**.
 
 ## Issue-category precision audit
 
-Not audited: category_audit_sheet.csv missing.
+Human precision audit of lexicon matches only; it does not estimate recall or replace the sampling intervals reported for category prevalence.
+
+| Category | Audited matches | Correct | Precision (95% Wilson CI) |
+| --- | ---: | ---: | --- |
+| ads_interruptions | 2 | 2 | 1.000 [0.342, 1.000], n=2 |
+| billing_charges | 11 | 10 | 0.909 [0.623, 0.984], n=11 |
+| bugs_stability | 2 | 2 | 1.000 [0.342, 1.000], n=2 |
+| content_accuracy_relevance | 4 | 3 | 0.750 [0.301, 0.954], n=4 |
+| customer_support | 5 | 5 | 1.000 [0.566, 1.000], n=5 |
+| pricing_paywall | 13 | 9 | 0.692 [0.424, 0.873], n=13 |
+| refunds | 5 | 5 | 1.000 [0.566, 1.000], n=5 |
+| scam_trust | 11 | 11 | 1.000 [0.741, 1.000], n=11 |
+| service_responsiveness | 2 | 0 | 0.000 [0.000, 0.658], n=2 |
+| subscription_cancellation | 9 | 6 | 0.667 [0.354, 0.879], n=9 |

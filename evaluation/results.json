@@ -454,7 +454,137 @@
     ]
   },
   "issue_categories": {
-    "status": "not_run",
-    "reason": "category_audit_sheet.csv missing"
+    "status": "run",
+    "n": 64,
+    "categories": [
+      {
+        "category": "ads_interruptions",
+        "n": 2,
+        "correct": 2,
+        "precision": {
+          "successes": 2,
+          "n": 2,
+          "value": 1.0,
+          "low": 0.34238022750665303,
+          "high": 1.0
+        }
+      },
+      {
+        "category": "billing_charges",
+        "n": 11,
+        "correct": 10,
+        "precision": {
+          "successes": 10,
+          "n": 11,
+          "value": 0.9090909090909091,
+          "low": 0.6226415635484043,
+          "high": 0.9837678271141151
+        }
+      },
+      {
+        "category": "bugs_stability",
+        "n": 2,
+        "correct": 2,
+        "precision": {
+          "successes": 2,
+          "n": 2,
+          "value": 1.0,
+          "low": 0.34238022750665303,
+          "high": 1.0
+        }
+      },
+      {
+        "category": "content_accuracy_relevance",
+        "n": 4,
+        "correct": 3,
+        "precision": {
+          "successes": 3,
+          "n": 4,
+          "value": 0.75,
+          "low": 0.30064184258240184,
+          "high": 0.9544127391902995
+        }
+      },
+      {
+        "category": "customer_support",
+        "n": 5,
+        "correct": 5,
+        "precision": {
+          "successes": 5,
+          "n": 5,
+          "value": 1.0,
+          "low": 0.5655175352168251,
+          "high": 1.0
+        }
+      },
+      {
+        "category": "pricing_paywall",
+        "n": 13,
+        "correct": 9,
+        "precision": {
+          "successes": 9,
+          "n": 13,
+          "value": 0.6923076923076923,
+          "low": 0.42369343180549035,
+          "high": 0.8731929634428948
+        }
+      },
+      {
+        "category": "refunds",
+        "n": 5,
+        "correct": 5,
+        "precision": {
+          "successes": 5,
+          "n": 5,
+          "value": 1.0,
+          "low": 0.5655175352168251,
+          "high": 1.0
+        }
+      },
+      {
+        "category": "scam_trust",
+        "n": 11,
+        "correct": 11,
+        "precision": {
+          "successes": 11,
+          "n": 11,
+          "value": 1.0,
+          "low": 0.7411670330319684,
+          "high": 1.0
+        }
+      },
+      {
+        "category": "service_responsiveness",
+        "n": 2,
+        "correct": 0,
+        "precision": {
+          "successes": 0,
+          "n": 2,
+          "value": 0.0,
+          "low": 0.0,
+          "high": 0.6576197724933469
+        }
+      },
+      {
+        "category": "subscription_cancellation",
+        "n": 9,
+        "correct": 6,
+        "precision": {
+          "successes": 6,
+          "n": 9,
+          "value": 0.6666666666666666,
+          "low": 0.3542021355803963,
+          "high": 0.879416181613089
+        }
+      }
+    ],
+    "overall_precision": {
+      "successes": 53,
+      "n": 64,
+      "value": 0.828125,
+      "low": 0.7178678837734179,
+      "high": 0.9012225769875536
+    },
+    "note": "Human precision audit of lexicon matches only; it does not estimate recall or replace the sampling intervals reported for category prevalence."
   }
 }

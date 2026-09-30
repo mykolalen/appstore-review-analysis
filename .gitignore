@@ -37,3 +37,5 @@ Thumbs.db
 # Evaluation working files (committed gold/results remain explicit)
 evaluation/*_sheet.csv
 evaluation/*_candidates.csv
+# The labelled category audit is the evidence behind the reported category precision.
+!evaluation/category_audit_sheet.csv

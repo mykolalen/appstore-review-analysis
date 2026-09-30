@@ -122,10 +122,16 @@ uv run reviews tune-threshold --pairs evaluation/pairs_gold.csv
 The selected threshold is the largest tested grid value whose same-issue precision is at least 0.80. If
 none qualifies, no threshold is selected.
 
-## 6. Optional issue-category precision audit
+## 6. Issue-category precision audit
 
-First regenerate the analysis so its retained complaint units and category matches are current, then
-create the audit sheet:
+The committed `category_audit_sheet.csv` is the labelled audit of the demo sample: all 64 category matches
+(one best-matching sentence per review and category), each judged on whether that sentence is a genuine
+complaint of that category as the lexicon defines it, with borderline cases marked `incorrect`. Overall
+precision is 82.8% (Wilson 95% CI 71.8%-90.1%); the per-category table is in `results.md`. The lexicon was
+not re-tuned on these labels, and changing it would require auditing a fresh sheet.
+
+To repeat the audit on a new analysis, first regenerate the analysis so its retained complaint units and
+category matches are current, then create a new sheet (the command refuses to overwrite an existing one):
 
 ```powershell
 uv run reviews audit-categories `
