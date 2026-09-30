@@ -11,12 +11,14 @@ import pytest
 from appstore_review_analysis import docker_entrypoint
 
 ROOT = Path(__file__).resolve().parents[2]
-SETUP_UV_SHA = "c18668ad3cf93ea998bef934396af7bb5c839dc7"
+SETUP_UV_SHA = "c18668ad3cf93ea998bef934396af7bb5c839dc7"  # pragma: allowlist secret
 
 
 def test_ci_is_pinned_cross_platform_and_uses_only_fast_offline_gate() -> None:
     text = (ROOT / ".github/workflows/ci.yml").read_text(encoding="utf-8")
-    assert text.count(f"astral-sh/setup-uv@{SETUP_UV_SHA}") == 2
+    assert text.count(f"astral-sh/setup-uv@{SETUP_UV_SHA}") == 3
+    assert "\n  pre-commit:\n" in text
+    assert "uv run --locked pre-commit run --all-files --show-diff-on-failure" in text
     assert 'version: "0.12.19"' in text
     assert "os: [ubuntu-latest, windows-latest]" in text
     assert 'uv run --locked pytest -m "not slow and not live"' in text

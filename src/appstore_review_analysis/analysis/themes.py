@@ -24,7 +24,7 @@ from appstore_review_analysis.hf_download import suppress_public_download_auth_w
 from appstore_review_analysis.text import lexical_text, normalise_text
 
 EMBEDDING_MODEL_ID = "sentence-transformers/all-MiniLM-L6-v2"
-EMBEDDING_MODEL_REVISION = "1110a243fdf4706b3f48f1d95db1a4f5529b4d41"
+EMBEDDING_MODEL_REVISION = "1110a243fdf4706b3f48f1d95db1a4f5529b4d41"  # pragma: allowlist secret
 EMBEDDING_MODEL_DIRNAME = "sentence-transformers--all-MiniLM-L6-v2"
 EMBEDDING_MODEL_ALLOW_PATTERNS = [
     "config*.json",

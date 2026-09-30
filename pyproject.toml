@@ -33,6 +33,7 @@ build-backend = "uv_build"
 dev = [
     "httpx2>=2,<3",
     "mypy",
+    "pre-commit>=4.6,<5",
     "pytest",
     "ruff",
 ]

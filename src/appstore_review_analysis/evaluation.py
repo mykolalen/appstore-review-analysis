@@ -55,10 +55,10 @@ UNIT_LABELS: tuple[BinaryUnitLabel, ...] = ("complaint", "not_complaint")
 PAIR_LABELS: tuple[PairLabel, ...] = ("same_issue", "different_issue")
 
 TABULARIS_MODEL_ID = "tabularisai/robust-sentiment-analysis"
-TABULARIS_MODEL_REVISION = "c542a281e22b3d840a0b3f6c129acf8e357aed50"
+TABULARIS_MODEL_REVISION = "c542a281e22b3d840a0b3f6c129acf8e357aed50"  # pragma: allowlist secret
 TABULARIS_MODEL_DIRNAME = "tabularisai--robust-sentiment-analysis"
 SIEBERT_MODEL_ID = "siebert/sentiment-roberta-large-english"
-SIEBERT_MODEL_REVISION = "74cea614e245b0832c770ec9aa51bd58df965b9c"
+SIEBERT_MODEL_REVISION = "74cea614e245b0832c770ec9aa51bd58df965b9c"  # pragma: allowlist secret
 SIEBERT_MODEL_DIRNAME = "siebert--sentiment-roberta-large-english"
 _EVAL_MODEL_ALLOW_PATTERNS = [
     "config.json",

@@ -171,6 +171,59 @@ Live Apple checks are explicitly opt-in:
 uv run pytest -m live
 ```
 
+
+## Development
+
+Install the development environment and both default Git hook types:
+
+```bash
+uv sync
+uv run pre-commit install --install-hooks
+```
+
+Run the complete pre-commit-stage gate over the repository at any time:
+
+```bash
+uv run pre-commit run --all-files
+```
+
+The pre-push hooks run strict mypy over `src` and the fast offline pytest suite. Run them explicitly with:
+
+```bash
+uv run pre-commit run --all-files --hook-stage pre-push
+```
+
+`detect-secrets` uses `.secrets.baseline` plus repository exclusions for generated/verbatim data. If an
+intentional high-entropy constant is a false positive, keep the value visible to review and annotate that
+source line with `# pragma: allowlist secret`; do not add a real secret to the baseline.
+
+On Windows, regenerate the baseline from Git-tracked paths so repository-style `/` paths are used
+consistently. The `[.]` spelling avoids storing backslashes in the portable baseline:
+
+```powershell
+$exclude = '^(uv[.]lock|data/|reports/|evaluation/(.*[.]csv|results[.](json|md))|tests/fixtures/)'
+$files = @(git ls-files | Where-Object { $_ -notmatch $exclude -and $_ -ne ".secrets.baseline" })
+
+uvx --from detect-secrets==1.5.0 detect-secrets scan `
+    --baseline .secrets.baseline `
+    --exclude-files $exclude `
+    @files
+```
+
+Do not use PowerShell `>` redirection to generate the baseline. After regeneration, confirm that
+`"results": {}` and that the baseline contains no platform-specific paths. The exclusions deliberately
+keep generated reports, evaluation outputs, fixtures and `uv.lock` out of the baseline so paths remain
+portable across Windows and Linux.
+
+For an additional local staged scan, install `gitleaks` separately and run the manual hook after staging:
+
+```bash
+uv run pre-commit run gitleaks --hook-stage manual
+```
+
+The manual hook is intentionally not part of the default reviewer gate; the pre-commit stage itself does
+not require any separately installed binary.
+
 ## Approach
 
 ### Collection and sampling

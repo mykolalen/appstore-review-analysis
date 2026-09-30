@@ -18,7 +18,7 @@ from appstore_review_analysis.hf_download import suppress_public_download_auth_w
 
 SentimentLabel = Literal["negative", "neutral", "positive"]
 SENTIMENT_MODEL_ID = "cardiffnlp/twitter-roberta-base-sentiment-latest"
-SENTIMENT_MODEL_REVISION = "3216a57f2a0d9c45a2e6c20157c20c49fb4bf9c7"
+SENTIMENT_MODEL_REVISION = "3216a57f2a0d9c45a2e6c20157c20c49fb4bf9c7"  # pragma: allowlist secret
 SENTIMENT_MODEL_DIRNAME = "cardiffnlp--twitter-roberta-base-sentiment-latest"
 SENTIMENT_MODEL_ALLOW_PATTERNS = [
     "config.json",

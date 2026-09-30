@@ -1,0 +1,78 @@
+default_install_hook_types: [pre-commit, pre-push]
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: check-yaml
+        stages: [pre-commit]
+      - id: check-toml
+        stages: [pre-commit]
+      - id: check-json
+        stages: [pre-commit]
+      - id: check-merge-conflict
+        stages: [pre-commit]
+      - id: check-case-conflict
+        stages: [pre-commit]
+      - id: check-added-large-files
+        args: [--maxkb=1024]
+        stages: [pre-commit]
+      - id: detect-private-key
+        stages: [pre-commit]
+      - id: mixed-line-ending
+        args: [--fix=lf]
+        exclude: &verbatim_files '^(data/|reports/|evaluation/(.*\.csv|results\.(json|md))|tests/fixtures/|uv\.lock)'
+        stages: [pre-commit]
+      - id: end-of-file-fixer
+        exclude: *verbatim_files
+        stages: [pre-commit]
+      - id: trailing-whitespace
+        exclude: *verbatim_files
+        stages: [pre-commit]
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.16.9
+    hooks:
+      - id: ruff-check
+        stages: [pre-commit]
+      - id: ruff-format
+        stages: [pre-commit]
+
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.5.0
+    hooks:
+      - id: detect-secrets
+        args: [--baseline, .secrets.baseline]
+        exclude: '^(uv\.lock|data/|reports/|evaluation/(.*\.csv|results\.(json|md))|tests/fixtures/)'
+        stages: [pre-commit]
+
+  - repo: local
+    hooks:
+      - id: uv-lock-check
+        name: uv lock --check
+        entry: uv lock --check
+        language: system
+        pass_filenames: false
+        files: '^(pyproject\.toml|uv\.lock)$'
+        stages: [pre-commit]
+
+      - id: mypy
+        name: mypy
+        entry: uv run --locked mypy src
+        language: system
+        pass_filenames: false
+        stages: [pre-push]
+
+      - id: pytest-fast
+        name: fast tests
+        entry: 'uv run --locked pytest -m "not slow and not live" -q'
+        language: system
+        pass_filenames: false
+        stages: [pre-push]
+
+      - id: gitleaks
+        name: gitleaks staged secret scan
+        entry: gitleaks git --staged --pre-commit --redact -v
+        language: system
+        pass_filenames: false
+        stages: [manual]
