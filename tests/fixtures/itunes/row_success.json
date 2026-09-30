@@ -1,0 +1,18 @@
+{
+  "userReviewList": [
+    {
+      "userReviewId": "fixture-review-1",
+      "title": "Useful app",
+      "body": "A sanitised recorded review body.",
+      "rating": 5,
+      "date": "2026-09-28",
+      "isEdited": false,
+      "voteCount": 2,
+      "voteSum": 2,
+      "developerResponse": {
+        "id": "developer-response-1",
+        "modified": "2026-09-29"
+      }
+    }
+  ]
+}

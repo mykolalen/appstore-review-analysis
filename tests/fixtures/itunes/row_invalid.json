@@ -1,0 +1,13 @@
+{
+  "userReviewList": [
+    {
+      "title": "Missing required review id",
+      "body": "This row must be rejected and replaced.",
+      "rating": 2,
+      "date": "2026-09-28",
+      "isEdited": false,
+      "voteCount": 0,
+      "voteSum": 0
+    }
+  ]
+}

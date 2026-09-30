@@ -1,0 +1,26 @@
+services:
+  api:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      PUBLIC_MODE: ${PUBLIC_MODE:-false}
+      PUBLIC_MAX_SAMPLE_SIZE: ${PUBLIC_MAX_SAMPLE_SIZE:-100}
+      PUBLIC_GLOBAL_POST_LIMIT: ${PUBLIC_GLOBAL_POST_LIMIT:-10}
+      PUBLIC_CLIENT_POST_LIMIT: ${PUBLIC_CLIENT_POST_LIMIT:-5}
+      PUBLIC_RATE_WINDOW_S: ${PUBLIC_RATE_WINDOW_S:-600}
+    volumes:
+      - app_data:/app/var
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/readyz', timeout=3).read()"
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 30s
+
+volumes:
+  app_data:

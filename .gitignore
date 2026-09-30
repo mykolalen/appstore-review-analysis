@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Environments and local config
+.venv/
+.env
+
+# Project runtime data / future model artefacts
+*.db
+*.db-*
+data/raw/
+models/
+.hf_home/
+*.onnx
+*.bin
+*.safetensors
+
+# Packaging
+build/
+dist/
+*.egg-info/
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Evaluation working files (committed gold/results remain explicit)
+evaluation/*_sheet.csv
+evaluation/*_candidates.csv

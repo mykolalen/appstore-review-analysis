@@ -1,0 +1,32 @@
+{
+  "app": {
+    "app_id": 1459969523,
+    "name": "Nebula: Spiritual Guidance",
+    "country": "us",
+    "average_user_rating": 4.57383,
+    "user_rating_count": 170793,
+    "current_version_release_date": "2026-09-21T07:54:59Z"
+  },
+  "country": "us",
+  "population_total": 15002,
+  "reachable": 15002,
+  "walked": 15002,
+  "written_review_mean": 3.371217171043861,
+  "written_review_star_distribution": {
+    "1": 5126,
+    "2": 548,
+    "3": 561,
+    "4": 1165,
+    "5": 7602
+  },
+  "reviews_per_year": {
+    "2019": 203,
+    "2020": 700,
+    "2021": 695,
+    "2022": 323,
+    "2023": 616,
+    "2024": 1940,
+    "2025": 5885,
+    "2026": 4640
+  }
+}

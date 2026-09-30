@@ -1,0 +1,15 @@
+/.git
+/.github
+/.venv
+/.pytest_cache
+/.mypy_cache
+/.ruff_cache
+/data/raw
+/models
+/.cache/huggingface
+/.huggingface
+**/*.db
+**/*.db-*
+__pycache__
+*.py[cod]
+.env

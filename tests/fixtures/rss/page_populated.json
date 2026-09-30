@@ -1,0 +1,36 @@
+{
+  "feed": {
+    "entry": [
+      {
+        "id": {"label": "metadata-entry"},
+        "title": {"label": "Not a review"},
+        "content": {"label": "No rating means this is ignored"}
+      },
+      {
+        "id": {"label": "rss-1"},
+        "title": {"label": "Great"},
+        "content": {"label": "Very useful"},
+        "im:rating": {"label": "5"},
+        "im:version": {"label": "4.2.0"},
+        "updated": {"label": "2026-09-29T10:00:00Z"},
+        "im:voteCount": {"label": "2"},
+        "im:voteSum": {"label": "2"}
+      },
+      {
+        "id": {"label": "rss-2"},
+        "title": {"label": "Billing"},
+        "content": {"label": "Unexpected charge"},
+        "im:rating": {"label": "1"},
+        "im:version": {"label": "4.2.0"},
+        "updated": {"label": "2026-09-28T10:00:00Z"}
+      },
+      {
+        "id": {"label": "rss-3"},
+        "title": {"label": "Okay"},
+        "content": {"label": "Works for me"},
+        "im:rating": {"label": "4"},
+        "updated": {"label": "2026-09-27T10:00:00Z"}
+      }
+    ]
+  }
+}

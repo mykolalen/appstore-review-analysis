@@ -1,0 +1,153 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    name: Python 3.13 / ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
+        with:
+          version: "0.12.19"
+          python-version: "3.13"
+          enable-cache: true
+
+      - name: Sync locked environment
+        run: uv sync --locked
+
+      - name: Verify CPU-only torch lock
+        shell: python
+        run: |
+          from pathlib import Path
+          lock = Path("uv.lock").read_text(encoding="utf-8")
+          if 'name = "nvidia' in lock:
+              raise SystemExit("CUDA torch dependencies found in uv.lock")
+          if "+cpu" not in lock:
+              raise SystemExit("CPU torch marker missing from uv.lock")
+
+      - name: Ruff lint
+        run: uv run --locked ruff check
+
+      - name: Ruff format check
+        run: uv run --locked ruff format --check
+
+      - name: Mypy
+        run: uv run --locked mypy src
+
+      - name: Pytest
+        run: uv run --locked pytest -m "not slow and not live"
+
+  readme-smoke:
+    name: README fixture smoke / Ubuntu
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
+        with:
+          version: "0.12.19"
+          python-version: "3.13"
+          enable-cache: true
+
+      - name: Cache pinned local models
+        uses: actions/cache@v4
+        with:
+          path: models
+          key: models-cardiff-3216a57-minilm-1110a243-v1
+
+      - name: Extract README smoke block
+        shell: python
+        run: |
+          from pathlib import Path
+
+          text = Path("README.md").read_text(encoding="utf-8")
+          start = text.index("<!-- readme-smoke:start -->")
+          end = text.index("<!-- readme-smoke:end -->")
+          block = text[start:end]
+          fence_start = block.index("```bash") + len("```bash")
+          fence_end = block.index("```", fence_start)
+          script = block[fence_start:fence_end].strip() + "\n"
+          Path("/tmp/readme-smoke.sh").write_text(script, encoding="utf-8")
+
+      - name: Run README block verbatim
+        shell: bash
+        run: bash /tmp/readme-smoke.sh
+
+  docker:
+    name: Docker fixture smoke
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Build and start compose stack
+        run: docker compose up --build -d
+
+      - name: Verify fixture exists in image
+        run: |
+          docker compose exec -T api python -c "from pathlib import Path; assert Path('data/fixtures/nebula_us_seed42.snapshot.json').is_file()"
+
+      - name: Wait for readiness
+        shell: bash
+        run: |
+          set -euo pipefail
+          ready=0
+          for _ in $(seq 1 120); do
+            if curl -fsS http://127.0.0.1:8080/readyz >/dev/null; then
+              ready=1
+              break
+            fi
+            sleep 2
+          done
+          if [ "$ready" -ne 1 ]; then
+            docker compose logs api
+            exit 1
+          fi
+
+      - name: Create fixture analysis and verify persistence
+        shell: bash
+        run: |
+          set -euo pipefail
+          created="$(curl -fsS -X POST http://127.0.0.1:8080/v1/analyses \
+            -H 'content-type: application/json' \
+            --data '{"app":"1459969523","country":"us","sample_size":100,"seed":42,"provider":"fixture","analyze":false}')"
+          analysis_id="$(printf '%s' "$created" | python -c 'import json,sys; print(json.load(sys.stdin)["analysis_id"])')"
+          printf '%s' "$analysis_id" >/tmp/analysis-id
+          curl -fsS "http://127.0.0.1:8080/v1/analyses/$analysis_id" >/dev/null
+          docker compose down
+          docker compose up -d
+          ready=0
+          for _ in $(seq 1 120); do
+            if curl -fsS http://127.0.0.1:8080/readyz >/dev/null; then
+              ready=1
+              break
+            fi
+            sleep 2
+          done
+          test "$ready" -eq 1
+          analysis_id="$(cat /tmp/analysis-id)"
+          curl -fsS "http://127.0.0.1:8080/v1/analyses/$analysis_id" >/dev/null
+
+      - name: Cleanup
+        if: always()
+        run: docker compose down -v

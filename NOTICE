@@ -1,0 +1,13 @@
+appstore-review-analysis
+
+Third-party model artefacts used or optionally downloaded by this project:
+
+- cardiffnlp/twitter-roberta-base-sentiment-latest — CC BY 4.0.
+  Model authors: Cardiff NLP / TimeLMs project.
+- sentence-transformers/all-MiniLM-L6-v2 — Apache License 2.0.
+- tabularisai/robust-sentiment-analysis — Apache License 2.0.
+- siebert/sentiment-roberta-large-english — optional evaluation reference. The public
+  model card does not state a licence in its metadata; model files are not redistributed
+  by this repository and licence terms should be verified before redistribution.
+
+Model files are not distributed in this repository.

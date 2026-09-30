@@ -1,0 +1,1496 @@
+{
+  "analysis_id": "00ec33ea-df96-4d66-9249-51d3d9291d4a",
+  "created_at": "2026-09-30T12:20:18.119804Z",
+  "app": {
+    "app_id": 1459969523,
+    "name": "Nebula: Spiritual Guidance",
+    "country": "us",
+    "average_user_rating": 4.57383,
+    "user_rating_count": 170793,
+    "current_version_release_date": "2026-09-21T07:54:59Z"
+  },
+  "request": {
+    "app": "1459969523",
+    "country": "us",
+    "sample_size": 100,
+    "seed": 42,
+    "provider": "fixture",
+    "analyze": true,
+    "distance_threshold": 0.4
+  },
+  "sampling": {
+    "provider": "itunes",
+    "method": "uniform_random_rank",
+    "storefront": "us",
+    "population_total": 15002,
+    "reachable": 15002,
+    "frame_description": "newest 15,002 of 15,002",
+    "frame_first_date": "2026-09-28T11:36:54Z",
+    "frame_last_date": "2019-05-10T15:43:06Z",
+    "requested": 100,
+    "actual": 100,
+    "sample_complete": true,
+    "sampling_fraction": 0.006665777896280496,
+    "seed": 42,
+    "ranks": [
+      96,
+      372,
+      395,
+      444,
+      480,
+      684,
+      706,
+      952,
+      1192,
+      1296,
+      1362,
+      1384,
+      1443,
+      1509,
+      1643,
+      2320,
+      2444,
+      2560,
+      2965,
+      3132,
+      3159,
+      3260,
+      3287,
+      3288,
+      3327,
+      3405,
+      3428,
+      3479,
+      3694,
+      3936,
+      3968,
+      3992,
+      4008,
+      4099,
+      4155,
+      4325,
+      4712,
+      4722,
+      5024,
+      5078,
+      5454,
+      5535,
+      5654,
+      5677,
+      5723,
+      5925,
+      5985,
+      6291,
+      6330,
+      6873,
+      7536,
+      7637,
+      7936,
+      8008,
+      8129,
+      8246,
+      8334,
+      8410,
+      8626,
+      8760,
+      8791,
+      9014,
+      9111,
+      9240,
+      9407,
+      9504,
+      9529,
+      9576,
+      9692,
+      9694,
+      9816,
+      10088,
+      10245,
+      10419,
+      10528,
+      10897,
+      10907,
+      10978,
+      11615,
+      11877,
+      12025,
+      12052,
+      12077,
+      12390,
+      12614,
+      12653,
+      12874,
+      12913,
+      13123,
+      13301,
+      13454,
+      13699,
+      14008,
+      14119,
+      14288,
+      14534,
+      14567,
+      14806,
+      14940,
+      14952
+    ],
+    "replacements": [],
+    "rows_invalid": 0,
+    "collected_at": "2026-09-29T17:16:29.209190Z",
+    "requests_made": 104,
+    "retries": 0,
+    "store_histogram": [
+      10447,
+      2083,
+      5689,
+      13380,
+      139205
+    ],
+    "store_mean": 4.573809746844336,
+    "store_rating_count": 170804
+  },
+  "preprocessing": {
+    "n_all": 100,
+    "n_analysable": 100,
+    "flag_counts": {
+      "duplicate_title_body": 5,
+      "short": 3
+    },
+    "language_counts": {
+      "en": 90,
+      "und": 10
+    },
+    "examples": [
+      {
+        "review_id": "10836437501",
+        "before": "Title: Trial Period | Body: Trial period was not free my card was charged the same day and NO trial period was offered",
+        "after": "Trial period was not free my card was charged the same day and NO trial period was offered",
+        "flags": [
+          "duplicate_title_body"
+        ]
+      },
+      {
+        "review_id": "12393766506",
+        "before": "Title: Readings | Body: Readings were not bad",
+        "after": "Readings were not bad",
+        "flags": [
+          "duplicate_title_body"
+        ]
+      },
+      {
+        "review_id": "12413447662",
+        "before": "Title: Awesome app for immediate answers | Body: Awesome app for immediate answers. I love that you can chat live or send a message and wait. Great way to get some insight/outside perspective immediately on practically any situation/topic and the representatives all seem to really care about helping others.",
+        "after": "Awesome app for immediate answers. I love that you can chat live or send a message and wait. Great way to get some insight/outside perspective immediately on practically any situation/topic and the representatives all seem to really care about helping others.",
+        "flags": [
+          "duplicate_title_body"
+        ]
+      },
+      {
+        "review_id": "12467337584",
+        "before": "Title: Scam | Body: Scam \nI only allowed one dollar to come out of my Apple Pay and it took almost $100 out of my account through Apple Pay and I don’t understand how it did that but it did without my permission without my authorization  \n3×3 different times .  I woke up at 5am n Apple Pay was used. my bank since it was Apple Pay. They would not refund me.",
+        "after": "Scam I only allowed one dollar to come out of my Apple Pay and it took almost $100 out of my account through Apple Pay and I don’t understand how it did that but it did without my permission without my authorization 3×3 different times . I woke up at 5am n Apple Pay was used. my bank since it was Apple Pay. They would not refund me.",
+        "flags": [
+          "duplicate_title_body"
+        ]
+      },
+      {
+        "review_id": "13761600243",
+        "before": "Title: Love | Body: 10/10",
+        "after": "Love. 10/10",
+        "flags": [
+          "short"
+        ]
+      }
+    ],
+    "n_negative": 43,
+    "n_rest": 57,
+    "n_complaint_reviews": 43,
+    "n_units": 103
+  },
+  "metrics": {
+    "n": 100,
+    "mean": 3.2,
+    "mean_ci95": {
+      "low": 2.82,
+      "high": 3.56,
+      "reason": null
+    },
+    "median": 4.0,
+    "stddev": 1.8909673650694174,
+    "distribution": {
+      "1": {
+        "count": 39,
+        "percentage": 0.39,
+        "ci95": {
+          "low": 0.3001687400639441,
+          "high": 0.4879698295415926,
+          "reason": null
+        }
+      },
+      "2": {
+        "count": 4,
+        "percentage": 0.04,
+        "ci95": {
+          "low": 0.01566330399154762,
+          "high": 0.0983707143588792,
+          "reason": null
+        }
+      },
+      "3": {
+        "count": 3,
+        "percentage": 0.03,
+        "ci95": {
+          "low": 0.010254524024038925,
+          "high": 0.0845193642905276,
+          "reason": null
+        }
+      },
+      "4": {
+        "count": 6,
+        "percentage": 0.06,
+        "ci95": {
+          "low": 0.027786123963188192,
+          "high": 0.1247681544589592,
+          "reason": null
+        }
+      },
+      "5": {
+        "count": 48,
+        "percentage": 0.48,
+        "ci95": {
+          "low": 0.384645517580519,
+          "high": 0.5768342223477603,
+          "reason": null
+        }
+      }
+    },
+    "sampling_fraction": 0.006665777896280496,
+    "store_benchmark": {
+      "mean": 4.573809746844336,
+      "rating_count": 170804,
+      "histogram_1_to_5": [
+        10447,
+        2083,
+        5689,
+        13380,
+        139205
+      ],
+      "note": "Store ratings include star-only ratings and are not the same population as sampled written reviews."
+    },
+    "periods": [
+      {
+        "label": "2026",
+        "years": [
+          2026
+        ],
+        "n": 36,
+        "mean": 4.472222222222222,
+        "mean_ci95": {
+          "low": 3.9722222222222223,
+          "high": 4.777777777777778,
+          "reason": null
+        },
+        "one_two_star_share": 0.08333333333333333,
+        "one_two_star_ci95": {
+          "low": 0.02874861133599338,
+          "high": 0.2182669124927263,
+          "reason": null
+        }
+      },
+      {
+        "label": "2025",
+        "years": [
+          2025
+        ],
+        "n": 38,
+        "mean": 2.8157894736842106,
+        "mean_ci95": {
+          "low": 2.210526315789474,
+          "high": 3.4210526315789473,
+          "reason": null
+        },
+        "one_two_star_share": 0.5263157894736842,
+        "one_two_star_ci95": {
+          "low": 0.3725897138449667,
+          "high": 0.6752097667747392,
+          "reason": null
+        }
+      },
+      {
+        "label": "2019-2024",
+        "years": [
+          2019,
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "n": 26,
+        "mean": 2.0,
+        "mean_ci95": {
+          "low": 1.5,
+          "high": 2.6923076923076925,
+          "reason": null
+        },
+        "one_two_star_share": 0.7692307692307693,
+        "one_two_star_ci95": {
+          "low": 0.5794844592105632,
+          "high": 0.8896615059421671,
+          "reason": null
+        }
+      }
+    ],
+    "bootstrap": {
+      "method": "BCa",
+      "n_resamples": 9999,
+      "seed": [
+        42,
+        1
+      ]
+    }
+  },
+  "sentiment": {
+    "status": "ok",
+    "n_analysable": 100,
+    "distribution": {
+      "negative": {
+        "count": 43,
+        "percentage": 0.43,
+        "ci95": {
+          "low": 0.33733298524110106,
+          "high": 0.5278461045078768,
+          "reason": null
+        }
+      },
+      "neutral": {
+        "count": 3,
+        "percentage": 0.03,
+        "ci95": {
+          "low": 0.010254524024038925,
+          "high": 0.0845193642905276,
+          "reason": null
+        }
+      },
+      "positive": {
+        "count": 54,
+        "percentage": 0.54,
+        "ci95": {
+          "low": 0.44264860323368227,
+          "high": 0.6343919169097589,
+          "reason": null
+        }
+      }
+    },
+    "rating_consistency": {
+      "comparable_reviews": 97,
+      "agreement_rate": 0.9587628865979382,
+      "disagreement": {
+        "rating_negative_model_positive": 1,
+        "rating_negative_model_neutral": 1,
+        "rating_positive_model_negative": 2,
+        "rating_positive_model_neutral": 0
+      },
+      "note": "Star ratings are a weak consistency proxy, not sentiment ground truth."
+    },
+    "model_id": "cardiffnlp/twitter-roberta-base-sentiment-latest",
+    "model_revision": "3216a57f2a0d9c45a2e6c20157c20c49fb4bf9c7"
+  },
+  "keywords": {
+    "status": "ok",
+    "n_negative": 43,
+    "n_rest": 57,
+    "common": [
+      {
+        "phrase": "pay",
+        "support_count": 11,
+        "negative_reviews": {
+          "count": 11,
+          "total": 43,
+          "display": "11 of 43"
+        },
+        "other_reviews": {
+          "count": 1,
+          "total": 57,
+          "display": "1 of 57"
+        },
+        "example_review_id": "14079993573",
+        "newest_date": "2026-05-18T22:34:10+00:00",
+        "share_last_12_months": 0.36363636363636365
+      },
+      {
+        "phrase": "scam",
+        "support_count": 10,
+        "negative_reviews": {
+          "count": 10,
+          "total": 43,
+          "display": "10 of 43"
+        },
+        "other_reviews": {
+          "count": 0,
+          "total": 57,
+          "display": "0 of 57"
+        },
+        "example_review_id": "13616064815",
+        "newest_date": "2026-01-10T07:17:26+00:00",
+        "share_last_12_months": 0.2
+      },
+      {
+        "phrase": "free",
+        "support_count": 9,
+        "negative_reviews": {
+          "count": 9,
+          "total": 43,
+          "display": "9 of 43"
+        },
+        "other_reviews": {
+          "count": 1,
+          "total": 57,
+          "display": "1 of 57"
+        },
+        "example_review_id": "14162858916",
+        "newest_date": "2026-06-09T16:43:19+00:00",
+        "share_last_12_months": 0.3333333333333333
+      },
+      {
+        "phrase": "charge",
+        "support_count": 7,
+        "negative_reviews": {
+          "count": 7,
+          "total": 43,
+          "display": "7 of 43"
+        },
+        "other_reviews": {
+          "count": 1,
+          "total": 57,
+          "display": "1 of 57"
+        },
+        "example_review_id": "13793435927",
+        "newest_date": "2026-02-27T03:17:48+00:00",
+        "share_last_12_months": 0.2857142857142857
+      },
+      {
+        "phrase": "money",
+        "support_count": 7,
+        "negative_reviews": {
+          "count": 7,
+          "total": 43,
+          "display": "7 of 43"
+        },
+        "other_reviews": {
+          "count": 0,
+          "total": 57,
+          "display": "0 of 57"
+        },
+        "example_review_id": "14079993573",
+        "newest_date": "2026-05-18T22:34:10+00:00",
+        "share_last_12_months": 0.14285714285714285
+      },
+      {
+        "phrase": "read",
+        "support_count": 7,
+        "negative_reviews": {
+          "count": 7,
+          "total": 43,
+          "display": "7 of 43"
+        },
+        "other_reviews": {
+          "count": 1,
+          "total": 57,
+          "display": "1 of 57"
+        },
+        "example_review_id": "12128656296",
+        "newest_date": "2024-12-31T19:32:59+00:00",
+        "share_last_12_months": 0.0
+      },
+      {
+        "phrase": "subscription",
+        "support_count": 6,
+        "negative_reviews": {
+          "count": 6,
+          "total": 43,
+          "display": "6 of 43"
+        },
+        "other_reviews": {
+          "count": 2,
+          "total": 57,
+          "display": "2 of 57"
+        },
+        "example_review_id": "14079993573",
+        "newest_date": "2026-05-18T22:34:10+00:00",
+        "share_last_12_months": 0.3333333333333333
+      },
+      {
+        "phrase": "to pay",
+        "support_count": 6,
+        "negative_reviews": {
+          "count": 6,
+          "total": 43,
+          "display": "6 of 43"
+        },
+        "other_reviews": {
+          "count": 1,
+          "total": 57,
+          "display": "1 of 57"
+        },
+        "example_review_id": "13524060324",
+        "newest_date": "2025-12-17T14:59:57+00:00",
+        "share_last_12_months": 0.3333333333333333
+      },
+      {
+        "phrase": "answer",
+        "support_count": 5,
+        "negative_reviews": {
+          "count": 5,
+          "total": 43,
+          "display": "5 of 43"
+        },
+        "other_reviews": {
+          "count": 0,
+          "total": 57,
+          "display": "0 of 57"
+        },
+        "example_review_id": "14162858916",
+        "newest_date": "2026-06-09T16:43:19+00:00",
+        "share_last_12_months": 0.2
+      },
+      {
+        "phrase": "charged",
+        "support_count": 5,
+        "negative_reviews": {
+          "count": 5,
+          "total": 43,
+          "display": "5 of 43"
+        },
+        "other_reviews": {
+          "count": 1,
+          "total": 57,
+          "display": "1 of 57"
+        },
+        "example_review_id": "13616064815",
+        "newest_date": "2026-01-10T07:17:26+00:00",
+        "share_last_12_months": 0.2
+      },
+      {
+        "phrase": "chart",
+        "support_count": 5,
+        "negative_reviews": {
+          "count": 5,
+          "total": 43,
+          "display": "5 of 43"
+        },
+        "other_reviews": {
+          "count": 1,
+          "total": 57,
+          "display": "1 of 57"
+        },
+        "example_review_id": "13238168680",
+        "newest_date": "2025-10-08T02:55:05+00:00",
+        "share_last_12_months": 0.2
+      },
+      {
+        "phrase": "refund",
+        "support_count": 5,
+        "negative_reviews": {
+          "count": 5,
+          "total": 43,
+          "display": "5 of 43"
+        },
+        "other_reviews": {
+          "count": 0,
+          "total": 57,
+          "display": "0 of 57"
+        },
+        "example_review_id": "12467337584",
+        "newest_date": "2025-03-26T17:04:47+00:00",
+        "share_last_12_months": 0.0
+      },
+      {
+        "phrase": "a scam",
+        "support_count": 4,
+        "negative_reviews": {
+          "count": 4,
+          "total": 43,
+          "display": "4 of 43"
+        },
+        "other_reviews": {
+          "count": 0,
+          "total": 57,
+          "display": "0 of 57"
+        },
+        "example_review_id": "13616064815",
+        "newest_date": "2026-01-10T07:17:26+00:00",
+        "share_last_12_months": 0.5
+      },
+      {
+        "phrase": "ads",
+        "support_count": 4,
+        "negative_reviews": {
+          "count": 4,
+          "total": 43,
+          "display": "4 of 43"
+        },
+        "other_reviews": {
+          "count": 0,
+          "total": 57,
+          "display": "0 of 57"
+        },
+        "example_review_id": "11940192431",
+        "newest_date": "2024-11-12T03:16:51+00:00",
+        "share_last_12_months": 0.0
+      },
+      {
+        "phrase": "day",
+        "support_count": 4,
+        "negative_reviews": {
+          "count": 4,
+          "total": 43,
+          "display": "4 of 43"
+        },
+        "other_reviews": {
+          "count": 1,
+          "total": 57,
+          "display": "1 of 57"
+        },
+        "example_review_id": "12164829797",
+        "newest_date": "2025-01-09T22:02:55+00:00",
+        "share_last_12_months": 0.0
+      }
+    ],
+    "distinctive": [
+      {
+        "phrase": "pay",
+        "negative_reviews": {
+          "count": 11,
+          "total": 43,
+          "display": "11 of 43"
+        },
+        "other_reviews": {
+          "count": 1,
+          "total": 57,
+          "display": "1 of 57"
+        },
+        "support_count": 11,
+        "z": 1.9413866775275583,
+        "z_ge_1_96": false,
+        "example_review_id": "14079993573",
+        "newest_date": "2026-05-18T22:34:10+00:00",
+        "share_last_12_months": 0.36363636363636365
+      },
+      {
+        "phrase": "free",
+        "negative_reviews": {
+          "count": 9,
+          "total": 43,
+          "display": "9 of 43"
+        },
+        "other_reviews": {
+          "count": 1,
+          "total": 57,
+          "display": "1 of 57"
+        },
+        "support_count": 9,
+        "z": 1.7241989406596159,
+        "z_ge_1_96": false,
+        "example_review_id": "14162858916",
+        "newest_date": "2026-06-09T16:43:19+00:00",
+        "share_last_12_months": 0.3333333333333333
+      },
+      {
+        "phrase": "charge",
+        "negative_reviews": {
+          "count": 7,
+          "total": 43,
+          "display": "7 of 43"
+        },
+        "other_reviews": {
+          "count": 1,
+          "total": 57,
+          "display": "1 of 57"
+        },
+        "support_count": 7,
+        "z": 1.458302952216835,
+        "z_ge_1_96": false,
+        "example_review_id": "13793435927",
+        "newest_date": "2026-02-27T03:17:48+00:00",
+        "share_last_12_months": 0.2857142857142857
+      },
+      {
+        "phrase": "read",
+        "negative_reviews": {
+          "count": 7,
+          "total": 43,
+          "display": "7 of 43"
+        },
+        "other_reviews": {
+          "count": 1,
+          "total": 57,
+          "display": "1 of 57"
+        },
+        "support_count": 7,
+        "z": 1.458302952216835,
+        "z_ge_1_96": false,
+        "example_review_id": "12128656296",
+        "newest_date": "2024-12-31T19:32:59+00:00",
+        "share_last_12_months": 0.0
+      },
+      {
+        "phrase": "scam",
+        "negative_reviews": {
+          "count": 10,
+          "total": 43,
+          "display": "10 of 43"
+        },
+        "other_reviews": {
+          "count": 0,
+          "total": 57,
+          "display": "0 of 57"
+        },
+        "support_count": 10,
+        "z": 1.3997598053615719,
+        "z_ge_1_96": false,
+        "example_review_id": "13616064815",
+        "newest_date": "2026-01-10T07:17:26+00:00",
+        "share_last_12_months": 0.2
+      },
+      {
+        "phrase": "to pay",
+        "negative_reviews": {
+          "count": 6,
+          "total": 43,
+          "display": "6 of 43"
+        },
+        "other_reviews": {
+          "count": 1,
+          "total": 57,
+          "display": "1 of 57"
+        },
+        "support_count": 6,
+        "z": 1.2984039416695858,
+        "z_ge_1_96": false,
+        "example_review_id": "13524060324",
+        "newest_date": "2025-12-17T14:59:57+00:00",
+        "share_last_12_months": 0.3333333333333333
+      },
+      {
+        "phrase": "money",
+        "negative_reviews": {
+          "count": 7,
+          "total": 43,
+          "display": "7 of 43"
+        },
+        "other_reviews": {
+          "count": 0,
+          "total": 57,
+          "display": "0 of 57"
+        },
+        "support_count": 7,
+        "z": 1.1709525643172232,
+        "z_ge_1_96": false,
+        "example_review_id": "14079993573",
+        "newest_date": "2026-05-18T22:34:10+00:00",
+        "share_last_12_months": 0.14285714285714285
+      },
+      {
+        "phrase": "charged",
+        "negative_reviews": {
+          "count": 5,
+          "total": 43,
+          "display": "5 of 43"
+        },
+        "other_reviews": {
+          "count": 1,
+          "total": 57,
+          "display": "1 of 57"
+        },
+        "support_count": 5,
+        "z": 1.1125321572539628,
+        "z_ge_1_96": false,
+        "example_review_id": "13616064815",
+        "newest_date": "2026-01-10T07:17:26+00:00",
+        "share_last_12_months": 0.2
+      },
+      {
+        "phrase": "chart",
+        "negative_reviews": {
+          "count": 5,
+          "total": 43,
+          "display": "5 of 43"
+        },
+        "other_reviews": {
+          "count": 1,
+          "total": 57,
+          "display": "1 of 57"
+        },
+        "support_count": 5,
+        "z": 1.1125321572539628,
+        "z_ge_1_96": false,
+        "example_review_id": "13238168680",
+        "newest_date": "2025-10-08T02:55:05+00:00",
+        "share_last_12_months": 0.2
+      },
+      {
+        "phrase": "answer",
+        "negative_reviews": {
+          "count": 5,
+          "total": 43,
+          "display": "5 of 43"
+        },
+        "other_reviews": {
+          "count": 0,
+          "total": 57,
+          "display": "0 of 57"
+        },
+        "support_count": 5,
+        "z": 0.9895395184367389,
+        "z_ge_1_96": false,
+        "example_review_id": "14162858916",
+        "newest_date": "2026-06-09T16:43:19+00:00",
+        "share_last_12_months": 0.2
+      },
+      {
+        "phrase": "refund",
+        "negative_reviews": {
+          "count": 5,
+          "total": 43,
+          "display": "5 of 43"
+        },
+        "other_reviews": {
+          "count": 0,
+          "total": 57,
+          "display": "0 of 57"
+        },
+        "support_count": 5,
+        "z": 0.9895395184367389,
+        "z_ge_1_96": false,
+        "example_review_id": "12467337584",
+        "newest_date": "2025-03-26T17:04:47+00:00",
+        "share_last_12_months": 0.0
+      },
+      {
+        "phrase": "day",
+        "negative_reviews": {
+          "count": 4,
+          "total": 43,
+          "display": "4 of 43"
+        },
+        "other_reviews": {
+          "count": 1,
+          "total": 57,
+          "display": "1 of 57"
+        },
+        "support_count": 4,
+        "z": 0.8903578944302181,
+        "z_ge_1_96": false,
+        "example_review_id": "12164829797",
+        "newest_date": "2025-01-09T22:02:55+00:00",
+        "share_last_12_months": 0.0
+      },
+      {
+        "phrase": "trial",
+        "negative_reviews": {
+          "count": 4,
+          "total": 43,
+          "display": "4 of 43"
+        },
+        "other_reviews": {
+          "count": 1,
+          "total": 57,
+          "display": "1 of 57"
+        },
+        "support_count": 4,
+        "z": 0.8903578944302181,
+        "z_ge_1_96": false,
+        "example_review_id": "13616064815",
+        "newest_date": "2026-01-10T07:17:26+00:00",
+        "share_last_12_months": 0.25
+      },
+      {
+        "phrase": "a scam",
+        "negative_reviews": {
+          "count": 4,
+          "total": 43,
+          "display": "4 of 43"
+        },
+        "other_reviews": {
+          "count": 0,
+          "total": 57,
+          "display": "0 of 57"
+        },
+        "support_count": 4,
+        "z": 0.8850281220371914,
+        "z_ge_1_96": false,
+        "example_review_id": "13616064815",
+        "newest_date": "2026-01-10T07:17:26+00:00",
+        "share_last_12_months": 0.5
+      },
+      {
+        "phrase": "ads",
+        "negative_reviews": {
+          "count": 4,
+          "total": 43,
+          "display": "4 of 43"
+        },
+        "other_reviews": {
+          "count": 0,
+          "total": 57,
+          "display": "0 of 57"
+        },
+        "support_count": 4,
+        "z": 0.8850281220371914,
+        "z_ge_1_96": false,
+        "example_review_id": "11940192431",
+        "newest_date": "2024-11-12T03:16:51+00:00",
+        "share_last_12_months": 0.0
+      }
+    ],
+    "a0": 100.0,
+    "note": "Fightin' Words z is used as a ranking score, not a significance test."
+  },
+  "themes": {
+    "status": "ok",
+    "n_units": 103,
+    "n_complaint_reviews": 43,
+    "minimum_cluster_support": 3,
+    "distance_threshold": 0.4,
+    "unit_gate": {
+      "positive_review_min_negative_score": 0.85,
+      "other_review_min_negative_score": 0.5,
+      "negative_label_candidates": 113,
+      "kept": 103,
+      "removed_total": 10,
+      "removed_by_rule": {
+        "rating_4_5_below_threshold": 8,
+        "rating_1_3_below_threshold": 2
+      },
+      "note": "Default score gates are heuristics based on observed classifier errors and must be re-tuned on hand-labelled complaint units when evaluation data exists."
+    },
+    "coverage": {
+      "units_clustered": 10,
+      "units_total": 103,
+      "unit_share": 0.0970873786407767,
+      "complaint_reviews_in_themes": 9,
+      "n_complaint_reviews": 43,
+      "review_share": 0.20930232558139536
+    },
+    "diagnostics": {
+      "pairwise_distance_histogram": [
+        {
+          "low": 0.0,
+          "high": 0.2,
+          "count": 22
+        },
+        {
+          "low": 0.2,
+          "high": 0.3,
+          "count": 8
+        },
+        {
+          "low": 0.3,
+          "high": 0.4,
+          "count": 36
+        },
+        {
+          "low": 0.4,
+          "high": 0.5,
+          "count": 110
+        },
+        {
+          "low": 0.5,
+          "high": 0.6,
+          "count": 233
+        },
+        {
+          "low": 0.6,
+          "high": 0.8,
+          "count": 1748
+        },
+        {
+          "low": 0.8,
+          "high": 1.0,
+          "count": 2906
+        },
+        {
+          "low": 1.0,
+          "high": 2.0,
+          "count": 190
+        }
+      ],
+      "cluster_sizes": {
+        "0.30": {
+          "n_clusters": 95,
+          "sizes": [
+            7,
+            2,
+            2,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        "0.40": {
+          "n_clusters": 81,
+          "sizes": [
+            10,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        "0.50": {
+          "n_clusters": 58,
+          "sizes": [
+            10,
+            7,
+            5,
+            5,
+            3,
+            3,
+            3,
+            3,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        "0.60": {
+          "n_clusters": 40,
+          "sizes": [
+            12,
+            10,
+            9,
+            7,
+            7,
+            5,
+            4,
+            3,
+            3,
+            3,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        }
+      }
+    },
+    "items": [
+      {
+        "theme_id": "theme_01",
+        "unit_count": 10,
+        "review_count": 9,
+        "share_of_complaint_reviews": {
+          "value": 0.20930232558139536,
+          "numerator": 9,
+          "denominator": 43,
+          "ci95": {
+            "low": 0.11422834220995602,
+            "high": 0.3520564271073644,
+            "reason": "conditional_on_clustering"
+          }
+        },
+        "share_of_analysable": {
+          "value": 0.09,
+          "numerator": 9,
+          "denominator": 100,
+          "ci95": {
+            "low": 0.04807254000256515,
+            "high": 0.1622621285271631,
+            "reason": "conditional_on_clustering"
+          }
+        },
+        "mean_star_rating": 1.0,
+        "top_phrases": [
+          {
+            "phrase": "scam",
+            "support_count": 9,
+            "z": 6.912273411565284
+          }
+        ],
+        "newest_date": "2026-01-10T07:17:26+00:00",
+        "oldest_date": "2020-09-19T09:31:16+00:00",
+        "share_last_12_months": 0.2222222222222222,
+        "historical": false,
+        "representative_units": [
+          {
+            "unit_id": "11099954190:s0",
+            "review_id": "11099954190",
+            "excerpt": "Scam.",
+            "distance_to_centroid": 0.02327117,
+            "negative_score": 0.6485478281974792
+          },
+          {
+            "unit_id": "12491998074:s0",
+            "review_id": "12491998074",
+            "excerpt": "Scam.",
+            "distance_to_centroid": 0.02327117,
+            "negative_score": 0.6485478281974792
+          },
+          {
+            "unit_id": "12688614586:s0",
+            "review_id": "12688614586",
+            "excerpt": "SCAM.",
+            "distance_to_centroid": 0.02327117,
+            "negative_score": 0.5296909213066101
+          }
+        ],
+        "evidence_review_ids": [
+          "11099954190",
+          "12351110123",
+          "12491998074",
+          "12688614586",
+          "12708833838",
+          "12829278222",
+          "13325807478",
+          "13616064815",
+          "6444787269"
+        ]
+      }
+    ],
+    "other": {
+      "unit_count": 93,
+      "review_count": 43,
+      "evidence_review_ids": [
+        "10522916069",
+        "10836437501",
+        "11075169965",
+        "11099954190",
+        "11117533220",
+        "11264084319",
+        "11449927296",
+        "12128656296",
+        "12164829797",
+        "12196916604",
+        "12304942988",
+        "12351110123",
+        "12351367713",
+        "12467337584",
+        "12491998074",
+        "12517752126",
+        "12672294275",
+        "12688614586",
+        "12708833838",
+        "12733964744",
+        "12756134004",
+        "12829278222",
+        "12936389038",
+        "12971587569",
+        "13228610177",
+        "13238168680",
+        "13325807478",
+        "13524060324",
+        "13616064815",
+        "13793435927",
+        "14079993573",
+        "14162858916",
+        "4696528106",
+        "4759538491",
+        "5300736312",
+        "5911315356",
+        "5966647683",
+        "6444787269",
+        "6782509379",
+        "6904797208",
+        "7988026369",
+        "8506856576",
+        "9208166980"
+      ]
+    }
+  },
+  "insights": {
+    "status": "ok",
+    "areas_of_improvement": [
+      {
+        "theme_id": "theme_01",
+        "area": "scam",
+        "complaint_reviews": {
+          "count": 9,
+          "total": 43,
+          "share": 0.20930232558139536,
+          "ci95": {
+            "low": 0.11422834220995602,
+            "high": 0.3520564271073644,
+            "reason": "conditional_on_clustering"
+          }
+        },
+        "mean_star_rating": 1.0,
+        "recency": {
+          "newest_date": "2026-01-10T07:17:26+00:00",
+          "share_last_12_months": 0.2222222222222222,
+          "historical": false
+        },
+        "evidence_review_ids": [
+          "11099954190",
+          "12351110123",
+          "12491998074"
+        ],
+        "text": "Investigate scam: 9 of 43 complaint reviews (20.9%, 95% CI 11.4%-35.2%), for example 'Scam.'."
+      }
+    ]
+  },
+  "provenance": {
+    "timings_ms": {
+      "preprocess": 433.432,
+      "metrics": 22.052,
+      "sentiment": 3745.135,
+      "keywords": 29.914,
+      "units": 2895.295,
+      "embeddings": 304.418,
+      "clustering": 1.611
+    },
+    "sentiment_model": {
+      "id": "cardiffnlp/twitter-roberta-base-sentiment-latest",
+      "revision": "3216a57f2a0d9c45a2e6c20157c20c49fb4bf9c7"
+    },
+    "embedding_model": {
+      "id": "sentence-transformers/all-MiniLM-L6-v2",
+      "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41"
+    },
+    "statistics": {
+      "bootstrap_method": "BCa",
+      "bootstrap_resamples": 9999,
+      "seed": 42
+    }
+  },
+  "analysis_complete": true,
+  "warnings": []
+}

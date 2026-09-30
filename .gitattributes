@@ -1,0 +1,12 @@
+# Keep the repository byte-stable across Windows, macOS and Linux.
+# Python, Markdown, JSON, YAML and shell tooling all accept LF on Windows.
+* text=auto eol=lf
+
+# Binary artefacts must never pass through line-ending normalization.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.zip binary

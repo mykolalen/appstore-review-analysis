@@ -1,0 +1,80 @@
+[project]
+name = "appstore-review-analysis"
+version = "0.1.0"
+description = "App Store review analysis API for the OBRIO take-home assignment."
+requires-python = ">=3.12,<3.14"
+license = { text = "MIT" }
+dependencies = [
+    "fastapi",
+    "httpx",
+    "huggingface-hub<2",
+    "matplotlib",
+    "numpy",
+    "pydantic-settings",
+    "py3langid",
+    "scikit-learn",
+    "scipy",
+    "sentence-transformers>=6.1",
+    "sqlalchemy>=2",
+    "torch>=2.14",
+    "transformers>=5.17",
+    "typer",
+    "uvicorn",
+]
+
+[project.scripts]
+reviews = "appstore_review_analysis.cli:app"
+
+[build-system]
+requires = ["uv_build>=0.10"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "httpx2>=2,<3",
+    "mypy",
+    "pytest",
+    "ruff",
+]
+
+[tool.uv]
+required-version = ">=0.12"
+
+[tool.uv.sources]
+torch = [
+    { index = "pytorch-cpu", marker = "sys_platform == 'linux' or sys_platform == 'win32'" },
+]
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[tool.ruff]
+target-version = "py313"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["B", "E", "F", "I", "UP"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "lf"
+
+[tool.mypy]
+python_version = "3.13"
+plugins = ["pydantic.mypy"]
+strict = true
+warn_unused_configs = true
+
+[[tool.mypy.overrides]]
+module = ["sklearn.*", "scipy.*"]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "slow: tests that load real ML models or are otherwise intentionally slow",
+    "live: tests that access live external services",
+]

@@ -1,0 +1,319 @@
+{
+  "benchmark": {
+    "status": "run",
+    "gold_seed": 20260928,
+    "evaluable_n": 114,
+    "mixed_n": 36,
+    "neutral_support": 3,
+    "neutral_note": "The neutral class is too small for a reliable standalone performance conclusion.",
+    "models": [
+      {
+        "name": "shipping_cardiffnlp",
+        "model_id": "cardiffnlp/twitter-roberta-base-sentiment-latest",
+        "revision": "3216a57f2a0d9c45a2e6c20157c20c49fb4bf9c7",
+        "size_bytes": 502403892,
+        "eligible_challenger": false,
+        "license": "existing shipping model",
+        "metrics": {
+          "accuracy": 0.9298245614035088,
+          "macro_f1": 0.7523809523809524,
+          "negative_f1": 0.9682539682539683,
+          "per_class": {
+            "negative": {
+              "precision": 1.0,
+              "recall": 0.9384615384615385,
+              "f1": 0.9682539682539683,
+              "support": 65
+            },
+            "neutral": {
+              "precision": 0.2222222222222222,
+              "recall": 0.6666666666666666,
+              "f1": 0.3333333333333333,
+              "support": 3
+            },
+            "positive": {
+              "precision": 0.9772727272727273,
+              "recall": 0.9347826086956522,
+              "f1": 0.9555555555555556,
+              "support": 46
+            }
+          },
+          "confusion_matrix": [
+            [
+              61,
+              4,
+              0
+            ],
+            [
+              0,
+              2,
+              1
+            ],
+            [
+              0,
+              3,
+              43
+            ]
+          ],
+          "ci95": {
+            "accuracy": {
+              "low": 0.868421052631579,
+              "high": 0.9649122807017544,
+              "reason": null
+            },
+            "macro_f1": {
+              "low": 0.6408715039652302,
+              "high": 0.9047392001937457,
+              "reason": null
+            },
+            "negative_f1": {
+              "low": 0.9174311926605505,
+              "high": 0.992,
+              "reason": null
+            }
+          },
+          "prevalence_reweighted_accuracy": 0.9315017333640134
+        },
+        "latency_per_100_ms": 5004.424210525477
+      },
+      {
+        "name": "tabularisai_robust_sentiment",
+        "model_id": "tabularisai/robust-sentiment-analysis",
+        "revision": "c542a281e22b3d840a0b3f6c129acf8e357aed50",
+        "size_bytes": 268788928,
+        "eligible_challenger": true,
+        "license": "apache-2.0",
+        "metrics": {
+          "accuracy": 0.8508771929824561,
+          "macro_f1": 0.6430308888083444,
+          "negative_f1": 0.9193548387096774,
+          "per_class": {
+            "negative": {
+              "precision": 0.9661016949152542,
+              "recall": 0.8769230769230769,
+              "f1": 0.9193548387096774,
+              "support": 65
+            },
+            "neutral": {
+              "precision": 0.08333333333333333,
+              "recall": 0.3333333333333333,
+              "f1": 0.13333333333333333,
+              "support": 3
+            },
+            "positive": {
+              "precision": 0.9069767441860465,
+              "recall": 0.8478260869565217,
+              "f1": 0.8764044943820225,
+              "support": 46
+            }
+          },
+          "confusion_matrix": [
+            [
+              57,
+              5,
+              3
+            ],
+            [
+              1,
+              1,
+              1
+            ],
+            [
+              1,
+              6,
+              39
+            ]
+          ],
+          "ci95": {
+            "accuracy": {
+              "low": 0.7807017543859649,
+              "high": 0.9122807017543859,
+              "reason": null
+            },
+            "macro_f1": {
+              "low": 0.5860333513428537,
+              "high": 0.7950623034984817,
+              "reason": null
+            },
+            "negative_f1": {
+              "low": 0.8547684969211186,
+              "high": 0.96,
+              "reason": null
+            }
+          },
+          "prevalence_reweighted_accuracy": 0.873016850224946
+        },
+        "latency_per_100_ms": 5289.3885964805495
+      },
+      {
+        "name": "star_rating_floor",
+        "model_id": "star-rating-baseline",
+        "revision": "fixed-rule-v1",
+        "size_bytes": 0,
+        "eligible_challenger": false,
+        "license": null,
+        "metrics": {
+          "accuracy": 0.868421052631579,
+          "macro_f1": 0.6597895568483804,
+          "negative_f1": 0.9166666666666666,
+          "per_class": {
+            "negative": {
+              "precision": 1.0,
+              "recall": 0.8461538461538461,
+              "f1": 0.9166666666666666,
+              "support": 65
+            },
+            "neutral": {
+              "precision": 0.07142857142857142,
+              "recall": 0.3333333333333333,
+              "f1": 0.11764705882352941,
+              "support": 3
+            },
+            "positive": {
+              "precision": 0.9555555555555556,
+              "recall": 0.9347826086956522,
+              "f1": 0.945054945054945,
+              "support": 46
+            }
+          },
+          "confusion_matrix": [
+            [
+              55,
+              10,
+              0
+            ],
+            [
+              0,
+              1,
+              2
+            ],
+            [
+              0,
+              3,
+              43
+            ]
+          ],
+          "ci95": {
+            "accuracy": {
+              "low": 0.7982456140350878,
+              "high": 0.9210526315789473,
+              "reason": null
+            },
+            "macro_f1": {
+              "low": 0.6125262211567276,
+              "high": 0.8041012850296496,
+              "reason": null
+            },
+            "negative_f1": {
+              "low": 0.8499948898662942,
+              "high": 0.9586776859504134,
+              "reason": null
+            }
+          },
+          "prevalence_reweighted_accuracy": 0.9434491707022037
+        },
+        "latency_per_100_ms": 0.0
+      }
+    ],
+    "references": [],
+    "paired_tabularis_minus_shipping_negative_f1_ci95": {
+      "low": -0.10357562408533996,
+      "high": -0.008526383526383574,
+      "reason": null
+    },
+    "decision_rule": "Switch only if an eligible licence-clean 3-class challenger has a paired-bootstrap negative-F1 difference CI excluding zero in its favour; on a tie keep the better-documented model.",
+    "switch_supported": false,
+    "error_analysis": [
+      {
+        "review_id": "13201661996",
+        "star": 1,
+        "gold": "negative",
+        "shipping": "negative",
+        "tabularis": "neutral",
+        "star_baseline": "negative",
+        "text": "Fees. Be careful and read all the fine print. They will come for the money and there's not easy way to cancel it."
+      },
+      {
+        "review_id": "11602909364",
+        "star": 1,
+        "gold": "negative",
+        "shipping": "negative",
+        "tabularis": "neutral",
+        "star_baseline": "negative",
+        "text": "Probably just for profit?? So I've had Nebula for about a couple years now, in the beginning I loved it, but as time passed on they've been offers to make me buy their sub. Today I went on to look at my MC / midheaven since I forgot it and ALL OF A SUDDEN I can't see my placements??? It's asking to "
+      },
+      {
+        "review_id": "6967325874",
+        "star": 1,
+        "gold": "negative",
+        "shipping": "neutral",
+        "tabularis": "negative",
+        "star_baseline": "negative",
+        "text": "Virgo was not born in August🤡 Virgo was born on December"
+      },
+      {
+        "review_id": "9355664082",
+        "star": 2,
+        "gold": "negative",
+        "shipping": "negative",
+        "tabularis": "positive",
+        "star_baseline": "negative",
+        "text": "DONT USE TRIAL! I tend to lock my card for any foreseen charges & good thing I did. 1. The 3 day free trial isn’t free, it’s 8.52 cents exactly. 2. After the 3 day trial ends it said that you would be charged 29.99 every 3 months, yet then it changed & said 39.99 on the apple receipt for the 3 day t"
+      },
+      {
+        "review_id": "7342103309",
+        "star": 2,
+        "gold": "negative",
+        "shipping": "neutral",
+        "tabularis": "positive",
+        "star_baseline": "negative",
+        "text": "My zodiac sign doesn’t just change out of nowhere. Being born a Virgo I will stay a Virgo for my entire life it doesn’t just magically change. My birthday is still the same as it was since you know, THE DAY I WAS BORN🤦‍♀️🤦‍♀️"
+      },
+      {
+        "review_id": "5780333379",
+        "star": 2,
+        "gold": "negative",
+        "shipping": "negative",
+        "tabularis": "positive",
+        "star_baseline": "negative",
+        "text": "Refund please!! I went on the site to get a good view and the trial I signed up for billed me upfront in full with no way to cancel. I can’t get my $119 back since Apple says it’s ineligible for a refund! Don’t sign up unless you can comfortably part with your money in times of Corona!"
+      },
+      {
+        "review_id": "4821101198",
+        "star": 2,
+        "gold": "negative",
+        "shipping": "neutral",
+        "tabularis": "neutral",
+        "star_baseline": "negative",
+        "text": "Expensive for generic astrology. Co—Star is a better app. It’s free and very in depth. The subscription for this app is pretty expensive and the information is generic."
+      },
+      {
+        "review_id": "14147041085",
+        "star": 3,
+        "gold": "positive",
+        "shipping": "positive",
+        "tabularis": "neutral",
+        "star_baseline": "neutral",
+        "text": "Relations. The sketch looks good"
+      }
+    ]
+  },
+  "annotator_relabel": {
+    "status": "run",
+    "n": 30,
+    "kappa": 1.0,
+    "bootstrap_ci95": {
+      "low": 1.0,
+      "high": 1.0,
+      "reason": "degenerate_perfect_agreement"
+    }
+  },
+  "complaint_units": {
+    "status": "not_run",
+    "reason": "units_gold.csv missing"
+  },
+  "theme_threshold": {
+    "status": "not_run",
+    "reason": "pairs_gold.csv missing"
+  }
+}
