@@ -439,7 +439,7 @@ instead of estimated.
 |---|---:|---|
 | Nebula fixture sample size | 100 reviews | committed `seed=42` fixture |
 | Native analysis of the fixture, n=100, all stages | 6.4 s (sentiment 3.3 s, complaint sentences 2.3 s, embeddings 0.2 s) | `provenance.timings_ms` in the committed analysis JSON; Windows 11, Python 3.13, CPU only |
-| Fast test suite | 165 passed, 5 deselected in 24.5 s | local Windows run |
+| Fast test suite | 167 passed, 5 deselected in 38.1 s | local Windows run |
 | Slow real-model tests | 3 passed in 22.7 s | local Windows run |
 | CardiffNLP model download/reconstruction | about 502 MB | local `reviews download-models` output |
 | MiniLM model download/reconstruction | about 91.6 MB | local `reviews download-models` output |
