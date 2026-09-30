@@ -100,9 +100,10 @@ too few complaint units for a heavy topic-model stack.
 Classify sentences, apply configurable negative-score gates (0.85 for 4-5 star reviews and 0.50 for
 1-3 star reviews by default), embed accepted complaint units with pinned `all-MiniLM-L6-v2`, cluster with
 cosine average-linkage agglomerative clustering, use adaptive minimum support, and expose unsupported
-groups as outliers. The score defaults are heuristics based on observed classifier errors and are intended
-to be re-tuned with hand-labelled complaint units. The clustering threshold remains configurable and can
-be selected from labelled unit pairs by requiring same-issue precision of at least 0.80. Attach review
+groups as outliers. The score defaults are heuristics based on observed classifier errors; the hand-labelled complaint units
+measure their precision and recall (see `evaluation/results.md`) but were not used to re-tune them. The
+clustering threshold is configurable and is selected from labelled unit pairs by requiring same-issue
+precision of at least 0.80; on 45 labelled pairs no tested threshold reached it, so the default 0.40 is unchanged. Attach review
 IDs/excerpts and explicit coverage to every displayed theme/area.
 
 ### Rejected alternatives

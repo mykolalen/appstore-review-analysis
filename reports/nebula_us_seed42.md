@@ -4,10 +4,6 @@
 
 The report analyses **100 sampled written reviews**. The sampled mean rating is **3.20/5**. Model-negative sentiment accounts for **43.0%** of analysable reviews.
 
-Theme coverage: **10 of 103 complaint units (9.7%)** and **9 of 43 complaint reviews (20.9%)** are represented in supported themes.
-
-**Theme coverage is below 50%.** The areas below describe only supported clusters; unclustered evidence remains in the `other` bucket and is not treated as a theme.
-
 Highest-supported issue categories, ordered with recent evidence first:
 
 - **Pricing and paywall**: 13 of 43 complaint reviews (30.2%; 95% CI 18.6% to 45.1%).
@@ -238,11 +234,7 @@ Fightin' Words z is used as a ranking score, not as a significance test. A ✓ m
 
 ## Areas of improvement
 
-Theme coverage: **10 of 103 complaint units (9.7%)** and **9 of 43 complaint reviews (20.9%)** are represented in supported themes.
-
-**Theme coverage is below 50%.** The areas below describe only supported clusters; unclustered evidence remains in the `other` bucket and is not treated as a theme.
-
-Complaint-unit score gate: kept **103** of **113** model-negative sentence candidates and removed **10** below the configured thresholds (0.85 for 4-5 star reviews; 0.50 otherwise).
+Recurring complaints are grouped into fixed issue categories first; semantic clusters follow as a separate discovery layer.
 
 ### Issue categories
 
@@ -382,9 +374,25 @@ Top matched phrases: `no response` (2).
 
 ![Issue-category support](charts/issue_category_support.png)
 
+### Not categorised
+
+**8 of 43 complaint reviews** (18.6%) did not match a supported issue category.
+
+- `12936389038`: “horrible app.”
+- `12756134004`: “Not a friendly app”
+- `12517752126`: “I don’t do witchcraft!!”
+
+### Complaint sentence selection
+
+Complaint-unit score gate: kept **103** of **113** model-negative sentence candidates and removed **10** below the configured thresholds (0.85 for 4-5 star reviews; 0.50 otherwise).
+
 ### Emerging clusters
 
 Semantic clusters remain a separate discovery layer; they are not merged into the fixed issue-category taxonomy.
+
+Theme coverage: **10 of 103 complaint units (9.7%)** and **9 of 43 complaint reviews (20.9%)** are represented in supported themes.
+
+**Theme coverage is below 50%.** The areas below describe only supported clusters; unclustered evidence remains in the `other` bucket and is not treated as a theme.
 
 #### Cluster 1: scam
 
@@ -394,14 +402,6 @@ Investigate scam: 9 of 43 complaint reviews (20.9%, 95% CI 11.4%-35.2%), for exa
 - Newest evidence: 2026-01-10T07:17:26+00:00
 - Share in last 12 months: 22.2%
 - Historical-only: False
-
-### Not categorised
-
-**8 of 43 complaint reviews** (18.6%) did not match a supported issue category.
-
-- `12936389038`: “horrible app.”
-- `12756134004`: “Not a friendly app”
-- `12517752126`: “I don’t do witchcraft!!”
 
 ## Limitations
 

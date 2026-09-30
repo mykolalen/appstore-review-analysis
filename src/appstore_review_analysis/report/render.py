@@ -135,7 +135,6 @@ def _executive_summary(
             f"Model-negative sentiment accounts for **{negative_share:.1%}** of analysable reviews."
         )
     lines.extend([" ".join(summary_bits), ""])
-    lines.extend(_coverage_summary(themes))
     if areas:
         lines.append("Highest-supported issue categories, ordered with recent evidence first:")
         lines.append("")
@@ -667,22 +666,13 @@ def _areas(
     chart_links: dict[str, str],
 ) -> list[str]:
     lines = ["## Areas of improvement", ""]
-    lines.extend(_coverage_summary(themes))
-    gate = _dict(themes.get("unit_gate"))
-    removed = _integer(gate.get("removed_total"))
-    candidates = _integer(gate.get("negative_label_candidates"))
     lines.extend(
         [
-            "Complaint-unit score gate: "
-            f"kept **{_fmt_int(gate.get('kept'))}** of **{candidates:,}** model-negative "
-            f"sentence candidates and removed **{removed:,}** below the configured thresholds "
-            f"({_fmt_float(_number(gate.get('positive_review_min_negative_score')), 2)} for "
-            "4-5 star reviews; "
-            f"{_fmt_float(_number(gate.get('other_review_min_negative_score')), 2)} otherwise).",
+            "Recurring complaints are grouped into fixed issue categories first; semantic "
+            "clusters follow as a separate discovery layer.",
             "",
         ]
     )
-
     issue_categories = _dict(insights.get("issue_categories"))
     category_items = [
         item for item in _list(issue_categories.get("items")) if isinstance(item, dict)
@@ -785,6 +775,39 @@ def _areas(
     else:
         lines.extend(["No issue category met the two-review support threshold.", ""])
 
+    not_categorised = _dict(issue_categories.get("not_categorised"))
+    lines.extend(["### Not categorised", ""])
+    nc_count = _integer(not_categorised.get("review_count"))
+    nc_total = _integer(not_categorised.get("denominator"))
+    lines.extend(
+        [
+            f"**{nc_count} of {nc_total} complaint reviews** "
+            f"({_fmt_pct(not_categorised.get('share'))}) did not match a supported issue category.",
+            "",
+        ]
+    )
+    for row in [item for item in _list(not_categorised.get("evidence")) if isinstance(item, dict)]:
+        lines.append(
+            f"- `{_safe(str(row.get('review_id') or 'unknown'))}`: "
+            f"“{_clip(str(row.get('excerpt') or ''), 300)}”"
+        )
+    lines.append("")
+    lines.extend(["### Complaint sentence selection", ""])
+    gate = _dict(themes.get("unit_gate"))
+    removed = _integer(gate.get("removed_total"))
+    candidates = _integer(gate.get("negative_label_candidates"))
+    lines.extend(
+        [
+            "Complaint-unit score gate: "
+            f"kept **{_fmt_int(gate.get('kept'))}** of **{candidates:,}** model-negative "
+            f"sentence candidates and removed **{removed:,}** below the configured thresholds "
+            f"({_fmt_float(_number(gate.get('positive_review_min_negative_score')), 2)} for "
+            "4-5 star reviews; "
+            f"{_fmt_float(_number(gate.get('other_review_min_negative_score')), 2)} otherwise).",
+            "",
+        ]
+    )
+
     lines.extend(
         [
             "### Emerging clusters",
@@ -794,6 +817,7 @@ def _areas(
             "",
         ]
     )
+    lines.extend(_coverage_summary(themes))
     cluster_areas = [
         item
         for item in _list(insights.get("areas_of_improvement"))
@@ -826,23 +850,6 @@ def _areas(
                 ]
             )
 
-    not_categorised = _dict(issue_categories.get("not_categorised"))
-    lines.extend(["### Not categorised", ""])
-    nc_count = _integer(not_categorised.get("review_count"))
-    nc_total = _integer(not_categorised.get("denominator"))
-    lines.extend(
-        [
-            f"**{nc_count} of {nc_total} complaint reviews** "
-            f"({_fmt_pct(not_categorised.get('share'))}) did not match a supported issue category.",
-            "",
-        ]
-    )
-    for row in [item for item in _list(not_categorised.get("evidence")) if isinstance(item, dict)]:
-        lines.append(
-            f"- `{_safe(str(row.get('review_id') or 'unknown'))}`: "
-            f"“{_clip(str(row.get('excerpt') or ''), 300)}”"
-        )
-    lines.append("")
     return lines
 
 

@@ -30,7 +30,7 @@ themes, and exposes the result through a REST API and downloadable review export
 | Visualisations | `reports/charts/` | four chart assertions |
 | Local setup/docs | this README + [`docs/architecture.md`](docs/architecture.md) | README smoke workflow |
 | Design decisions | [`docs/decisions.md`](docs/decisions.md) | ADR structure test |
-| Video demo | Ukrainian narration script in [`docs/video_script_uk.md`](docs/video_script_uk.md); recording link: _to be added_ | link opens while logged out |
+| Video demo | recording link: _to be added_ | link opens while logged out |
 
 ## Quickstart
 
@@ -320,8 +320,9 @@ subsumed by their longer phrase in the report tables.
 Complaint units are negative sentences from any analysable review, not only reviews whose overall
 label is negative. A configurable score gate currently requires a negative probability of at least 0.85
 for sentences from 4-5 star reviews and 0.50 for 1-3 star reviews. These defaults are heuristics introduced
-after observing false-positive negative sentences; they must be re-tuned against hand-labelled complaint
-units before being treated as calibrated thresholds. They can be configured with
+after observing false-positive negative sentences. On the 473 hand-labelled complaint sentences the gated
+units reach 98.5% precision and 60.3% recall (recall is far lower for 4-5 star reviews); those labels were
+used to measure the defaults, not to re-tune them, so they are not presented as calibrated. They can be configured with
 `UNIT_MIN_NEGATIVE_SCORE_POSITIVE_REVIEWS` and `UNIT_MIN_NEGATIVE_SCORE_OTHER`.
 
 The same retained complaint units also pass through a versioned, app-agnostic issue-category lexicon.
@@ -373,8 +374,9 @@ The Tabularis comparator is Apache-2.0 licensed. The pre-written model decision 
 switch only when an eligible licence-clean 3-class challenger has a paired-bootstrap negative-F1
 difference interval excluding zero in its favour; on a tie, retain the better-documented model.
 
-Complaint-unit, theme-distance and issue-category precision evaluations are optional. When their files do
-not exist, both `evaluation/results.md` and the demo report explicitly state which evaluation was not run.
+The complaint-unit and theme-distance evaluations are included; the issue-category precision audit is optional.
+When an evaluation file does not exist, both `evaluation/results.md` and the demo report explicitly state which
+evaluation was not run.
 The issue-category audit is human-only: generate `evaluation/category_audit_sheet.csv`, label every
 `human_label` as `correct` or `incorrect`, then validate it. No category precision is claimed before that
 sheet is labelled.
@@ -432,13 +434,17 @@ instead of estimated.
 | Measurement | Observed value | Evidence / status |
 |---|---:|---|
 | Nebula fixture sample size | 100 reviews | committed `seed=42` fixture |
-| Native fixture reproduction, n=100 | 21.38 s | Windows 11 / Python 3.13 local slow-test run |
-| Fast deterministic gate before issue-category changes | 135 passed, 5 deselected in 27.16 s | Windows Batch 0 acceptance gate; Batch 1 is re-measured before merge |
+| Native analysis of the fixture, n=100, all stages | 6.4 s (sentiment 3.3 s, complaint sentences 2.3 s, embeddings 0.2 s) | `provenance.timings_ms` in the committed analysis JSON; Windows 11, Python 3.13, CPU only |
+| Fast test suite | 165 passed, 5 deselected in 24.5 s | local Windows run |
+| Slow real-model tests | 3 passed in 22.7 s | local Windows run |
 | CardiffNLP model download/reconstruction | about 502 MB | local `reviews download-models` output |
 | MiniLM model download/reconstruction | about 91.6 MB | local `reviews download-models` output |
+| Docker image size | 3.06 GB | `docker image inspect` on the built image |
+| Docker build time | 209 s | with a warm layer cache; a cold build downloads the dependencies and both models again and takes longer |
+| Docker start to `/readyz` OK | 10 s | includes loading both models; Docker Desktop VM with 4 CPUs and 5.2 GB RAM |
+| Docker memory | 577 MiB idle; about 813 MiB peak during an analysis | `docker stats` sampled about every 0.4 s, so the peak is approximate |
+| Docker `POST /v1/analyses`, n=100, fixture provider, full analysis | 9.97 s first request; 8.83 s repeat | includes sentiment 4.4-4.8 s and complaint sentences 3.8 s |
 | Native n=200 end-to-end | not measured | no committed n=200 fixture |
-| Docker n=100/n=200 stage latency | not measured yet | fill from the Docker gate before claiming a number |
-| Docker cold start / peak RSS / image size | not measured yet | Docker gate required |
 
 The analysis JSON itself records per-stage timings and provider request/retry counts for a given run;
 those run-specific values are preferable to hard-coding a benchmark from another machine.
@@ -488,8 +494,8 @@ The decision record is in [`docs/decisions.md`](docs/decisions.md); the componen
 [`docs/architecture.md`](docs/architecture.md). The repository currently does not include:
 
 - a public Cloud Run deployment (the public-mode code and deployment instructions are included);
-- completed complaint-unit, labelled theme-pair or issue-category precision evaluations;
-- a published recording (the Ukrainian narration script is provided);
+- an issue-category precision audit (the sheet and validator are included; the report states it has not been run);
+- a published demo recording;
 - RAG, a vector database or agents.
 
 ## Limitations and scaling path

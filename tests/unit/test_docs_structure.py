@@ -24,7 +24,6 @@ def test_readme_has_required_sections_and_smoke_markers() -> None:
     assert "<!-- readme-smoke:start -->" in text
     assert "<!-- readme-smoke:end -->" in text
     assert "reports/nebula_us_seed42.md" in text
-    assert "docs/video_script_uk.md" in text
 
 
 def test_mermaid_blocks_are_balanced_and_non_empty() -> None:
