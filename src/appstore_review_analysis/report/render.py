@@ -7,7 +7,7 @@ from collections.abc import Sequence
 from pathlib import Path
 from typing import Any
 
-from appstore_review_analysis.report.charts import render_all_charts
+from appstore_review_analysis.report.charts import CATEGORY_PRECISION_TARGET, render_all_charts
 from appstore_review_analysis.report.constants import (
     RATING_INTERVAL,
     REPRODUCTION_NOTE,
@@ -18,8 +18,6 @@ from appstore_review_analysis.report.constants import (
 )
 from appstore_review_analysis.report.contracts import ReportAnalysisContract
 from appstore_review_analysis.report.population import interval_covers, simulate_ci_coverage
-
-_CATEGORY_PRECISION_TARGET = 0.80
 
 _PREPROCESSING_DENOMINATORS = (
     ("n_all", "All sampled reviews"),
@@ -68,14 +66,14 @@ def render_report(
 
     title_name = str(app.get("name") or "App Store app")
     lines.extend([f"# {title_name} - App Store review analysis", ""])
-    lines.extend(_executive_summary(metrics, sentiment, insights, themes))
+    lines.extend(_executive_summary(metrics, sentiment, insights, chart_links))
     lines.extend(_dataset_and_provenance(analysis, app, sampling, provenance))
     lines.extend(_recent_window_frame(analysis, sampling))
     lines.extend(_ratings(metrics, population, chart_links))
     lines.extend(_periods(metrics, chart_links))
     lines.extend(_preprocessing(preprocessing))
     lines.extend(_sentiment(sentiment, evaluation, chart_links))
-    lines.extend(_keywords(keywords))
+    lines.extend(_keywords(keywords, chart_links))
     lines.extend(_areas(insights, themes, evaluation, chart_links))
     lines.extend(_limitations(population, evaluation, themes))
     lines.extend(_methodology(themes))
@@ -91,14 +89,14 @@ def write_report_files(
     output_path: Path,
     charts_dir: Path,
 ) -> tuple[Path, dict[str, Path]]:
-    """Load committed inputs, render four charts and write the Markdown report."""
+    """Load committed inputs, render the charts and write the Markdown report."""
 
     analysis = load_json(analysis_path)
     assert analysis is not None
     population = load_json(population_path, required=False)
     evaluation = load_json(evaluation_path, required=False)
     ReportAnalysisContract.model_validate(analysis)
-    chart_paths = render_all_charts(analysis, charts_dir)
+    chart_paths = render_all_charts(analysis, charts_dir, evaluation)
     links = {
         key: _relative_markdown_path(path, output_path.parent) for key, path in chart_paths.items()
     }
@@ -117,7 +115,7 @@ def _executive_summary(
     metrics: dict[str, Any],
     sentiment: dict[str, Any],
     insights: dict[str, Any],
-    themes: dict[str, Any],
+    chart_links: dict[str, str],
 ) -> list[str]:
     mean = _number(metrics.get("mean"))
     n = _integer(metrics.get("n"))
@@ -137,6 +135,8 @@ def _executive_summary(
             f"Model-negative sentiment accounts for **{negative_share:.1%}** of analysable reviews."
         )
     lines.extend([" ".join(summary_bits), ""])
+    if "summary_card" in chart_links:
+        lines.extend([f"![Key numbers at a glance]({chart_links['summary_card']})", ""])
     if areas:
         lines.append("Highest-supported issue categories, ordered with recent evidence first:")
         lines.append("")
@@ -457,11 +457,13 @@ def _sentiment(
         ]
         lines.extend(_table(["Metric", "Value"], consistency_rows))
         lines.append("")
-    lines.extend(_evaluation_summary(evaluation))
+    lines.extend(_evaluation_summary(evaluation, chart_links))
     return lines
 
 
-def _evaluation_summary(evaluation: dict[str, Any] | None) -> list[str]:
+def _evaluation_summary(
+    evaluation: dict[str, Any] | None, chart_links: dict[str, str]
+) -> list[str]:
     lines = ["### Evaluation summary", ""]
     if evaluation is None:
         return lines + [
@@ -593,15 +595,21 @@ def _evaluation_summary(evaluation: dict[str, Any] | None) -> list[str]:
         if audit_rows:
             lines.extend(_table(["Category", "Audited matches", "Precision", "95% CI"], audit_rows))
             lines.append("")
+            if "category_precision" in chart_links:
+                lines.extend(
+                    [f"![Issue-category precision]({chart_links['category_precision']})", ""]
+                )
         else:
             lines.extend(["Audit marked run but contains no category rows.", ""])
     return lines
 
 
-def _keywords(keywords: dict[str, Any]) -> list[str]:
+def _keywords(keywords: dict[str, Any], chart_links: dict[str, str]) -> list[str]:
     lines = ["## Keywords and phrases in negative reviews", ""]
     lines.append(f"Status: **{_safe(str(keywords.get('status') or 'unknown'))}**.")
     lines.append("")
+    if "negative_phrases" in chart_links:
+        lines.extend([f"![Most common negative phrases]({chart_links['negative_phrases']})", ""])
     lines.extend(
         _phrase_table(
             "### A. Most common phrases",
@@ -675,6 +683,8 @@ def _areas(
             "",
         ]
     )
+    if "complaint_funnel" in chart_links:
+        lines.extend([f"![Complaint funnel]({chart_links['complaint_funnel']})", ""])
     issue_categories = _dict(insights.get("issue_categories"))
     category_items = [
         item for item in _list(issue_categories.get("items")) if isinstance(item, dict)
@@ -900,18 +910,18 @@ def _category_audit_limitation(audit: dict[str, Any]) -> str:
     for raw in _list(audit.get("categories")):
         row = _dict(raw)
         value = _number(_dict(row.get("precision")).get("value"))
-        if value is not None and value < _CATEGORY_PRECISION_TARGET:
+        if value is not None and value < CATEGORY_PRECISION_TARGET:
             weak.append(
                 f"{row.get('category', 'unknown')} {value:.1%} "
                 f"({_integer(row.get('correct'))}/{_integer(row.get('n'))})"
             )
     if weak:
         text += (
-            f" Categories below {_CATEGORY_PRECISION_TARGET:.0%} precision: {', '.join(weak)}; "
+            f" Categories below {CATEGORY_PRECISION_TARGET:.0%} precision: {', '.join(weak)}; "
             "their shares may be overstated."
         )
     else:
-        text += f" No audited category fell below {_CATEGORY_PRECISION_TARGET:.0%} precision."
+        text += f" No audited category fell below {CATEGORY_PRECISION_TARGET:.0%} precision."
     return text
 
 

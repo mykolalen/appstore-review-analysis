@@ -4,6 +4,8 @@
 
 The report analyses **100 sampled written reviews**. The sampled mean rating is **3.20/5**. Model-negative sentiment accounts for **43.0%** of analysable reviews.
 
+![Key numbers at a glance](charts/summary_card.png)
+
 Highest-supported issue categories, ordered with recent evidence first:
 
 - **Pricing and paywall**: 13 of 43 complaint reviews (30.2%; 95% CI 18.6% to 45.1%).
@@ -199,9 +201,13 @@ Issue-category precision audit:
 | service_responsiveness | 2 | 0.0% | 0.0% to 65.8% |
 | subscription_cancellation | 9 | 66.7% | 35.4% to 87.9% |
 
+![Issue-category precision](charts/category_precision.png)
+
 ## Keywords and phrases in negative reviews
 
 Status: **ok**.
+
+![Most common negative phrases](charts/negative_phrases.png)
 
 ### A. Most common phrases
 
@@ -248,6 +254,8 @@ Fightin' Words z is used as a ranking score, not as a significance test. A ✓ m
 ## Areas of improvement
 
 Recurring complaints are grouped into fixed issue categories first; semantic clusters follow as a separate discovery layer.
+
+![Complaint funnel](charts/complaint_funnel.png)
 
 ### Issue categories
 

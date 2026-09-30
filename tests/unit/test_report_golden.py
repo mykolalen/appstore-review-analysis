@@ -65,6 +65,10 @@ def _chart_links() -> dict[str, str]:
         "sentiment_distribution": "charts/sentiment_distribution.png",
         "issue_category_support": "charts/issue_category_support.png",
         "rating_by_period": "charts/rating_by_period.png",
+        "summary_card": "charts/summary_card.png",
+        "negative_phrases": "charts/negative_phrases.png",
+        "complaint_funnel": "charts/complaint_funnel.png",
+        "category_precision": "charts/category_precision.png",
     }
 
 
@@ -153,7 +157,7 @@ def test_chart_data_matches_pipeline_analysis_json_exactly(
     assert periods["values"] == [item["mean"] for item in metric_periods]
 
 
-def test_report_writes_four_non_empty_charts_and_links_them(
+def test_report_writes_non_empty_charts_and_links_them(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
@@ -183,8 +187,15 @@ def test_report_writes_four_non_empty_charts_and_links_them(
     for star in range(1, 6):
         assert f"{star}-star share" in markdown
     assert "1,000" in markdown
-    assert len(charts) == 4
-    assert "issue_category_support" in charts
+    assert set(charts) == {
+        "summary_card",
+        "rating_distribution",
+        "sentiment_distribution",
+        "issue_category_support",
+        "rating_by_period",
+        "negative_phrases",
+        "complaint_funnel",
+    }
     assert not (charts_dir / "theme_support.png").exists()
     for chart in charts.values():
         assert chart.stat().st_size > 1000

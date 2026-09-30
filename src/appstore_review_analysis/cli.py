@@ -442,7 +442,7 @@ def report(
         typer.Option("--charts-dir", help="Directory for report PNG charts."),
     ] = Path("reports/charts"),
 ) -> None:
-    """Render the reproducible Markdown report and its four PNG charts."""
+    """Render the reproducible Markdown report and its PNG charts."""
 
     try:
         report_path, chart_paths = write_report_files(

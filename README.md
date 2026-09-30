@@ -27,7 +27,7 @@ themes, and exposes the result through a REST API and downloadable review export
 | Metrics / insights endpoints | `GET /v1/analyses/{id}`, `/metrics`, `/insights` | API tests |
 | Raw review download | `GET /v1/analyses/{id}/reviews?format=csv|json` | export/API tests |
 | Sample report | [`reports/nebula_us_seed42.md`](reports/nebula_us_seed42.md) | golden + fixture-reproduction tests |
-| Visualisations | `reports/charts/` | four chart assertions |
+| Visualisations | `reports/charts/` | chart-data and render tests |
 | Local setup/docs | this README + [`docs/architecture.md`](docs/architecture.md) | README smoke workflow |
 | Design decisions | [`docs/decisions.md`](docs/decisions.md) | ADR structure test |
 | Video demo | recording link: _to be added_ | link opens while logged out |
@@ -415,8 +415,10 @@ CSV output follows RFC 4180 and guards spreadsheet-formula prefixes in free-text
 ## Demo report
 
 The committed report is [`reports/nebula_us_seed42.md`](reports/nebula_us_seed42.md), generated only
-from the committed snapshot/analysis/population files. Its four charts are under `reports/charts/`:
-rating distribution, sentiment distribution, issue-category support and rating by period.
+from the committed snapshot/analysis/population files. Its eight charts are under `reports/charts/`:
+a key-numbers card, rating distribution, sentiment distribution, rating by period (oldest to newest),
+most common negative phrases, the complaint funnel (sampled reviews to categorised complaints),
+issue-category support and the issue-category precision audit.
 
 Reproduce it without contacting Apple:
 
@@ -439,7 +441,7 @@ instead of estimated.
 |---|---:|---|
 | Nebula fixture sample size | 100 reviews | committed `seed=42` fixture |
 | Native analysis of the fixture, n=100, all stages | 6.4 s (sentiment 3.3 s, complaint sentences 2.3 s, embeddings 0.2 s) | `provenance.timings_ms` in the committed analysis JSON; Windows 11, Python 3.13, CPU only |
-| Fast test suite | 167 passed, 5 deselected in 38.1 s | local Windows run |
+| Fast test suite | 174 passed, 5 deselected in 25.9 s | local Windows run |
 | Slow real-model tests | 3 passed in 22.7 s | local Windows run |
 | CardiffNLP model download/reconstruction | about 502 MB | local `reviews download-models` output |
 | MiniLM model download/reconstruction | about 91.6 MB | local `reviews download-models` output |
