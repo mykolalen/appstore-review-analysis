@@ -53,7 +53,7 @@ def _rows(count: int) -> list[AnalysedReview]:
 
 
 def test_adaptive_policy_under_five_units_skips_clustering() -> None:
-    result, _timings = analyse_themes(
+    result, _timings, _units = analyse_themes(
         _rows(4),
         sentiment=FakeSentiment(),
         embedder=FakeEmbedder(),
@@ -66,7 +66,7 @@ def test_adaptive_policy_under_five_units_skips_clustering() -> None:
 
 
 def test_adaptive_policy_5_to_14_keeps_support_two_clusters() -> None:
-    result, _timings = analyse_themes(
+    result, _timings, _units = analyse_themes(
         _rows(6),
         sentiment=FakeSentiment(),
         embedder=FakeEmbedder(),
@@ -78,7 +78,7 @@ def test_adaptive_policy_5_to_14_keeps_support_two_clusters() -> None:
 
 
 def test_adaptive_policy_15_plus_requires_support_three_and_is_recomputable() -> None:
-    result, _timings = analyse_themes(
+    result, _timings, _units = analyse_themes(
         _rows(18),
         sentiment=FakeSentiment(),
         embedder=FakeEmbedder(),
@@ -182,13 +182,16 @@ def test_positive_review_negative_score_gate_removes_weak_false_positive() -> No
     }
 
 
-def test_theme_output_exposes_coverage_gate_and_diagnostics() -> None:
-    result, _timings = analyse_themes(
+def test_theme_output_exposes_coverage_gate_diagnostics_and_retained_units() -> None:
+    result, timings, units = analyse_themes(
         _rows(8),
         sentiment=FakeSentiment(),
         embedder=FakeEmbedder(),
         reference_date=datetime(2026, 9, 29, tzinfo=UTC),
     )
+    assert len(units) == result["n_units"]
+    assert set(timings) == {"units", "embeddings", "clustering"}
+
     coverage = result["coverage"]
     assert coverage["units_total"] == result["n_units"]
     assert coverage["units_clustered"] <= coverage["units_total"]

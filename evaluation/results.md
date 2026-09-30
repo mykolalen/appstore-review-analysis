@@ -94,3 +94,7 @@ Evaluation not run: units_gold.csv missing.
 ## Theme threshold
 
 Evaluation not run: pairs_gold.csv missing.
+
+## Issue-category precision audit
+
+Not audited: category_audit_sheet.csv missing.

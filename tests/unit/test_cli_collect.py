@@ -155,3 +155,50 @@ def test_download_models_eval_adds_pinned_comparator_without_siebert(
     assert len(calls) == 1
     assert calls[0][0] == cli.TABULARIS_MODEL_ID
     assert "evaluation_siebert" not in json.loads(result.output)
+
+
+def test_audit_categories_writes_empty_human_labels_and_refuses_overwrite(tmp_path: Path) -> None:
+    analysis = tmp_path / "analysis.json"
+    out = tmp_path / "category_audit_sheet.csv"
+    analysis.write_text(
+        json.dumps(
+            {
+                "insights": {
+                    "issue_categories": {
+                        "audit_rows": [
+                            {
+                                "category": "refunds",
+                                "review_id": "r1",
+                                "matched_phrase": "refund",
+                                "sentence": "I did not get a refund.",
+                            },
+                            {
+                                "category": "billing_charges",
+                                "review_id": "r2",
+                                "matched_phrase": "charged",
+                                "sentence": "I was charged twice.",
+                            },
+                        ]
+                    }
+                }
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    result = runner.invoke(
+        app,
+        ["audit-categories", "--analysis", str(analysis), "--out", str(out)],
+    )
+    assert result.exit_code == 0, result.output
+    lines = out.read_text(encoding="utf-8").splitlines()
+    assert lines[0] == "category,review_id,matched_phrase,sentence,human_label"
+    assert lines[1].endswith(",")
+    assert lines[2].endswith(",")
+
+    second = runner.invoke(
+        app,
+        ["audit-categories", "--analysis", str(analysis), "--out", str(out)],
+    )
+    assert second.exit_code != 0
+    assert "INVALID_INPUT" in second.output

@@ -43,7 +43,7 @@ def test_mermaid_blocks_are_balanced_and_non_empty() -> None:
 def test_every_adr_has_required_sections() -> None:
     text = (ROOT / "docs/decisions.md").read_text(encoding="utf-8")
     adrs = re.split(r"(?=^## ADR-\d{3})", text, flags=re.MULTILINE)[1:]
-    assert len(adrs) == 10
+    assert len(adrs) == 11
     for adr in adrs:
         assert "### Context" in adr
         assert "### Decision" in adr
@@ -106,6 +106,7 @@ def test_reviewer_visible_files_and_cli_help_do_not_leak_internal_process_wordin
         ["--help"],
         ["collect", "--help"],
         ["analyze", "--help"],
+        ["audit-categories", "--help"],
         ["report", "--help"],
         ["tune-threshold", "--help"],
         ["serve", "--help"],

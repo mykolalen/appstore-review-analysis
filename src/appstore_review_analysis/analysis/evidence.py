@@ -14,13 +14,77 @@ def build_areas_of_improvement(
     themes: Mapping[str, Any],
     keywords: Mapping[str, Any],
     rows: list[AnalysedReview],
+    issue_categories: Mapping[str, Any] | None = None,
 ) -> dict[str, object]:
-    """Always provide deterministic areas when supported themes or phrases exist."""
+    """Merge transparent categories with supported semantic themes and phrase fallbacks."""
 
     by_id = {row.source_review_id: row for row in rows}
-    theme_items = list(themes.get("items", []))
-    areas: list[dict[str, Any]] = []
-    for theme in theme_items:
+    category_payload = dict(issue_categories or {})
+    category_areas = _category_areas(category_payload)
+    theme_areas = _theme_areas(themes)
+    if not category_areas and not theme_areas:
+        theme_areas = _phrase_fallbacks(keywords, by_id)
+
+    category_areas.sort(key=_area_sort_key)
+    theme_areas.sort(key=_area_sort_key)
+    areas = [*category_areas, *theme_areas]
+    status = "ok" if areas else "insufficient_signal"
+    return {
+        "status": status,
+        "issue_categories": category_payload,
+        "areas_of_improvement": areas,
+    }
+
+
+def _category_areas(issue_categories: Mapping[str, Any]) -> list[dict[str, Any]]:
+    output: list[dict[str, Any]] = []
+    for raw in issue_categories.get("items", []):
+        if not isinstance(raw, dict):
+            continue
+        label = str(raw.get("label") or "Issue category")
+        count = int(raw.get("review_count", 0))
+        total = int(raw.get("denominator", 0))
+        share = raw.get("share")
+        ci = raw.get("ci95")
+        raw_recency = raw.get("recency")
+        recency: dict[str, Any] = raw_recency if isinstance(raw_recency, dict) else {}
+        evidence = [item for item in raw.get("evidence", []) if isinstance(item, dict)]
+        evidence_ids = [
+            str(item.get("review_id")) for item in evidence if item.get("review_id") is not None
+        ]
+        excerpt = str(evidence[0].get("excerpt", "")) if evidence else ""
+        output.append(
+            {
+                "source": "issue_category",
+                "theme_id": None,
+                "category_id": raw.get("category_id"),
+                "area": label,
+                "complaint_reviews": {
+                    "count": count,
+                    "total": total,
+                    "share": share,
+                    "ci95": ci,
+                },
+                "mean_star_rating": raw.get("mean_star_rating"),
+                "recency": {
+                    "newest_date": recency.get("newest_date"),
+                    "share_last_12_months": recency.get("share_last_12_months"),
+                    "historical": bool(recency.get("historical", False)),
+                },
+                "evidence_review_ids": evidence_ids[:3],
+                "description": raw.get("description"),
+                "top_matched_phrases": raw.get("top_matched_phrases", []),
+                "evidence": evidence,
+                "suggested_investigation": raw.get("suggested_investigation"),
+                "text": _area_text(label, count, total, share, ci, excerpt),
+            }
+        )
+    return output
+
+
+def _theme_areas(themes: Mapping[str, Any]) -> list[dict[str, Any]]:
+    output: list[dict[str, Any]] = []
+    for theme in list(themes.get("items", [])):
         if not isinstance(theme, dict):
             continue
         evidence_ids = [str(item) for item in theme.get("evidence_review_ids", [])]
@@ -44,9 +108,9 @@ def build_areas_of_improvement(
         count = int(theme.get("review_count", len(evidence_ids)))
         denominator = int(share.get("denominator", 0)) if isinstance(share, dict) else 0
         excerpt = str(representatives[0].get("excerpt", "")) if representatives else ""
-        text = _area_text(area, count, denominator, share_value, ci, excerpt)
-        areas.append(
+        output.append(
             {
+                "source": "theme",
                 "theme_id": theme.get("theme_id"),
                 "area": area,
                 "complaint_reviews": {
@@ -62,24 +126,10 @@ def build_areas_of_improvement(
                     "historical": bool(theme.get("historical", False)),
                 },
                 "evidence_review_ids": evidence_ids[:3],
-                "text": text,
+                "text": _area_text(area, count, denominator, share_value, ci, excerpt),
             }
         )
-
-    if not areas:
-        areas.extend(_phrase_fallbacks(keywords, by_id))
-
-    areas.sort(
-        key=lambda item: (
-            bool(item.get("recency", {}).get("historical", False))
-            if isinstance(item.get("recency"), dict)
-            else True,
-            -_share_value(item),
-            str(item.get("area", "")),
-        )
-    )
-    status = "ok" if areas else "insufficient_signal"
-    return {"status": status, "areas_of_improvement": areas}
+    return output
 
 
 def _phrase_fallbacks(
@@ -109,6 +159,7 @@ def _phrase_fallbacks(
         share = count / total if total else None
         output.append(
             {
+                "source": "phrase",
                 "theme_id": None,
                 "area": phrase,
                 "complaint_reviews": {
@@ -151,6 +202,12 @@ def _area_text(
         f"Investigate {area}: {count} of {total} complaint reviews "
         f"({share_text}{ci_text}){example}."
     )
+
+
+def _area_sort_key(item: Mapping[str, Any]) -> tuple[bool, float, str]:
+    recency = item.get("recency")
+    historical = bool(recency.get("historical", False)) if isinstance(recency, dict) else True
+    return (historical, -_share_value(item), str(item.get("area", "")))
 
 
 def _share_value(item: Mapping[str, Any]) -> float:

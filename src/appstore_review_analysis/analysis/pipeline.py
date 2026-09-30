@@ -9,6 +9,7 @@ from datetime import UTC, datetime
 from uuid import uuid4
 
 from appstore_review_analysis.analysis.evidence import build_areas_of_improvement
+from appstore_review_analysis.analysis.issue_categories import analyse_issue_categories
 from appstore_review_analysis.analysis.keywords import analyse_keywords
 from appstore_review_analysis.analysis.metrics import rating_metrics, wilson_interval
 from appstore_review_analysis.analysis.sentiment import SentimentAnalyzer, SentimentResult
@@ -16,6 +17,7 @@ from appstore_review_analysis.analysis.themes import (
     DEFAULT_DISTANCE_THRESHOLD,
     DEFAULT_UNIT_MIN_NEGATIVE_SCORE_OTHER,
     DEFAULT_UNIT_MIN_NEGATIVE_SCORE_POSITIVE_REVIEWS,
+    ComplaintUnit,
     EmbeddingModel,
     analyse_themes,
 )
@@ -121,6 +123,7 @@ def analyse_collection(
         }
         insights: dict[str, object] = {
             "status": "not_requested",
+            "issue_categories": _empty_issue_categories("not_requested"),
             "areas_of_improvement": [],
         }
     else:
@@ -164,6 +167,7 @@ def analyse_collection(
         )
         timings["keywords"] = _elapsed_ms(keyword_started)
 
+        complaint_units: list[ComplaintUnit] = []
         if budget.expired:
             themes = {
                 "status": "skipped_deadline",
@@ -197,7 +201,7 @@ def analyse_collection(
             }
         else:
             try:
-                themes, theme_timings = analyse_themes(
+                themes, theme_timings, complaint_units = analyse_themes(
                     analysed_reviews,
                     sentiment=sentiment,
                     embedder=embedder,
@@ -220,10 +224,20 @@ def analyse_collection(
                     details={"error": type(exc).__name__},
                 ) from exc
 
+        if budget.expired:
+            issue_categories = _empty_issue_categories("skipped_deadline")
+        else:
+            issue_categories = analyse_issue_categories(
+                complaint_units,
+                reference_date=reference_date,
+                app_name=collection.app.name,
+            )
+
         insights = build_areas_of_improvement(
             themes=themes,
             keywords=keywords,
             rows=analysed_reviews,
+            issue_categories=issue_categories,
         )
     preprocessing = _preprocessing_summary(analysed_reviews)
     preprocessing.update(
@@ -266,6 +280,24 @@ def analyse_collection(
         warnings=warnings,
     )
     return payload, analysed_reviews
+
+
+def _empty_issue_categories(status: str) -> dict[str, object]:
+    return {
+        "status": status,
+        "version": "1",
+        "denominator": 0,
+        "multi_label": True,
+        "items": [],
+        "not_categorised": {
+            "review_count": 0,
+            "denominator": 0,
+            "share": None,
+            "review_ids": [],
+            "evidence": [],
+        },
+        "audit_rows": [],
+    }
 
 
 def _base_rows(reviews: list[Review], processed: list[ProcessedText]) -> list[AnalysedReview]:

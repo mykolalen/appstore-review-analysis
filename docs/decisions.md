@@ -201,3 +201,31 @@ Using star ratings as ground truth; a live labelling API (not reproducible witho
 [`evaluation/README.md`](../evaluation/README.md),
 [`evaluation/build_gold.py`](../evaluation/build_gold.py), and
 [`evaluation.py`](../src/appstore_review_analysis/evaluation.py).
+
+## ADR-011 - Generic issue categories for actionable findings
+
+### Context
+The sentence-clustering layer is intentionally conservative at its untuned default distance threshold,
+so semantically related complaints can remain fragmented even when reviewers repeatedly describe the
+same operational issue. The take-home also requires actionable areas of improvement, while counts and
+causal claims must remain traceable to review evidence.
+
+### Decision
+Add a versioned, app-agnostic issue-category layer beside semantic clustering. Match only explicit
+lowercase whole-token phrases against retained complaint units, guard negated trust triggers, count each
+review at most once per category, allow categories to overlap, and display only categories supported by
+at least two complaint reviews. Report support with Wilson 95% sampling intervals, recency, mean stars,
+matched phrases, review IDs and excerpts. Pair every category with a static `Check whether ...`
+investigation hypothesis rather than asserting a cause. Keep semantic themes unchanged as emerging
+clusters, and report uncategorised complaint reviews explicitly. Category precision is reported only
+after the optional human audit is labelled and validated.
+
+### Rejected alternatives
+Lowering the clustering threshold without labelled pair evidence; learning categories from the demo app;
+substring keyword matching; forcing each complaint into exactly one category; treating lexical matches
+as causal findings; hiding unmatched complaints.
+
+### Evidence
+[`analysis/issue_categories.py`](../src/appstore_review_analysis/analysis/issue_categories.py),
+[`analysis/evidence.py`](../src/appstore_review_analysis/analysis/evidence.py), and
+[`tests/unit/test_issue_categories.py`](../tests/unit/test_issue_categories.py).

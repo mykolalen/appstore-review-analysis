@@ -1,6 +1,6 @@
 {
-  "analysis_id": "00ec33ea-df96-4d66-9249-51d3d9291d4a",
-  "created_at": "2026-09-30T12:20:18.119804Z",
+  "analysis_id": "bd565eb5-50ec-461a-8830-8e4eff648ec2",
+  "created_at": "2026-09-30T15:12:46.578076Z",
   "app": {
     "app_id": 1459969523,
     "name": "Nebula: Spiritual Guidance",
@@ -1438,8 +1438,1565 @@
   },
   "insights": {
     "status": "ok",
+    "issue_categories": {
+      "status": "ok",
+      "version": "1",
+      "denominator": 43,
+      "multi_label": true,
+      "items": [
+        {
+          "category_id": "pricing_paywall",
+          "label": "Pricing and paywall",
+          "description": "Complaints about price, paid access, trials, or features being blocked behind payment.",
+          "review_count": 13,
+          "denominator": 43,
+          "share": 0.3023255813953488,
+          "ci95": {
+            "low": 0.1860200013584818,
+            "high": 0.45105364177729607,
+            "reason": "sampling uncertainty only; lexicon precision not measured unless audited"
+          },
+          "mean_star_rating": 1.2307692307692308,
+          "recency": {
+            "newest_date": "2026-06-09T16:43:19+00:00",
+            "share_last_12_months": 0.3076923076923077,
+            "historical": false
+          },
+          "top_matched_phrases": [
+            {
+              "phrase": "pay",
+              "count": 8
+            },
+            {
+              "phrase": "paid",
+              "count": 3
+            },
+            {
+              "phrase": "cost",
+              "count": 2
+            },
+            {
+              "phrase": "have to pay",
+              "count": 1
+            },
+            {
+              "phrase": "need to pay",
+              "count": 1
+            }
+          ],
+          "evidence": [
+            {
+              "review_id": "13238168680",
+              "excerpt": "I can’t even see my own birth chart without it telling me I need to pay."
+            },
+            {
+              "review_id": "12196916604",
+              "excerpt": "On top of the subscription you STILL have to pay for readings."
+            },
+            {
+              "review_id": "11264084319",
+              "excerpt": "I paid for all these supposed features and then had to pay more for a reading waste of 60.00"
+            }
+          ],
+          "matched_review_ids": [
+            "10836437501",
+            "11075169965",
+            "11117533220",
+            "11264084319",
+            "12164829797",
+            "12196916604",
+            "12467337584",
+            "12672294275",
+            "13238168680",
+            "13524060324",
+            "14079993573",
+            "14162858916",
+            "6904797208"
+          ],
+          "suggested_investigation": "Check whether pricing, trial conversion, and paid-feature boundaries are visible before users invest time in the product."
+        },
+        {
+          "category_id": "billing_charges",
+          "label": "Billing and unexpected charges",
+          "description": "Complaints about billing events, debits, or charges the reviewer did not expect.",
+          "review_count": 11,
+          "denominator": 43,
+          "share": 0.2558139534883721,
+          "ci95": {
+            "low": 0.14929517123808245,
+            "high": 0.40238403498846675,
+            "reason": "sampling uncertainty only; lexicon precision not measured unless audited"
+          },
+          "mean_star_rating": 1.0,
+          "recency": {
+            "newest_date": "2026-02-27T03:17:48+00:00",
+            "share_last_12_months": 0.2727272727272727,
+            "historical": false
+          },
+          "top_matched_phrases": [
+            {
+              "phrase": "charge",
+              "count": 7
+            },
+            {
+              "phrase": "charged",
+              "count": 5
+            }
+          ],
+          "evidence": [
+            {
+              "review_id": "11075169965",
+              "excerpt": "I will be reporting the charge with my bank as fraudulent!"
+            },
+            {
+              "review_id": "13793435927",
+              "excerpt": "Do not download this app I’ve had to order multiple debit cards because they charge your Apple account and there’s no way to cancel the subscription in the app nor does it show under your Apple subscription list"
+            },
+            {
+              "review_id": "13616064815",
+              "excerpt": "But after deleting the app is was charged 50 dollars for no reason."
+            }
+          ],
+          "matched_review_ids": [
+            "10836437501",
+            "11075169965",
+            "12128656296",
+            "12491998074",
+            "12708833838",
+            "12733964744",
+            "13228610177",
+            "13616064815",
+            "13793435927",
+            "6782509379",
+            "9208166980"
+          ],
+          "suggested_investigation": "Check whether purchase, renewal, and billing confirmations make the timing and amount of charges clear before money is taken."
+        },
+        {
+          "category_id": "scam_trust",
+          "label": "Scam and trust",
+          "description": "Complaints that question the product's honesty, legitimacy, or representation.",
+          "review_count": 11,
+          "denominator": 43,
+          "share": 0.2558139534883721,
+          "ci95": {
+            "low": 0.14929517123808245,
+            "high": 0.40238403498846675,
+            "reason": "sampling uncertainty only; lexicon precision not measured unless audited"
+          },
+          "mean_star_rating": 1.0,
+          "recency": {
+            "newest_date": "2026-01-10T07:17:26+00:00",
+            "share_last_12_months": 0.18181818181818182,
+            "historical": false
+          },
+          "top_matched_phrases": [
+            {
+              "phrase": "scam",
+              "count": 10
+            },
+            {
+              "phrase": "rip off",
+              "count": 1
+            },
+            {
+              "phrase": "fraud",
+              "count": 1
+            },
+            {
+              "phrase": "fraudulent",
+              "count": 1
+            }
+          ],
+          "evidence": [
+            {
+              "review_id": "12688614586",
+              "excerpt": "Reporting as fraud"
+            },
+            {
+              "review_id": "11075169965",
+              "excerpt": "I will be reporting the charge with my bank as fraudulent!"
+            },
+            {
+              "review_id": "13616064815",
+              "excerpt": "This is a scam."
+            }
+          ],
+          "matched_review_ids": [
+            "11075169965",
+            "11099954190",
+            "12467337584",
+            "12491998074",
+            "12688614586",
+            "12708833838",
+            "12829278222",
+            "13325807478",
+            "13616064815",
+            "6444787269",
+            "6782509379"
+          ],
+          "suggested_investigation": "Check whether product claims, purchase flows, and delivered value match what users are shown before they commit."
+        },
+        {
+          "category_id": "subscription_cancellation",
+          "label": "Subscription and cancellation",
+          "description": "Complaints about subscriptions, renewals, or difficulty cancelling recurring access.",
+          "review_count": 9,
+          "denominator": 43,
+          "share": 0.20930232558139536,
+          "ci95": {
+            "low": 0.11422834220995602,
+            "high": 0.3520564271073644,
+            "reason": "sampling uncertainty only; lexicon precision not measured unless audited"
+          },
+          "mean_star_rating": 1.0,
+          "recency": {
+            "newest_date": "2026-05-18T22:34:10+00:00",
+            "share_last_12_months": 0.4444444444444444,
+            "historical": false
+          },
+          "top_matched_phrases": [
+            {
+              "phrase": "subscription",
+              "count": 5
+            },
+            {
+              "phrase": "cancel",
+              "count": 2
+            },
+            {
+              "phrase": "cancellation",
+              "count": 2
+            },
+            {
+              "phrase": "canceled",
+              "count": 1
+            },
+            {
+              "phrase": "cancelled",
+              "count": 1
+            }
+          ],
+          "evidence": [
+            {
+              "review_id": "13793435927",
+              "excerpt": "Do not download this app I’ve had to order multiple debit cards because they charge your Apple account and there’s no way to cancel the subscription in the app nor does it show under your Apple subscription list"
+            },
+            {
+              "review_id": "13228610177",
+              "excerpt": "They will not accept your cancellation but it won’t show up on the app and they will continue to charge you despite having cancelled."
+            },
+            {
+              "review_id": "12971587569",
+              "excerpt": "I canceled the free subscription and then saw how it was still pulling from my card."
+            }
+          ],
+          "matched_review_ids": [
+            "12196916604",
+            "12304942988",
+            "12491998074",
+            "12733964744",
+            "12971587569",
+            "13228610177",
+            "13325807478",
+            "13793435927",
+            "14079993573"
+          ],
+          "suggested_investigation": "Check whether subscription terms, renewal status, and cancellation controls are easy to find and complete across supported purchase channels."
+        },
+        {
+          "category_id": "customer_support",
+          "label": "Customer support",
+          "description": "Complaints about getting help from the product's support or customer-service function.",
+          "review_count": 5,
+          "denominator": 43,
+          "share": 0.11627906976744186,
+          "ci95": {
+            "low": 0.05070427739804166,
+            "high": 0.24479161810082128,
+            "reason": "sampling uncertainty only; lexicon precision not measured unless audited"
+          },
+          "mean_star_rating": 1.0,
+          "recency": {
+            "newest_date": "2025-08-03T16:31:26+00:00",
+            "share_last_12_months": 0.0,
+            "historical": true
+          },
+          "top_matched_phrases": [
+            {
+              "phrase": "support",
+              "count": 3
+            },
+            {
+              "phrase": "customer service",
+              "count": 2
+            },
+            {
+              "phrase": "support team",
+              "count": 1
+            }
+          ],
+          "evidence": [
+            {
+              "review_id": "6904797208",
+              "excerpt": "After 4 emails and prof I paid them I have been left on read by the support team."
+            },
+            {
+              "review_id": "12971587569",
+              "excerpt": "When I logged into the app to try to figure out how and to contact support I can’t seem to find the option, as if it’s not there or very well hidden."
+            },
+            {
+              "review_id": "12829278222",
+              "excerpt": "The customer service is horrible."
+            }
+          ],
+          "matched_review_ids": [
+            "12351110123",
+            "12829278222",
+            "12971587569",
+            "6782509379",
+            "6904797208"
+          ],
+          "suggested_investigation": "Check whether support requests reach an accountable owner and whether customers can see expected response and resolution paths."
+        },
+        {
+          "category_id": "refunds",
+          "label": "Refunds",
+          "description": "Complaints about requesting, receiving, or being denied money back.",
+          "review_count": 5,
+          "denominator": 43,
+          "share": 0.11627906976744186,
+          "ci95": {
+            "low": 0.05070427739804166,
+            "high": 0.24479161810082128,
+            "reason": "sampling uncertainty only; lexicon precision not measured unless audited"
+          },
+          "mean_star_rating": 1.0,
+          "recency": {
+            "newest_date": "2025-03-26T17:04:47+00:00",
+            "share_last_12_months": 0.0,
+            "historical": true
+          },
+          "top_matched_phrases": [
+            {
+              "phrase": "refund",
+              "count": 4
+            },
+            {
+              "phrase": "money back",
+              "count": 1
+            },
+            {
+              "phrase": "no refund",
+              "count": 1
+            }
+          ],
+          "evidence": [
+            {
+              "review_id": "6904797208",
+              "excerpt": "No answer received, no refund just left on read!!!"
+            },
+            {
+              "review_id": "12467337584",
+              "excerpt": "They would not refund me."
+            },
+            {
+              "review_id": "11449927296",
+              "excerpt": "I want a refund and i want this to never happen to other people."
+            }
+          ],
+          "matched_review_ids": [
+            "11449927296",
+            "12467337584",
+            "6782509379",
+            "6904797208",
+            "9208166980"
+          ],
+          "suggested_investigation": "Check whether refund eligibility, request steps, ownership, and response timing are clear to customers."
+        },
+        {
+          "category_id": "content_accuracy_relevance",
+          "label": "Content accuracy and relevance",
+          "description": "Complaints that generated or delivered content is wrong, generic, vague, or irrelevant.",
+          "review_count": 4,
+          "denominator": 43,
+          "share": 0.09302325581395349,
+          "ci95": {
+            "low": 0.036771640631712774,
+            "high": 0.21602703641253584,
+            "reason": "sampling uncertainty only; lexicon precision not measured unless audited"
+          },
+          "mean_star_rating": 1.5,
+          "recency": {
+            "newest_date": "2025-01-09T22:02:55+00:00",
+            "share_last_12_months": 0.0,
+            "historical": true
+          },
+          "top_matched_phrases": [
+            {
+              "phrase": "not accurate",
+              "count": 1
+            },
+            {
+              "phrase": "generic",
+              "count": 1
+            },
+            {
+              "phrase": "vague",
+              "count": 1
+            },
+            {
+              "phrase": "wrong",
+              "count": 1
+            }
+          ],
+          "evidence": [
+            {
+              "review_id": "12164829797",
+              "excerpt": "Not only that but the horoscopes are very vague and negative."
+            },
+            {
+              "review_id": "8506856576",
+              "excerpt": "Not accurate and a waste of money."
+            },
+            {
+              "review_id": "6782509379",
+              "excerpt": "When you contact nebula’s support they give you a generic answer (exactly like the ones on all of the 1 star ratings) that they’re sorry you didn’t read their terms and conditions on what you’re buying (you never get the chance to before clicking) and that they can’t offer you a refund."
+            }
+          ],
+          "matched_review_ids": [
+            "12164829797",
+            "5911315356",
+            "6782509379",
+            "8506856576"
+          ],
+          "suggested_investigation": "Check whether the content is specific to the user's inputs and whether unsupported or generic outputs can be detected before delivery."
+        },
+        {
+          "category_id": "ads_interruptions",
+          "label": "Ads and interruptions",
+          "description": "Complaints about advertising, pop-ups, or interruptions that disrupt product use.",
+          "review_count": 2,
+          "denominator": 43,
+          "share": 0.046511627906976744,
+          "ci95": {
+            "low": 0.012849260094380227,
+            "high": 0.15455498004063967,
+            "reason": "sampling uncertainty only; lexicon precision not measured unless audited"
+          },
+          "mean_star_rating": 1.5,
+          "recency": {
+            "newest_date": "2024-03-23T05:54:26+00:00",
+            "share_last_12_months": 0.0,
+            "historical": true
+          },
+          "top_matched_phrases": [
+            {
+              "phrase": "ad",
+              "count": 2
+            },
+            {
+              "phrase": "ads",
+              "count": 1
+            }
+          ],
+          "evidence": [
+            {
+              "review_id": "4696528106",
+              "excerpt": "The ads for this app are not only definite lies but once you download the app and get through the whole personalized astrology experience, you can’t even use the features with out paying over $10 per month."
+            },
+            {
+              "review_id": "11075169965",
+              "excerpt": "Deceiving ad - when you click on the free 3 day trial you are automatically taken to Apple Pay and once you click submit to activate the three day trial you are charged the monthly fee - what a rip off!"
+            }
+          ],
+          "matched_review_ids": [
+            "11075169965",
+            "4696528106"
+          ],
+          "suggested_investigation": "Check whether advertising frequency, placement, and interruption points are concentrated in flows users expect to complete without disruption."
+        },
+        {
+          "category_id": "bugs_stability",
+          "label": "Bugs and stability",
+          "description": "Complaints about crashes, errors, broken flows, loading failures, or poor performance.",
+          "review_count": 2,
+          "denominator": 43,
+          "share": 0.046511627906976744,
+          "ci95": {
+            "low": 0.012849260094380227,
+            "high": 0.15455498004063967,
+            "reason": "sampling uncertainty only; lexicon precision not measured unless audited"
+          },
+          "mean_star_rating": 1.5,
+          "recency": {
+            "newest_date": "2024-03-29T21:15:50+00:00",
+            "share_last_12_months": 0.0,
+            "historical": true
+          },
+          "top_matched_phrases": [
+            {
+              "phrase": "does not work",
+              "count": 1
+            },
+            {
+              "phrase": "frozen",
+              "count": 1
+            },
+            {
+              "phrase": "stuck",
+              "count": 1
+            }
+          ],
+          "evidence": [
+            {
+              "review_id": "11099954190",
+              "excerpt": "Your app doesn’t work, especially the compatibility, it’s just a frozen screen and automatically switched to annual when I checked out for a week option."
+            },
+            {
+              "review_id": "5300736312",
+              "excerpt": "I downloaded it twice and both times it was stuck on the loading screen."
+            }
+          ],
+          "matched_review_ids": [
+            "11099954190",
+            "5300736312"
+          ],
+          "suggested_investigation": "Check whether the affected flows share a release, device, network condition, or backend dependency that can be reproduced from telemetry."
+        },
+        {
+          "category_id": "service_responsiveness",
+          "label": "Service responsiveness",
+          "description": "Complaints about live agents, advisers, readers, sellers, or other human-delivered service.",
+          "review_count": 2,
+          "denominator": 43,
+          "share": 0.046511627906976744,
+          "ci95": {
+            "low": 0.012849260094380227,
+            "high": 0.15455498004063967,
+            "reason": "sampling uncertainty only; lexicon precision not measured unless audited"
+          },
+          "mean_star_rating": 1.0,
+          "recency": {
+            "newest_date": "2024-03-23T05:54:26+00:00",
+            "share_last_12_months": 0.0,
+            "historical": true
+          },
+          "top_matched_phrases": [
+            {
+              "phrase": "no response",
+              "count": 2
+            }
+          ],
+          "evidence": [
+            {
+              "review_id": "11075169965",
+              "excerpt": "I reached out via email with no response just a screen shot of frequently asked questions."
+            },
+            {
+              "review_id": "6444787269",
+              "excerpt": "Tried contacting these people through email and no response."
+            }
+          ],
+          "matched_review_ids": [
+            "11075169965",
+            "6444787269"
+          ],
+          "suggested_investigation": "Check whether human-service availability, response-time expectations, and service-quality controls match what customers are promised."
+        }
+      ],
+      "not_categorised": {
+        "review_count": 8,
+        "denominator": 43,
+        "share": 0.18604651162790697,
+        "review_ids": [
+          "10522916069",
+          "12351367713",
+          "12517752126",
+          "12756134004",
+          "12936389038",
+          "4759538491",
+          "5966647683",
+          "7988026369"
+        ],
+        "evidence": [
+          {
+            "review_id": "12936389038",
+            "excerpt": "horrible app."
+          },
+          {
+            "review_id": "12756134004",
+            "excerpt": "Not a friendly app"
+          },
+          {
+            "review_id": "12517752126",
+            "excerpt": "I don’t do witchcraft!!"
+          }
+        ]
+      },
+      "audit_rows": [
+        {
+          "category": "ads_interruptions",
+          "review_id": "11075169965",
+          "matched_phrase": "ad",
+          "sentence": "Deceiving ad - when you click on the free 3 day trial you are automatically taken to Apple Pay and once you click submit to activate the three day trial you are charged the monthly fee - what a rip off!"
+        },
+        {
+          "category": "ads_interruptions",
+          "review_id": "4696528106",
+          "matched_phrase": "ads",
+          "sentence": "The ads for this app are not only definite lies but once you download the app and get through the whole personalized astrology experience, you can’t even use the features with out paying over $10 per month."
+        },
+        {
+          "category": "billing_charges",
+          "review_id": "10836437501",
+          "matched_phrase": "charged",
+          "sentence": "Trial period was not free my card was charged the same day and NO trial period was offered"
+        },
+        {
+          "category": "billing_charges",
+          "review_id": "11075169965",
+          "matched_phrase": "charge",
+          "sentence": "I will be reporting the charge with my bank as fraudulent!"
+        },
+        {
+          "category": "billing_charges",
+          "review_id": "12128656296",
+          "matched_phrase": "charge",
+          "sentence": "They manage to still charge you another $29.99."
+        },
+        {
+          "category": "billing_charges",
+          "review_id": "12491998074",
+          "matched_phrase": "charge",
+          "sentence": "Definitely a scam charge even after cancellation!!!!!"
+        },
+        {
+          "category": "billing_charges",
+          "review_id": "12708833838",
+          "matched_phrase": "charged",
+          "sentence": "I was charged $45 WITHOUT WARNING and for NO REASON!"
+        },
+        {
+          "category": "billing_charges",
+          "review_id": "12733964744",
+          "matched_phrase": "charge",
+          "sentence": "After downloading this app and not subscribing to anything I received a random charge for $45."
+        },
+        {
+          "category": "billing_charges",
+          "review_id": "13228610177",
+          "matched_phrase": "charge",
+          "sentence": "They will not accept your cancellation but it won’t show up on the app and they will continue to charge you despite having cancelled."
+        },
+        {
+          "category": "billing_charges",
+          "review_id": "13616064815",
+          "matched_phrase": "charged",
+          "sentence": "But after deleting the app is was charged 50 dollars for no reason."
+        },
+        {
+          "category": "billing_charges",
+          "review_id": "13793435927",
+          "matched_phrase": "charge",
+          "sentence": "Do not download this app I’ve had to order multiple debit cards because they charge your Apple account and there’s no way to cancel the subscription in the app nor does it show under your Apple subscription list"
+        },
+        {
+          "category": "billing_charges",
+          "review_id": "6782509379",
+          "matched_phrase": "charge",
+          "sentence": "I guess the only good thing is that since I did the lifetime they can’t charge me again unlike some of these other poor souls on here."
+        },
+        {
+          "category": "billing_charges",
+          "review_id": "9208166980",
+          "matched_phrase": "charged",
+          "sentence": "Been trying to get my money back you guys have yet to respond to my request I was charged for no reason please give my 50 $ back you are terrible for that"
+        },
+        {
+          "category": "bugs_stability",
+          "review_id": "11099954190",
+          "matched_phrase": "does not work",
+          "sentence": "Your app doesn’t work, especially the compatibility, it’s just a frozen screen and automatically switched to annual when I checked out for a week option."
+        },
+        {
+          "category": "bugs_stability",
+          "review_id": "5300736312",
+          "matched_phrase": "stuck",
+          "sentence": "I downloaded it twice and both times it was stuck on the loading screen."
+        },
+        {
+          "category": "content_accuracy_relevance",
+          "review_id": "12164829797",
+          "matched_phrase": "vague",
+          "sentence": "Not only that but the horoscopes are very vague and negative."
+        },
+        {
+          "category": "content_accuracy_relevance",
+          "review_id": "5911315356",
+          "matched_phrase": "wrong",
+          "sentence": "I downloaded this app maybe 5 minutes ago and immediately it gave me the wrong ascendant."
+        },
+        {
+          "category": "content_accuracy_relevance",
+          "review_id": "6782509379",
+          "matched_phrase": "generic",
+          "sentence": "When you contact nebula’s support they give you a generic answer (exactly like the ones on all of the 1 star ratings) that they’re sorry you didn’t read their terms and conditions on what you’re buying (you never get the chance to before clicking) and that they can’t offer you a refund."
+        },
+        {
+          "category": "content_accuracy_relevance",
+          "review_id": "8506856576",
+          "matched_phrase": "not accurate",
+          "sentence": "Not accurate and a waste of money."
+        },
+        {
+          "category": "customer_support",
+          "review_id": "12351110123",
+          "matched_phrase": "customer service",
+          "sentence": "When you write to their customer service no solution will be offered."
+        },
+        {
+          "category": "customer_support",
+          "review_id": "12829278222",
+          "matched_phrase": "customer service",
+          "sentence": "The customer service is horrible."
+        },
+        {
+          "category": "customer_support",
+          "review_id": "12971587569",
+          "matched_phrase": "support",
+          "sentence": "When I logged into the app to try to figure out how and to contact support I can’t seem to find the option, as if it’s not there or very well hidden."
+        },
+        {
+          "category": "customer_support",
+          "review_id": "6782509379",
+          "matched_phrase": "support",
+          "sentence": "When you contact nebula’s support they give you a generic answer (exactly like the ones on all of the 1 star ratings) that they’re sorry you didn’t read their terms and conditions on what you’re buying (you never get the chance to before clicking) and that they can’t offer you a refund."
+        },
+        {
+          "category": "customer_support",
+          "review_id": "6904797208",
+          "matched_phrase": "support team",
+          "sentence": "After 4 emails and prof I paid them I have been left on read by the support team."
+        },
+        {
+          "category": "pricing_paywall",
+          "review_id": "10836437501",
+          "matched_phrase": "not free",
+          "sentence": "Trial period was not free my card was charged the same day and NO trial period was offered"
+        },
+        {
+          "category": "pricing_paywall",
+          "review_id": "11075169965",
+          "matched_phrase": "pay",
+          "sentence": "Deceiving ad - when you click on the free 3 day trial you are automatically taken to Apple Pay and once you click submit to activate the three day trial you are charged the monthly fee - what a rip off!"
+        },
+        {
+          "category": "pricing_paywall",
+          "review_id": "11117533220",
+          "matched_phrase": "paid",
+          "sentence": "Hi I paid 2.99 (85% offer) for chatting with a psychic, I sent her two messages and she did not answer and my 100 credits is gone!!!"
+        },
+        {
+          "category": "pricing_paywall",
+          "review_id": "11264084319",
+          "matched_phrase": "paid",
+          "sentence": "I paid for all these supposed features and then had to pay more for a reading waste of 60.00"
+        },
+        {
+          "category": "pricing_paywall",
+          "review_id": "12164829797",
+          "matched_phrase": "pay",
+          "sentence": "New update is basically pay to play."
+        },
+        {
+          "category": "pricing_paywall",
+          "review_id": "12196916604",
+          "matched_phrase": "have to pay",
+          "sentence": "On top of the subscription you STILL have to pay for readings."
+        },
+        {
+          "category": "pricing_paywall",
+          "review_id": "12467337584",
+          "matched_phrase": "pay",
+          "sentence": "Scam I only allowed one dollar to come out of my Apple Pay and it took almost $100 out of my account through Apple Pay and I don’t understand how it did that but it did without my permission without my authorization 3×3 different times ."
+        },
+        {
+          "category": "pricing_paywall",
+          "review_id": "12672294275",
+          "matched_phrase": "pay",
+          "sentence": "As soon as I asked 2 questions they wanted me to pay $99.99 NOT COOL"
+        },
+        {
+          "category": "pricing_paywall",
+          "review_id": "13238168680",
+          "matched_phrase": "need to pay",
+          "sentence": "I can’t even see my own birth chart without it telling me I need to pay."
+        },
+        {
+          "category": "pricing_paywall",
+          "review_id": "13524060324",
+          "matched_phrase": "pay",
+          "sentence": "I couldn’t even see anything after downloading it because everytime I opened it it wanted me to pay pay pay."
+        },
+        {
+          "category": "pricing_paywall",
+          "review_id": "14079993573",
+          "matched_phrase": "cost",
+          "sentence": "If you’re going to make the app unusable without a subscription, you might as well just make the app cost money in the App Store."
+        },
+        {
+          "category": "pricing_paywall",
+          "review_id": "14162858916",
+          "matched_phrase": "cost",
+          "sentence": "The only thing I dislike about it is the cost."
+        },
+        {
+          "category": "pricing_paywall",
+          "review_id": "6904797208",
+          "matched_phrase": "paid",
+          "sentence": "After 4 emails and prof I paid them I have been left on read by the support team."
+        },
+        {
+          "category": "refunds",
+          "review_id": "11449927296",
+          "matched_phrase": "refund",
+          "sentence": "I want a refund and i want this to never happen to other people."
+        },
+        {
+          "category": "refunds",
+          "review_id": "12467337584",
+          "matched_phrase": "refund",
+          "sentence": "They would not refund me."
+        },
+        {
+          "category": "refunds",
+          "review_id": "6782509379",
+          "matched_phrase": "refund",
+          "sentence": "When you contact nebula’s support they give you a generic answer (exactly like the ones on all of the 1 star ratings) that they’re sorry you didn’t read their terms and conditions on what you’re buying (you never get the chance to before clicking) and that they can’t offer you a refund."
+        },
+        {
+          "category": "refunds",
+          "review_id": "6904797208",
+          "matched_phrase": "no refund",
+          "sentence": "No answer received, no refund just left on read!!!"
+        },
+        {
+          "category": "refunds",
+          "review_id": "9208166980",
+          "matched_phrase": "money back",
+          "sentence": "Been trying to get my money back you guys have yet to respond to my request I was charged for no reason please give my 50 $ back you are terrible for that"
+        },
+        {
+          "category": "scam_trust",
+          "review_id": "11075169965",
+          "matched_phrase": "fraudulent",
+          "sentence": "I will be reporting the charge with my bank as fraudulent!"
+        },
+        {
+          "category": "scam_trust",
+          "review_id": "11099954190",
+          "matched_phrase": "scam",
+          "sentence": "Scam."
+        },
+        {
+          "category": "scam_trust",
+          "review_id": "12467337584",
+          "matched_phrase": "scam",
+          "sentence": "Scam I only allowed one dollar to come out of my Apple Pay and it took almost $100 out of my account through Apple Pay and I don’t understand how it did that but it did without my permission without my authorization 3×3 different times ."
+        },
+        {
+          "category": "scam_trust",
+          "review_id": "12491998074",
+          "matched_phrase": "scam",
+          "sentence": "Definitely a scam charge even after cancellation!!!!!"
+        },
+        {
+          "category": "scam_trust",
+          "review_id": "12688614586",
+          "matched_phrase": "fraud",
+          "sentence": "Reporting as fraud"
+        },
+        {
+          "category": "scam_trust",
+          "review_id": "12708833838",
+          "matched_phrase": "scam",
+          "sentence": "SCAM."
+        },
+        {
+          "category": "scam_trust",
+          "review_id": "12829278222",
+          "matched_phrase": "scam",
+          "sentence": "Total scam."
+        },
+        {
+          "category": "scam_trust",
+          "review_id": "13325807478",
+          "matched_phrase": "scam",
+          "sentence": "This is a scam"
+        },
+        {
+          "category": "scam_trust",
+          "review_id": "13616064815",
+          "matched_phrase": "scam",
+          "sentence": "This is a scam."
+        },
+        {
+          "category": "scam_trust",
+          "review_id": "6444787269",
+          "matched_phrase": "scam",
+          "sentence": "SCAM."
+        },
+        {
+          "category": "scam_trust",
+          "review_id": "6782509379",
+          "matched_phrase": "scam",
+          "sentence": "I agree this app is a SCAM."
+        },
+        {
+          "category": "service_responsiveness",
+          "review_id": "11075169965",
+          "matched_phrase": "no response",
+          "sentence": "I reached out via email with no response just a screen shot of frequently asked questions."
+        },
+        {
+          "category": "service_responsiveness",
+          "review_id": "6444787269",
+          "matched_phrase": "no response",
+          "sentence": "Tried contacting these people through email and no response."
+        },
+        {
+          "category": "subscription_cancellation",
+          "review_id": "12196916604",
+          "matched_phrase": "subscription",
+          "sentence": "On top of the subscription you STILL have to pay for readings."
+        },
+        {
+          "category": "subscription_cancellation",
+          "review_id": "12304942988",
+          "matched_phrase": "cancel",
+          "sentence": "I tried to cancel and their Bot gave me the run around."
+        },
+        {
+          "category": "subscription_cancellation",
+          "review_id": "12491998074",
+          "matched_phrase": "cancellation",
+          "sentence": "Definitely a scam charge even after cancellation!!!!!"
+        },
+        {
+          "category": "subscription_cancellation",
+          "review_id": "12733964744",
+          "matched_phrase": "subscription",
+          "sentence": "My phone is showing no active subscription for this app."
+        },
+        {
+          "category": "subscription_cancellation",
+          "review_id": "12971587569",
+          "matched_phrase": "canceled",
+          "sentence": "I canceled the free subscription and then saw how it was still pulling from my card."
+        },
+        {
+          "category": "subscription_cancellation",
+          "review_id": "13228610177",
+          "matched_phrase": "cancellation",
+          "sentence": "They will not accept your cancellation but it won’t show up on the app and they will continue to charge you despite having cancelled."
+        },
+        {
+          "category": "subscription_cancellation",
+          "review_id": "13325807478",
+          "matched_phrase": "subscribed",
+          "sentence": "I never subscribed and they keep charging me $50."
+        },
+        {
+          "category": "subscription_cancellation",
+          "review_id": "13793435927",
+          "matched_phrase": "cancel",
+          "sentence": "Do not download this app I’ve had to order multiple debit cards because they charge your Apple account and there’s no way to cancel the subscription in the app nor does it show under your Apple subscription list"
+        },
+        {
+          "category": "subscription_cancellation",
+          "review_id": "14079993573",
+          "matched_phrase": "subscription",
+          "sentence": "If you’re going to make the app unusable without a subscription, you might as well just make the app cost money in the App Store."
+        }
+      ]
+    },
     "areas_of_improvement": [
       {
+        "source": "issue_category",
+        "theme_id": null,
+        "category_id": "pricing_paywall",
+        "area": "Pricing and paywall",
+        "complaint_reviews": {
+          "count": 13,
+          "total": 43,
+          "share": 0.3023255813953488,
+          "ci95": {
+            "low": 0.1860200013584818,
+            "high": 0.45105364177729607,
+            "reason": "sampling uncertainty only; lexicon precision not measured unless audited"
+          }
+        },
+        "mean_star_rating": 1.2307692307692308,
+        "recency": {
+          "newest_date": "2026-06-09T16:43:19+00:00",
+          "share_last_12_months": 0.3076923076923077,
+          "historical": false
+        },
+        "evidence_review_ids": [
+          "13238168680",
+          "12196916604",
+          "11264084319"
+        ],
+        "description": "Complaints about price, paid access, trials, or features being blocked behind payment.",
+        "top_matched_phrases": [
+          {
+            "phrase": "pay",
+            "count": 8
+          },
+          {
+            "phrase": "paid",
+            "count": 3
+          },
+          {
+            "phrase": "cost",
+            "count": 2
+          },
+          {
+            "phrase": "have to pay",
+            "count": 1
+          },
+          {
+            "phrase": "need to pay",
+            "count": 1
+          }
+        ],
+        "evidence": [
+          {
+            "review_id": "13238168680",
+            "excerpt": "I can’t even see my own birth chart without it telling me I need to pay."
+          },
+          {
+            "review_id": "12196916604",
+            "excerpt": "On top of the subscription you STILL have to pay for readings."
+          },
+          {
+            "review_id": "11264084319",
+            "excerpt": "I paid for all these supposed features and then had to pay more for a reading waste of 60.00"
+          }
+        ],
+        "suggested_investigation": "Check whether pricing, trial conversion, and paid-feature boundaries are visible before users invest time in the product.",
+        "text": "Investigate Pricing and paywall: 13 of 43 complaint reviews (30.2%, 95% CI 18.6%-45.1%), for example 'I can’t even see my own birth chart without it telling me I need to pay.'."
+      },
+      {
+        "source": "issue_category",
+        "theme_id": null,
+        "category_id": "billing_charges",
+        "area": "Billing and unexpected charges",
+        "complaint_reviews": {
+          "count": 11,
+          "total": 43,
+          "share": 0.2558139534883721,
+          "ci95": {
+            "low": 0.14929517123808245,
+            "high": 0.40238403498846675,
+            "reason": "sampling uncertainty only; lexicon precision not measured unless audited"
+          }
+        },
+        "mean_star_rating": 1.0,
+        "recency": {
+          "newest_date": "2026-02-27T03:17:48+00:00",
+          "share_last_12_months": 0.2727272727272727,
+          "historical": false
+        },
+        "evidence_review_ids": [
+          "11075169965",
+          "13793435927",
+          "13616064815"
+        ],
+        "description": "Complaints about billing events, debits, or charges the reviewer did not expect.",
+        "top_matched_phrases": [
+          {
+            "phrase": "charge",
+            "count": 7
+          },
+          {
+            "phrase": "charged",
+            "count": 5
+          }
+        ],
+        "evidence": [
+          {
+            "review_id": "11075169965",
+            "excerpt": "I will be reporting the charge with my bank as fraudulent!"
+          },
+          {
+            "review_id": "13793435927",
+            "excerpt": "Do not download this app I’ve had to order multiple debit cards because they charge your Apple account and there’s no way to cancel the subscription in the app nor does it show under your Apple subscription list"
+          },
+          {
+            "review_id": "13616064815",
+            "excerpt": "But after deleting the app is was charged 50 dollars for no reason."
+          }
+        ],
+        "suggested_investigation": "Check whether purchase, renewal, and billing confirmations make the timing and amount of charges clear before money is taken.",
+        "text": "Investigate Billing and unexpected charges: 11 of 43 complaint reviews (25.6%, 95% CI 14.9%-40.2%), for example 'I will be reporting the charge with my bank as fraudulent!'."
+      },
+      {
+        "source": "issue_category",
+        "theme_id": null,
+        "category_id": "scam_trust",
+        "area": "Scam and trust",
+        "complaint_reviews": {
+          "count": 11,
+          "total": 43,
+          "share": 0.2558139534883721,
+          "ci95": {
+            "low": 0.14929517123808245,
+            "high": 0.40238403498846675,
+            "reason": "sampling uncertainty only; lexicon precision not measured unless audited"
+          }
+        },
+        "mean_star_rating": 1.0,
+        "recency": {
+          "newest_date": "2026-01-10T07:17:26+00:00",
+          "share_last_12_months": 0.18181818181818182,
+          "historical": false
+        },
+        "evidence_review_ids": [
+          "12688614586",
+          "11075169965",
+          "13616064815"
+        ],
+        "description": "Complaints that question the product's honesty, legitimacy, or representation.",
+        "top_matched_phrases": [
+          {
+            "phrase": "scam",
+            "count": 10
+          },
+          {
+            "phrase": "rip off",
+            "count": 1
+          },
+          {
+            "phrase": "fraud",
+            "count": 1
+          },
+          {
+            "phrase": "fraudulent",
+            "count": 1
+          }
+        ],
+        "evidence": [
+          {
+            "review_id": "12688614586",
+            "excerpt": "Reporting as fraud"
+          },
+          {
+            "review_id": "11075169965",
+            "excerpt": "I will be reporting the charge with my bank as fraudulent!"
+          },
+          {
+            "review_id": "13616064815",
+            "excerpt": "This is a scam."
+          }
+        ],
+        "suggested_investigation": "Check whether product claims, purchase flows, and delivered value match what users are shown before they commit.",
+        "text": "Investigate Scam and trust: 11 of 43 complaint reviews (25.6%, 95% CI 14.9%-40.2%), for example 'Reporting as fraud'."
+      },
+      {
+        "source": "issue_category",
+        "theme_id": null,
+        "category_id": "subscription_cancellation",
+        "area": "Subscription and cancellation",
+        "complaint_reviews": {
+          "count": 9,
+          "total": 43,
+          "share": 0.20930232558139536,
+          "ci95": {
+            "low": 0.11422834220995602,
+            "high": 0.3520564271073644,
+            "reason": "sampling uncertainty only; lexicon precision not measured unless audited"
+          }
+        },
+        "mean_star_rating": 1.0,
+        "recency": {
+          "newest_date": "2026-05-18T22:34:10+00:00",
+          "share_last_12_months": 0.4444444444444444,
+          "historical": false
+        },
+        "evidence_review_ids": [
+          "13793435927",
+          "13228610177",
+          "12971587569"
+        ],
+        "description": "Complaints about subscriptions, renewals, or difficulty cancelling recurring access.",
+        "top_matched_phrases": [
+          {
+            "phrase": "subscription",
+            "count": 5
+          },
+          {
+            "phrase": "cancel",
+            "count": 2
+          },
+          {
+            "phrase": "cancellation",
+            "count": 2
+          },
+          {
+            "phrase": "canceled",
+            "count": 1
+          },
+          {
+            "phrase": "cancelled",
+            "count": 1
+          }
+        ],
+        "evidence": [
+          {
+            "review_id": "13793435927",
+            "excerpt": "Do not download this app I’ve had to order multiple debit cards because they charge your Apple account and there’s no way to cancel the subscription in the app nor does it show under your Apple subscription list"
+          },
+          {
+            "review_id": "13228610177",
+            "excerpt": "They will not accept your cancellation but it won’t show up on the app and they will continue to charge you despite having cancelled."
+          },
+          {
+            "review_id": "12971587569",
+            "excerpt": "I canceled the free subscription and then saw how it was still pulling from my card."
+          }
+        ],
+        "suggested_investigation": "Check whether subscription terms, renewal status, and cancellation controls are easy to find and complete across supported purchase channels.",
+        "text": "Investigate Subscription and cancellation: 9 of 43 complaint reviews (20.9%, 95% CI 11.4%-35.2%), for example 'Do not download this app I’ve had to order multiple debit cards because they charge your Apple account and there’s no way to cancel the subscription in the app nor does it show under your Apple subscription list'."
+      },
+      {
+        "source": "issue_category",
+        "theme_id": null,
+        "category_id": "customer_support",
+        "area": "Customer support",
+        "complaint_reviews": {
+          "count": 5,
+          "total": 43,
+          "share": 0.11627906976744186,
+          "ci95": {
+            "low": 0.05070427739804166,
+            "high": 0.24479161810082128,
+            "reason": "sampling uncertainty only; lexicon precision not measured unless audited"
+          }
+        },
+        "mean_star_rating": 1.0,
+        "recency": {
+          "newest_date": "2025-08-03T16:31:26+00:00",
+          "share_last_12_months": 0.0,
+          "historical": true
+        },
+        "evidence_review_ids": [
+          "6904797208",
+          "12971587569",
+          "12829278222"
+        ],
+        "description": "Complaints about getting help from the product's support or customer-service function.",
+        "top_matched_phrases": [
+          {
+            "phrase": "support",
+            "count": 3
+          },
+          {
+            "phrase": "customer service",
+            "count": 2
+          },
+          {
+            "phrase": "support team",
+            "count": 1
+          }
+        ],
+        "evidence": [
+          {
+            "review_id": "6904797208",
+            "excerpt": "After 4 emails and prof I paid them I have been left on read by the support team."
+          },
+          {
+            "review_id": "12971587569",
+            "excerpt": "When I logged into the app to try to figure out how and to contact support I can’t seem to find the option, as if it’s not there or very well hidden."
+          },
+          {
+            "review_id": "12829278222",
+            "excerpt": "The customer service is horrible."
+          }
+        ],
+        "suggested_investigation": "Check whether support requests reach an accountable owner and whether customers can see expected response and resolution paths.",
+        "text": "Investigate Customer support: 5 of 43 complaint reviews (11.6%, 95% CI 5.1%-24.5%), for example 'After 4 emails and prof I paid them I have been left on read by the support team.'."
+      },
+      {
+        "source": "issue_category",
+        "theme_id": null,
+        "category_id": "refunds",
+        "area": "Refunds",
+        "complaint_reviews": {
+          "count": 5,
+          "total": 43,
+          "share": 0.11627906976744186,
+          "ci95": {
+            "low": 0.05070427739804166,
+            "high": 0.24479161810082128,
+            "reason": "sampling uncertainty only; lexicon precision not measured unless audited"
+          }
+        },
+        "mean_star_rating": 1.0,
+        "recency": {
+          "newest_date": "2025-03-26T17:04:47+00:00",
+          "share_last_12_months": 0.0,
+          "historical": true
+        },
+        "evidence_review_ids": [
+          "6904797208",
+          "12467337584",
+          "11449927296"
+        ],
+        "description": "Complaints about requesting, receiving, or being denied money back.",
+        "top_matched_phrases": [
+          {
+            "phrase": "refund",
+            "count": 4
+          },
+          {
+            "phrase": "money back",
+            "count": 1
+          },
+          {
+            "phrase": "no refund",
+            "count": 1
+          }
+        ],
+        "evidence": [
+          {
+            "review_id": "6904797208",
+            "excerpt": "No answer received, no refund just left on read!!!"
+          },
+          {
+            "review_id": "12467337584",
+            "excerpt": "They would not refund me."
+          },
+          {
+            "review_id": "11449927296",
+            "excerpt": "I want a refund and i want this to never happen to other people."
+          }
+        ],
+        "suggested_investigation": "Check whether refund eligibility, request steps, ownership, and response timing are clear to customers.",
+        "text": "Investigate Refunds: 5 of 43 complaint reviews (11.6%, 95% CI 5.1%-24.5%), for example 'No answer received, no refund just left on read!!!'."
+      },
+      {
+        "source": "issue_category",
+        "theme_id": null,
+        "category_id": "content_accuracy_relevance",
+        "area": "Content accuracy and relevance",
+        "complaint_reviews": {
+          "count": 4,
+          "total": 43,
+          "share": 0.09302325581395349,
+          "ci95": {
+            "low": 0.036771640631712774,
+            "high": 0.21602703641253584,
+            "reason": "sampling uncertainty only; lexicon precision not measured unless audited"
+          }
+        },
+        "mean_star_rating": 1.5,
+        "recency": {
+          "newest_date": "2025-01-09T22:02:55+00:00",
+          "share_last_12_months": 0.0,
+          "historical": true
+        },
+        "evidence_review_ids": [
+          "12164829797",
+          "8506856576",
+          "6782509379"
+        ],
+        "description": "Complaints that generated or delivered content is wrong, generic, vague, or irrelevant.",
+        "top_matched_phrases": [
+          {
+            "phrase": "not accurate",
+            "count": 1
+          },
+          {
+            "phrase": "generic",
+            "count": 1
+          },
+          {
+            "phrase": "vague",
+            "count": 1
+          },
+          {
+            "phrase": "wrong",
+            "count": 1
+          }
+        ],
+        "evidence": [
+          {
+            "review_id": "12164829797",
+            "excerpt": "Not only that but the horoscopes are very vague and negative."
+          },
+          {
+            "review_id": "8506856576",
+            "excerpt": "Not accurate and a waste of money."
+          },
+          {
+            "review_id": "6782509379",
+            "excerpt": "When you contact nebula’s support they give you a generic answer (exactly like the ones on all of the 1 star ratings) that they’re sorry you didn’t read their terms and conditions on what you’re buying (you never get the chance to before clicking) and that they can’t offer you a refund."
+          }
+        ],
+        "suggested_investigation": "Check whether the content is specific to the user's inputs and whether unsupported or generic outputs can be detected before delivery.",
+        "text": "Investigate Content accuracy and relevance: 4 of 43 complaint reviews (9.3%, 95% CI 3.7%-21.6%), for example 'Not only that but the horoscopes are very vague and negative.'."
+      },
+      {
+        "source": "issue_category",
+        "theme_id": null,
+        "category_id": "ads_interruptions",
+        "area": "Ads and interruptions",
+        "complaint_reviews": {
+          "count": 2,
+          "total": 43,
+          "share": 0.046511627906976744,
+          "ci95": {
+            "low": 0.012849260094380227,
+            "high": 0.15455498004063967,
+            "reason": "sampling uncertainty only; lexicon precision not measured unless audited"
+          }
+        },
+        "mean_star_rating": 1.5,
+        "recency": {
+          "newest_date": "2024-03-23T05:54:26+00:00",
+          "share_last_12_months": 0.0,
+          "historical": true
+        },
+        "evidence_review_ids": [
+          "4696528106",
+          "11075169965"
+        ],
+        "description": "Complaints about advertising, pop-ups, or interruptions that disrupt product use.",
+        "top_matched_phrases": [
+          {
+            "phrase": "ad",
+            "count": 2
+          },
+          {
+            "phrase": "ads",
+            "count": 1
+          }
+        ],
+        "evidence": [
+          {
+            "review_id": "4696528106",
+            "excerpt": "The ads for this app are not only definite lies but once you download the app and get through the whole personalized astrology experience, you can’t even use the features with out paying over $10 per month."
+          },
+          {
+            "review_id": "11075169965",
+            "excerpt": "Deceiving ad - when you click on the free 3 day trial you are automatically taken to Apple Pay and once you click submit to activate the three day trial you are charged the monthly fee - what a rip off!"
+          }
+        ],
+        "suggested_investigation": "Check whether advertising frequency, placement, and interruption points are concentrated in flows users expect to complete without disruption.",
+        "text": "Investigate Ads and interruptions: 2 of 43 complaint reviews (4.7%, 95% CI 1.3%-15.5%), for example 'The ads for this app are not only definite lies but once you download the app and get through the whole personalized astrology experience, you can’t even use the features with out paying over $10 per month.'."
+      },
+      {
+        "source": "issue_category",
+        "theme_id": null,
+        "category_id": "bugs_stability",
+        "area": "Bugs and stability",
+        "complaint_reviews": {
+          "count": 2,
+          "total": 43,
+          "share": 0.046511627906976744,
+          "ci95": {
+            "low": 0.012849260094380227,
+            "high": 0.15455498004063967,
+            "reason": "sampling uncertainty only; lexicon precision not measured unless audited"
+          }
+        },
+        "mean_star_rating": 1.5,
+        "recency": {
+          "newest_date": "2024-03-29T21:15:50+00:00",
+          "share_last_12_months": 0.0,
+          "historical": true
+        },
+        "evidence_review_ids": [
+          "11099954190",
+          "5300736312"
+        ],
+        "description": "Complaints about crashes, errors, broken flows, loading failures, or poor performance.",
+        "top_matched_phrases": [
+          {
+            "phrase": "does not work",
+            "count": 1
+          },
+          {
+            "phrase": "frozen",
+            "count": 1
+          },
+          {
+            "phrase": "stuck",
+            "count": 1
+          }
+        ],
+        "evidence": [
+          {
+            "review_id": "11099954190",
+            "excerpt": "Your app doesn’t work, especially the compatibility, it’s just a frozen screen and automatically switched to annual when I checked out for a week option."
+          },
+          {
+            "review_id": "5300736312",
+            "excerpt": "I downloaded it twice and both times it was stuck on the loading screen."
+          }
+        ],
+        "suggested_investigation": "Check whether the affected flows share a release, device, network condition, or backend dependency that can be reproduced from telemetry.",
+        "text": "Investigate Bugs and stability: 2 of 43 complaint reviews (4.7%, 95% CI 1.3%-15.5%), for example 'Your app doesn’t work, especially the compatibility, it’s just a frozen screen and automatically switched to annual when I checked out for a week option.'."
+      },
+      {
+        "source": "issue_category",
+        "theme_id": null,
+        "category_id": "service_responsiveness",
+        "area": "Service responsiveness",
+        "complaint_reviews": {
+          "count": 2,
+          "total": 43,
+          "share": 0.046511627906976744,
+          "ci95": {
+            "low": 0.012849260094380227,
+            "high": 0.15455498004063967,
+            "reason": "sampling uncertainty only; lexicon precision not measured unless audited"
+          }
+        },
+        "mean_star_rating": 1.0,
+        "recency": {
+          "newest_date": "2024-03-23T05:54:26+00:00",
+          "share_last_12_months": 0.0,
+          "historical": true
+        },
+        "evidence_review_ids": [
+          "11075169965",
+          "6444787269"
+        ],
+        "description": "Complaints about live agents, advisers, readers, sellers, or other human-delivered service.",
+        "top_matched_phrases": [
+          {
+            "phrase": "no response",
+            "count": 2
+          }
+        ],
+        "evidence": [
+          {
+            "review_id": "11075169965",
+            "excerpt": "I reached out via email with no response just a screen shot of frequently asked questions."
+          },
+          {
+            "review_id": "6444787269",
+            "excerpt": "Tried contacting these people through email and no response."
+          }
+        ],
+        "suggested_investigation": "Check whether human-service availability, response-time expectations, and service-quality controls match what customers are promised.",
+        "text": "Investigate Service responsiveness: 2 of 43 complaint reviews (4.7%, 95% CI 1.3%-15.5%), for example 'I reached out via email with no response just a screen shot of frequently asked questions.'."
+      },
+      {
+        "source": "theme",
         "theme_id": "theme_01",
         "area": "scam",
         "complaint_reviews": {
@@ -1469,13 +3026,13 @@
   },
   "provenance": {
     "timings_ms": {
-      "preprocess": 433.432,
-      "metrics": 22.052,
-      "sentiment": 3745.135,
-      "keywords": 29.914,
-      "units": 2895.295,
-      "embeddings": 304.418,
-      "clustering": 1.611
+      "preprocess": 452.038,
+      "metrics": 24.623,
+      "sentiment": 3337.753,
+      "keywords": 26.782,
+      "units": 2310.594,
+      "embeddings": 221.077,
+      "clustering": 1.369
     },
     "sentiment_model": {
       "id": "cardiffnlp/twitter-roberta-base-sentiment-latest",

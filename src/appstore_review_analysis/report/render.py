@@ -74,7 +74,7 @@ def render_report(
     lines.extend(_preprocessing(preprocessing))
     lines.extend(_sentiment(sentiment, evaluation, chart_links))
     lines.extend(_keywords(keywords))
-    lines.extend(_areas(insights, themes, chart_links))
+    lines.extend(_areas(insights, themes, evaluation, chart_links))
     lines.extend(_limitations(population, evaluation, themes))
     lines.extend(_methodology(themes))
     lines.extend(_reproduce())
@@ -121,7 +121,11 @@ def _executive_summary(
     n = _integer(metrics.get("n"))
     negative = _dict(_dict(sentiment.get("distribution")).get("negative"))
     negative_share = _number(negative.get("percentage"))
-    areas = [item for item in _list(insights.get("areas_of_improvement")) if isinstance(item, dict)]
+    areas = [
+        item
+        for item in _list(insights.get("areas_of_improvement"))
+        if isinstance(item, dict) and item.get("source") == "issue_category"
+    ]
     lines = ["## Executive summary", ""]
     summary_bits = [f"The report analyses **{n} sampled written reviews**."]
     if mean is not None:
@@ -133,14 +137,21 @@ def _executive_summary(
     lines.extend([" ".join(summary_bits), ""])
     lines.extend(_coverage_summary(themes))
     if areas:
-        lines.append("Most actionable supported areas, ordered with recent evidence first:")
+        lines.append("Highest-supported issue categories, ordered with recent evidence first:")
         lines.append("")
         for area in areas[:5]:
-            summary = str(area.get("text") or area.get("area") or "Supported issue")
-            lines.append(f"- {_safe(summary)}")
+            complaint = _dict(area.get("complaint_reviews"))
+            count = _integer(complaint.get("count"))
+            total = _integer(complaint.get("total"))
+            share = _fmt_pct(complaint.get("share"))
+            ci = _fmt_ci(_dict(complaint.get("ci95")), percent=True)
+            lines.append(
+                f"- **{_safe(str(area.get('area') or 'Issue category'))}**: "
+                f"{count} of {total} complaint reviews ({share}; 95% CI {ci})."
+            )
         lines.append("")
     else:
-        lines.extend(["No area of improvement met the configured evidence threshold.", ""])
+        lines.extend(["No issue category met the two-review support threshold.", ""])
     return lines
 
 
@@ -461,6 +472,8 @@ def _evaluation_summary(evaluation: dict[str, Any] | None) -> list[str]:
             "",
             "Theme-threshold check: **evaluation not run**.",
             "",
+            "Issue-category precision audit: **not audited**.",
+            "",
         ]
 
     benchmark = _dict(evaluation.get("benchmark"))
@@ -559,6 +572,28 @@ def _evaluation_summary(evaluation: dict[str, Any] | None) -> list[str]:
                     "",
                 ]
             )
+    category_audit = _dict(evaluation.get("issue_categories"))
+    if category_audit.get("status") != "run":
+        lines.extend(["Issue-category precision audit: **not audited**.", ""])
+    else:
+        audit_rows: list[tuple[str, ...]] = []
+        for raw in _list(category_audit.get("categories")):
+            row = _dict(raw)
+            precision = _dict(row.get("precision"))
+            audit_rows.append(
+                (
+                    str(row.get("category") or "unknown"),
+                    _fmt_int(row.get("n")),
+                    _fmt_pct(precision.get("value")),
+                    _fmt_ci(precision, percent=True),
+                )
+            )
+        lines.extend(["Issue-category precision audit:", ""])
+        if audit_rows:
+            lines.extend(_table(["Category", "Audited matches", "Precision", "95% CI"], audit_rows))
+            lines.append("")
+        else:
+            lines.extend(["Audit marked run but contains no category rows.", ""])
     return lines
 
 
@@ -626,7 +661,10 @@ def _phrase_table(title: str, rows_raw: list[Any], *, distinctive: bool) -> list
 
 
 def _areas(
-    insights: dict[str, Any], themes: dict[str, Any], chart_links: dict[str, str]
+    insights: dict[str, Any],
+    themes: dict[str, Any],
+    evaluation: dict[str, Any] | None,
+    chart_links: dict[str, str],
 ) -> list[str]:
     lines = ["## Areas of improvement", ""]
     lines.extend(_coverage_summary(themes))
@@ -644,12 +682,130 @@ def _areas(
             "",
         ]
     )
-    items = [item for item in _list(insights.get("areas_of_improvement")) if isinstance(item, dict)]
-    if not items:
-        lines.extend(["No area met the configured evidence threshold.", ""])
+
+    issue_categories = _dict(insights.get("issue_categories"))
+    category_items = [
+        item for item in _list(issue_categories.get("items")) if isinstance(item, dict)
+    ]
+    lines.extend(["### Issue categories", ""])
+    lines.extend(
+        [
+            "Categories use a fixed, app-agnostic whole-token lexicon over complaint sentences. "
+            "A review can match multiple categories, so category shares overlap.",
+            "",
+        ]
+    )
+    audit = _dict(evaluation.get("issue_categories")) if evaluation is not None else {}
+    if audit.get("status") == "run":
+        lines.extend(
+            [
+                "Category precision audit: **run**. Precision estimates are reported in the "
+                "evaluation section and remain separate from sampling uncertainty.",
+                "",
+            ]
+        )
     else:
-        for index, item in enumerate(items, start=1):
-            lines.append(f"### {index}. {_safe(str(item.get('area') or 'Supported issue'))}")
+        lines.extend(["Category precision audit: **not audited**.", ""])
+
+    if category_items:
+        rows: list[tuple[str, ...]] = []
+        for item in category_items:
+            evidence_ids = ", ".join(
+                f"`{_safe(str(row.get('review_id')))}`"
+                for row in _list(item.get("evidence"))
+                if isinstance(row, dict) and row.get("review_id") is not None
+            )
+            rows.append(
+                (
+                    str(item.get("label") or item.get("category_id") or "Issue"),
+                    f"{_integer(item.get('review_count'))} of {_integer(item.get('denominator'))}",
+                    (
+                        f"{_fmt_pct(item.get('share'))}; "
+                        f"{_fmt_ci(_dict(item.get('ci95')), percent=True)}"
+                    ),
+                    _fmt_float(_number(item.get("mean_star_rating")), 2),
+                    _fmt_pct(_dict(item.get("recency")).get("share_last_12_months")),
+                    evidence_ids or "none",
+                )
+            )
+        lines.extend(
+            _table(
+                [
+                    "Category",
+                    "Reviews",
+                    "Share and 95% CI",
+                    "Mean stars",
+                    "Recent (last 12 months)",
+                    "Evidence IDs",
+                ],
+                rows,
+            )
+        )
+        lines.append("")
+        for item in category_items:
+            label = _safe(str(item.get("label") or "Issue category"))
+            lines.extend([f"#### {label}", ""])
+            lines.extend(
+                [
+                    _safe(str(item.get("description") or "")),
+                    "",
+                    "Suggested investigation: "
+                    + _safe(
+                        str(item.get("suggested_investigation") or "Check the matched evidence.")
+                    ),
+                    "",
+                ]
+            )
+            phrases = [
+                row for row in _list(item.get("top_matched_phrases")) if isinstance(row, dict)
+            ]
+            if phrases:
+                lines.append(
+                    "Top matched phrases: "
+                    + ", ".join(
+                        f"`{_safe(str(row.get('phrase') or ''))}` ({_integer(row.get('count'))})"
+                        for row in phrases
+                    )
+                    + "."
+                )
+                lines.append("")
+            evidence = [row for row in _list(item.get("evidence")) if isinstance(row, dict)]
+            for row in evidence:
+                lines.append(
+                    f"- `{_safe(str(row.get('review_id') or 'unknown'))}`: "
+                    f"“{_clip(str(row.get('excerpt') or ''), 300)}”"
+                )
+            lines.append("")
+        lines.extend(
+            [
+                f"![Issue-category support]({chart_links['issue_category_support']})",
+                "",
+            ]
+        )
+    else:
+        lines.extend(["No issue category met the two-review support threshold.", ""])
+
+    lines.extend(
+        [
+            "### Emerging clusters",
+            "",
+            "Semantic clusters remain a separate discovery layer; they are not merged into the "
+            "fixed issue-category taxonomy.",
+            "",
+        ]
+    )
+    cluster_areas = [
+        item
+        for item in _list(insights.get("areas_of_improvement"))
+        if isinstance(item, dict) and item.get("source") in {"theme", "phrase"}
+    ]
+    if not cluster_areas:
+        lines.extend(["No semantic cluster met the configured evidence threshold.", ""])
+    else:
+        for index, item in enumerate(cluster_areas, start=1):
+            lines.append(
+                f"#### Cluster {index}: {_safe(str(item.get('area') or 'Supported issue'))}"
+            )
             lines.append("")
             lines.append(_safe(str(item.get("text") or "")))
             lines.append("")
@@ -669,8 +825,24 @@ def _areas(
                     "",
                 ]
             )
-    if _list(themes.get("items")):
-        lines.extend([f"![Theme support]({chart_links['theme_support']})", ""])
+
+    not_categorised = _dict(issue_categories.get("not_categorised"))
+    lines.extend(["### Not categorised", ""])
+    nc_count = _integer(not_categorised.get("review_count"))
+    nc_total = _integer(not_categorised.get("denominator"))
+    lines.extend(
+        [
+            f"**{nc_count} of {nc_total} complaint reviews** "
+            f"({_fmt_pct(not_categorised.get('share'))}) did not match a supported issue category.",
+            "",
+        ]
+    )
+    for row in [item for item in _list(not_categorised.get("evidence")) if isinstance(item, dict)]:
+        lines.append(
+            f"- `{_safe(str(row.get('review_id') or 'unknown'))}`: "
+            f"“{_clip(str(row.get('excerpt') or ''), 300)}”"
+        )
+    lines.append("")
     return lines
 
 
@@ -764,6 +936,20 @@ def _limitations(
             bullets.append(
                 "No evaluated theme distance threshold met the 0.80 same-issue precision target."
             )
+    bullets.extend(
+        [
+            "Issue categories are lexicon-based heuristics with a fixed generic vocabulary; they "
+            "are not learned from this app and can miss paraphrases or ambiguous uses.",
+            "Issue-category shares are multi-label and may overlap; they must not be summed to "
+            "100%.",
+        ]
+    )
+    category_audit = _dict(evaluation.get("issue_categories")) if evaluation is not None else {}
+    if category_audit.get("status") != "run":
+        bullets.append(
+            "Issue-category precision has not been measured; the optional human audit has not "
+            "been run."
+        )
     coverage = _dict(themes.get("coverage"))
     coverage_values = [
         _number(coverage.get("unit_share")),
@@ -790,6 +976,8 @@ def _methodology(themes: dict[str, Any]) -> list[str]:
         "analysable reviews only.",
         "- Common 1-3 grams and contrastive Fightin' Words rankings are calculated from "
         "negative reviews. Displayed phrases must contain at least one content token.",
+        "- Issue categories use a versioned, generic whole-token lexicon over score-gated "
+        "complaint sentences; category support is review-level and multi-label.",
         "- Complaint themes are built from score-gated negative sentences with pinned MiniLM "
         f"embeddings and agglomerative clustering at cosine distance threshold {threshold}.",
         "",

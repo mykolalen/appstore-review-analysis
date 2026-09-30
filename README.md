@@ -1,14 +1,14 @@
 # App Store Review Analysis API
 
 A reproducible Python service that collects a uniform random sample of written App Store reviews,
-computes rating and sentiment metrics, surfaces negative phrases and complaint themes, and exposes the
-result through a REST API and downloadable review exports.
+computes rating and sentiment metrics, surfaces negative phrases, generic issue categories and complaint
+themes, and exposes the result through a REST API and downloadable review exports.
 
 **Architecture in five lines**
 
 1. `collection/` validates the target and provides iTunes rank sampling, an explicit RSS fallback, and fixture replay.
 2. `text.py` normalises review text and applies the language/analysis eligibility rules.
-3. `analysis/` computes rating metrics, local sentiment, negative phrases, themes and grounded evidence.
+3. `analysis/` computes rating metrics, local sentiment, negative phrases, generic issue categories, themes and grounded evidence.
 4. `api/` + `storage.py` expose synchronous REST endpoints backed by SQLite; `report/` renders the reproducible demo report.
 
 ## Requirements mapped to the repository
@@ -22,7 +22,7 @@ result through a REST API and downloadable review exports.
 | Average/distribution of ratings | `analysis/metrics.py` | reference/Wilson tests + report charts |
 | Positive/neutral/negative sentiment | pinned CardiffNLP RoBERTa in `analysis/sentiment.py` | mapping + real-model slow test |
 | Common negative keywords/phrases | common n-grams + Fightin' Words in `analysis/keywords.py` | keyword tests + report tables |
-| Areas of improvement | complaint units, MiniLM clustering, evidence in `themes.py` / `evidence.py` | theme/evidence tests + report |
+| Areas of improvement | generic issue categories in `issue_categories.py` plus complaint clustering/evidence in `themes.py` / `evidence.py` | category/theme/evidence tests + report |
 | Collect endpoint | `POST /v1/analyses` | API tests |
 | Metrics / insights endpoints | `GET /v1/analyses/{id}`, `/metrics`, `/insights` | API tests |
 | Raw review download | `GET /v1/analyses/{id}/reviews?format=csv|json` | export/API tests |
@@ -292,8 +292,8 @@ for production scraping.
 
 `analysis_text` preserves punctuation/emoji for models and evidence. `lexical_text` normalises
 apostrophes/contractions while preserving negation. Rating metrics use every sampled review;
-sentiment/keyword/theme metrics use reviews that pass the language gate. Every proportion names its
-denominator. Wilson 95% intervals are used for proportions, and seeded bootstrap helpers avoid NaN
+sentiment/keyword/theme/category metrics use reviews that pass the language gate. Every proportion names
+its denominator. Wilson 95% intervals are used for proportions, and seeded bootstrap helpers avoid NaN
 output for degenerate cases.
 
 ### Sentiment
@@ -303,7 +303,7 @@ Sentiment runs locally with `cardiffnlp/twitter-roberta-base-sentiment-latest` p
 truncation is explicit at 512 tokens and labels come from the model's `id2label` mapping. The model is
 a tweet-domain model; the project-specific hand-labelled benchmark is reported below, while broader domain transfer remains a limitation.
 
-### Negative phrases and complaint themes
+### Negative phrases, issue categories and complaint themes
 
 Negative feedback produces two phrase tables from the same counts:
 
@@ -323,6 +323,15 @@ for sentences from 4-5 star reviews and 0.50 for 1-3 star reviews. These default
 after observing false-positive negative sentences; they must be re-tuned against hand-labelled complaint
 units before being treated as calibrated thresholds. They can be configured with
 `UNIT_MIN_NEGATIVE_SCORE_POSITIVE_REVIEWS` and `UNIT_MIN_NEGATIVE_SCORE_OTHER`.
+
+The same retained complaint units also pass through a versioned, app-agnostic issue-category lexicon.
+Matching uses explicit lowercase whole-token phrases against `lexical_text`; substrings do not match and
+trust triggers such as `scam`, `fraud` and `fake` are ignored when negated within the preceding two tokens.
+A review counts once per category, categories may overlap, and only categories supported by at least two
+complaint reviews are displayed. Each category reports `k of N`, a Wilson 95% interval for sampling
+uncertainty, mean stars, recency, matched phrases, evidence review IDs/excerpts and an author-written
+`Check whether ...` investigation hypothesis. The categories are generic heuristics, not learned from the
+demo app. Their precision is reported only if the optional human audit has been labelled and validated.
 
 Accepted complaint units are embedded by pinned `all-MiniLM-L6-v2`, then clustered with cosine/average
 agglomerative clustering and an adaptive minimum-support policy. The clustering distance threshold is
@@ -364,8 +373,19 @@ The Tabularis comparator is Apache-2.0 licensed. The pre-written model decision 
 switch only when an eligible licence-clean 3-class challenger has a paired-bootstrap negative-F1
 difference interval excluding zero in its favour; on a tie, retain the better-documented model.
 
-Complaint-unit and theme-distance evaluations are optional. When their gold files do not exist, both
-`evaluation/results.md` and the demo report explicitly state which evaluation was not run.
+Complaint-unit, theme-distance and issue-category precision evaluations are optional. When their files do
+not exist, both `evaluation/results.md` and the demo report explicitly state which evaluation was not run.
+The issue-category audit is human-only: generate `evaluation/category_audit_sheet.csv`, label every
+`human_label` as `correct` or `incorrect`, then validate it. No category precision is claimed before that
+sheet is labelled.
+
+```powershell
+uv run reviews audit-categories `
+  --analysis reports/nebula_us_seed42.analysis.json `
+  --out evaluation/category_audit_sheet.csv
+# Fill human_label with correct or incorrect.
+uv run python evaluation/validate_category_audit.py
+```
 
 ## API surface
 
@@ -374,7 +394,7 @@ Complaint-unit and theme-distance evaluations are optional. When their gold file
 | `POST` | `/v1/analyses` | collect + optionally analyse synchronously; returns `201` and relative `Location` |
 | `GET` | `/v1/analyses/{id}` | stored full analysis |
 | `GET` | `/v1/analyses/{id}/metrics` | preprocessing, ratings, sentiment and keyword tables |
-| `GET` | `/v1/analyses/{id}/insights` | themes + deterministic areas of improvement |
+| `GET` | `/v1/analyses/{id}/insights` | issue categories, themes + deterministic areas of improvement |
 | `GET` | `/v1/analyses/{id}/reviews?format=json|csv` | allowlisted raw/analysed review export |
 | `GET` | `/healthz` | liveness |
 | `GET` | `/readyz` | database + local-model readiness |
@@ -390,7 +410,7 @@ CSV output follows RFC 4180 and guards spreadsheet-formula prefixes in free-text
 
 The committed report is [`reports/nebula_us_seed42.md`](reports/nebula_us_seed42.md), generated only
 from the committed snapshot/analysis/population files. Its four charts are under `reports/charts/`:
-rating distribution, sentiment distribution, theme support and rating by period.
+rating distribution, sentiment distribution, issue-category support and rating by period.
 
 Reproduce it without contacting Apple:
 
@@ -413,7 +433,7 @@ instead of estimated.
 |---|---:|---|
 | Nebula fixture sample size | 100 reviews | committed `seed=42` fixture |
 | Native fixture reproduction, n=100 | 21.38 s | Windows 11 / Python 3.13 local slow-test run |
-| Fast deterministic gate | 132 passed, 5 deselected in 22.99 s | Windows local gate after the repository audit |
+| Fast deterministic gate before issue-category changes | 135 passed, 5 deselected in 27.16 s | Windows Batch 0 acceptance gate; Batch 1 is re-measured before merge |
 | CardiffNLP model download/reconstruction | about 502 MB | local `reviews download-models` output |
 | MiniLM model download/reconstruction | about 91.6 MB | local `reviews download-models` output |
 | Native n=200 end-to-end | not measured | no committed n=200 fixture |
@@ -468,7 +488,7 @@ The decision record is in [`docs/decisions.md`](docs/decisions.md); the componen
 [`docs/architecture.md`](docs/architecture.md). The repository currently does not include:
 
 - a public Cloud Run deployment (the public-mode code and deployment instructions are included);
-- completed complaint-unit and labelled theme-pair evaluations;
+- completed complaint-unit, labelled theme-pair or issue-category precision evaluations;
 - a published recording (the Ukrainian narration script is provided);
 - RAG, a vector database or agents.
 
@@ -483,6 +503,9 @@ The decision record is in [`docs/decisions.md`](docs/decisions.md); the componen
 - The sentiment model is tweet-domain. On the committed hand-labelled set it performs strongly on the
   primary negative-class F1 metric, but the neutral class has only three examples and the evaluation is
   too small to establish broad domain-general performance.
+- Issue categories use a fixed generic phrase lexicon over complaint units. They are heuristic rather than
+  learned from this app; category shares can overlap, and lexical precision is unknown until the optional
+  human category audit is labelled and validated.
 - SQLite + one uvicorn worker is appropriate for the take-home. A production ingestion system should use
   scheduled ingestion, a durable queue, Postgres, rolling aggregates, alerting and provider-specific
   credentials/secrets.

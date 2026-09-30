@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict
 
@@ -187,15 +187,78 @@ class RecencyContract(_ContractModel):
     historical: bool
 
 
-class InsightAreaContract(_ContractModel):
-    area: str
-    text: str
-    evidence_review_ids: list[str]
+class IssueCategoryEvidenceContract(_ContractModel):
+    review_id: str
+    excerpt: str
+
+
+class IssueCategoryPhraseContract(_ContractModel):
+    phrase: str
+    count: int
+
+
+class IssueCategoryItemContract(_ContractModel):
+    category_id: str
+    label: str
+    description: str
+    review_count: int
+    denominator: int
+    share: float | None
+    ci95: IntervalContract
+    mean_star_rating: float | None
     recency: RecencyContract
+    top_matched_phrases: list[IssueCategoryPhraseContract]
+    evidence: list[IssueCategoryEvidenceContract]
+    matched_review_ids: list[str]
+    suggested_investigation: str
+
+
+class NotCategorisedContract(_ContractModel):
+    review_count: int
+    denominator: int
+    share: float | None
+    review_ids: list[str]
+    evidence: list[IssueCategoryEvidenceContract]
+
+
+class CategoryAuditRowContract(_ContractModel):
+    category: str
+    review_id: str
+    matched_phrase: str
+    sentence: str
+
+
+class IssueCategoriesContract(_ContractModel):
+    status: str
+    version: str
+    denominator: int
+    multi_label: bool
+    items: list[IssueCategoryItemContract]
+    not_categorised: NotCategorisedContract
+    audit_rows: list[CategoryAuditRowContract]
+
+
+class ComplaintReviewSupportContract(_ContractModel):
+    count: int
+    total: int
+    share: float | None
+    ci95: IntervalContract | None
+
+
+class InsightAreaContract(_ContractModel):
+    source: Literal["issue_category", "theme", "phrase"]
+    theme_id: str | None
+    area: str
+    complaint_reviews: ComplaintReviewSupportContract
+    mean_star_rating: float | None
+    recency: RecencyContract
+    evidence_review_ids: list[str]
+    text: str
 
 
 class InsightsContract(_ContractModel):
     status: str
+    issue_categories: IssueCategoriesContract | None = None
     areas_of_improvement: list[InsightAreaContract]
 
 

@@ -166,3 +166,65 @@ def test_theme_without_displayable_phrase_gets_explicit_unlabelled_name() -> Non
     }
     result = build_areas_of_improvement(themes=themes, keywords={}, rows=rows)
     assert result["areas_of_improvement"][0]["area"] == "Unlabelled complaint group (3 units)"
+
+
+def test_issue_categories_precede_themes_and_sources_are_explicit() -> None:
+    rows = [_row("r1", "charged twice"), _row("r2", "charged again")]
+    themes = {
+        "items": [
+            {
+                "theme_id": "theme_01",
+                "unit_count": 3,
+                "review_count": 2,
+                "share_of_complaint_reviews": {
+                    "value": 1.0,
+                    "denominator": 2,
+                    "ci95": {"low": 0.34, "high": 1.0},
+                },
+                "mean_star_rating": 1.0,
+                "top_phrases": [{"phrase": "charged"}],
+                "newest_date": "2026-09-01T00:00:00+00:00",
+                "share_last_12_months": 1.0,
+                "historical": False,
+                "representative_units": [{"review_id": "r1", "excerpt": "charged twice"}],
+                "evidence_review_ids": ["r1", "r2"],
+            }
+        ]
+    }
+    issue_categories = {
+        "status": "ok",
+        "items": [
+            {
+                "category_id": "billing_charges",
+                "label": "Billing and unexpected charges",
+                "description": "Billing complaints.",
+                "review_count": 2,
+                "denominator": 2,
+                "share": 1.0,
+                "ci95": {"low": 0.34, "high": 1.0, "reason": "sampling uncertainty only"},
+                "mean_star_rating": 1.0,
+                "recency": {
+                    "newest_date": "2026-09-01T00:00:00+00:00",
+                    "share_last_12_months": 1.0,
+                    "historical": False,
+                },
+                "top_matched_phrases": [{"phrase": "charged", "count": 2}],
+                "evidence": [{"review_id": "r1", "excerpt": "charged twice"}],
+                "matched_review_ids": ["r1", "r2"],
+                "suggested_investigation": "Check whether billing is clear.",
+            }
+        ],
+        "not_categorised": {},
+        "audit_rows": [],
+    }
+    result = build_areas_of_improvement(
+        themes=themes,
+        keywords={},
+        rows=rows,
+        issue_categories=issue_categories,
+    )
+    areas = result["areas_of_improvement"]
+    assert [item["source"] for item in areas] == ["issue_category", "theme"]
+    assert areas[0]["category_id"] == "billing_charges"
+    assert areas[0]["theme_id"] is None
+    assert areas[1]["theme_id"] == "theme_01"

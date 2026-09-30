@@ -315,5 +315,9 @@
   "theme_threshold": {
     "status": "not_run",
     "reason": "pairs_gold.csv missing"
+  },
+  "issue_categories": {
+    "status": "not_run",
+    "reason": "category_audit_sheet.csv missing"
   }
 }

@@ -11,9 +11,12 @@ flowchart LR
     T --> M[Ratings + local sentiment]
     M --> K[Negative phrase tables]
     M --> U[Negative sentence units]
+    U --> C[Generic issue categories + evidence]
     U --> E[MiniLM embeddings]
     E --> H[Agglomerative themes + evidence]
-    H --> I[Deterministic evidence-backed insights]
+    K --> I[Deterministic evidence-backed insights]
+    C --> I
+    H --> I
     I --> DB[(SQLite)]
     I --> R[Markdown report + 4 charts]
     DB --> A[GET metrics / insights / review export]

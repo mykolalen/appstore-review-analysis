@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import runpy
 import warnings
 from datetime import UTC, datetime
 from pathlib import Path
@@ -14,6 +15,7 @@ from appstore_review_analysis.evaluation import (
     annotator_relabel_statistics,
     assert_pinned_model,
     build_gold_items,
+    category_audit_metrics,
     classification_metrics,
     label_sheet_rows,
     pair_threshold_metrics,
@@ -131,6 +133,64 @@ def test_optional_evaluation_helpers() -> None:
     assert threshold["selected_threshold"] is not None
 
 
+def test_category_audit_metrics_are_per_category_wilson_precision() -> None:
+    result = category_audit_metrics(
+        [
+            {
+                "category": "billing_charges",
+                "review_id": "r1",
+                "matched_phrase": "charged",
+                "sentence": "I was charged.",
+                "human_label": "correct",
+            },
+            {
+                "category": "billing_charges",
+                "review_id": "r2",
+                "matched_phrase": "charge",
+                "sentence": "No relevant charge complaint.",
+                "human_label": "incorrect",
+            },
+            {
+                "category": "refunds",
+                "review_id": "r3",
+                "matched_phrase": "refund",
+                "sentence": "Refund never arrived.",
+                "human_label": "correct",
+            },
+        ]
+    )
+    assert result["status"] == "run"
+    categories = {row["category"]: row for row in result["categories"]}  # type: ignore[index]
+    billing_precision = categories["billing_charges"]["precision"]  # type: ignore[index]
+    assert billing_precision["value"] == pytest.approx(0.5)
+    assert categories["refunds"]["precision"]["value"] == pytest.approx(1.0)  # type: ignore[index]
+    assert result["overall_precision"]["value"] == pytest.approx(2 / 3)  # type: ignore[index]
+
+
+def test_category_audit_rejects_missing_or_invalid_human_labels() -> None:
+    base = {
+        "category": "refunds",
+        "review_id": "r1",
+        "matched_phrase": "refund",
+        "sentence": "Refund never arrived.",
+    }
+    with pytest.raises(ValueError, match="missing human_label"):
+        category_audit_metrics([{**base, "human_label": ""}])
+    with pytest.raises(ValueError, match="correct.*incorrect"):
+        category_audit_metrics([{**base, "human_label": "maybe"}])
+
+
+def test_category_audit_validator_is_optional_when_sheet_is_absent(tmp_path: Path) -> None:
+    validator = runpy.run_path(str(Path("evaluation/validate_category_audit.py")))
+    section = validator["_section"]
+
+    result = section(tmp_path / "missing_category_audit_sheet.csv")
+    assert result == {
+        "status": "not_run",
+        "reason": "category_audit_sheet.csv missing",
+    }
+
+
 def test_annotator_relabel_perfect_agreement_is_warning_free_and_finite() -> None:
     original = {"a": "negative", "b": "mixed", "c": "positive"}
 
@@ -208,6 +268,24 @@ def test_results_markdown_publishes_metrics_and_threshold_table() -> None:
         },
         "annotator_relabel": {"status": "not_run", "reason": "missing"},
         "complaint_units": {"status": "not_run", "reason": "missing"},
+        "issue_categories": {
+            "status": "run",
+            "categories": [
+                {
+                    "category": "refunds",
+                    "n": 2,
+                    "correct": 2,
+                    "precision": {
+                        "successes": 2,
+                        "n": 2,
+                        "value": 1.0,
+                        "low": 0.342,
+                        "high": 1.0,
+                    },
+                }
+            ],
+            "note": "Human precision audit.",
+        },
         "theme_threshold": {
             "status": "run",
             "minimum_precision": 0.8,
@@ -230,6 +308,8 @@ def test_results_markdown_publishes_metrics_and_threshold_table() -> None:
     assert "Reweighted accuracy" in markdown
     assert "Confusion matrix" in markdown
     assert "Selected threshold: **0.40**" in markdown
+    assert "## Issue-category precision audit" in markdown
+    assert "| refunds | 2 | 2 |" in markdown
     assert "| 0.40 | 10 | 8 | 0.800 | True |" in markdown
 
 

@@ -12,10 +12,10 @@ from appstore_review_analysis.analysis.sentiment import FakeSentiment
 from appstore_review_analysis.analysis.themes import FakeEmbedder
 from appstore_review_analysis.collection.fixture import FixtureProvider
 from appstore_review_analysis.report.charts import (
+    issue_category_support_data,
     period_rating_data,
     rating_distribution_data,
     sentiment_distribution_data,
-    theme_support_data,
 )
 from appstore_review_analysis.report.contracts import ReportAnalysisContract
 from appstore_review_analysis.report.render import render_report, write_report_files
@@ -63,7 +63,7 @@ def _chart_links() -> dict[str, str]:
     return {
         "rating_distribution": "charts/rating_distribution.png",
         "sentiment_distribution": "charts/sentiment_distribution.png",
-        "theme_support": "charts/theme_support.png",
+        "issue_category_support": "charts/issue_category_support.png",
         "rating_by_period": "charts/rating_by_period.png",
     }
 
@@ -87,6 +87,10 @@ def test_pipeline_output_satisfies_report_contract_and_has_no_empty_sections(
     assert "## Preprocessing" in markdown
     assert "### Before/after examples" in markdown
     assert "Theme coverage:" in markdown
+    assert "### Issue categories" in markdown
+    assert "### Emerging clusters" in markdown
+    assert "### Not categorised" in markdown
+    assert "Category precision audit: **not audited**" in markdown
 
 
 def test_committed_report_has_no_empty_sections_or_unexplained_na() -> None:
@@ -126,7 +130,7 @@ def test_chart_data_matches_pipeline_analysis_json_exactly(
     analysis = _pipeline_analysis(monkeypatch)
     ratings = rating_distribution_data(analysis)
     sentiment = sentiment_distribution_data(analysis)
-    themes = theme_support_data(analysis)
+    categories = issue_category_support_data(analysis)
     periods = period_rating_data(analysis)
 
     distribution = analysis["metrics"]["distribution"]  # type: ignore[index]
@@ -138,9 +142,11 @@ def test_chart_data_matches_pipeline_analysis_json_exactly(
         sentiment_distribution[label]["count"] for label in ("negative", "neutral", "positive")
     ]
 
-    theme_items = analysis["themes"]["items"]  # type: ignore[index]
-    assert themes["counts"] == [item["review_count"] for item in theme_items]
-    assert themes["values"] == [item["share_of_complaint_reviews"]["value"] for item in theme_items]
+    category_items = analysis["insights"]["issue_categories"]["items"]  # type: ignore[index]
+    assert categories["counts"] == [item["review_count"] for item in category_items]
+    assert categories["values"] == [item["share"] for item in category_items]
+    assert categories["low"] == [item["ci95"]["low"] for item in category_items]
+    assert categories["high"] == [item["ci95"]["high"] for item in category_items]
 
     metric_periods = analysis["metrics"]["periods"]  # type: ignore[index]
     assert periods["counts"] == [item["n"] for item in metric_periods]
@@ -178,6 +184,8 @@ def test_report_writes_four_non_empty_charts_and_links_them(
         assert f"{star}-star share" in markdown
     assert "1,000" in markdown
     assert len(charts) == 4
+    assert "issue_category_support" in charts
+    assert not (charts_dir / "theme_support.png").exists()
     for chart in charts.values():
         assert chart.stat().st_size > 1000
         assert f"charts/{chart.name}" in markdown
@@ -231,6 +239,7 @@ def test_report_marks_missing_evaluation_parts_explicitly(
     assert "Annotator repeatability: **evaluation not run**" in markdown
     assert "Complaint-unit check: **evaluation not run**" in markdown
     assert "Theme-threshold check: **evaluation not run**" in markdown
+    assert "Issue-category precision audit: **not audited**" in markdown
 
 
 def test_report_renders_structured_evaluation_without_json_dump(
@@ -268,6 +277,16 @@ def test_report_renders_structured_evaluation_without_json_dump(
             "subgroups": {},
         },
         "theme_threshold": {"status": "run", "selected_threshold": 0.45},
+        "issue_categories": {
+            "status": "run",
+            "categories": [
+                {
+                    "category": "billing_charges",
+                    "n": 10,
+                    "precision": {"value": 0.9, "low": 0.6, "high": 0.98},
+                }
+            ],
+        },
     }
     markdown = render_report(
         analysis,
@@ -280,4 +299,6 @@ def test_report_renders_structured_evaluation_without_json_dump(
     assert "Anchoring" not in markdown
     assert "repeat-label file does not encode session timing" in markdown
     assert "selected threshold **0.45**" in markdown
+    assert "Issue-category precision audit:" in markdown
+    assert "billing_charges" in markdown
     assert '"benchmark"' not in markdown

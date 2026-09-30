@@ -124,6 +124,7 @@ def test_requirement_table_points_to_existing_implementation() -> None:
         "src/appstore_review_analysis/analysis/metrics.py",
         "src/appstore_review_analysis/analysis/sentiment.py",
         "src/appstore_review_analysis/analysis/keywords.py",
+        "src/appstore_review_analysis/analysis/issue_categories.py",
         "src/appstore_review_analysis/analysis/themes.py",
         "src/appstore_review_analysis/analysis/evidence.py",
         "reports/nebula_us_seed42.md",

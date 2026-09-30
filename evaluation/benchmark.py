@@ -25,6 +25,7 @@ from appstore_review_analysis.evaluation import (
     BinarySentimentAdapter,
     FiveClassSentimentAdapter,
     annotator_relabel_statistics,
+    category_audit_metrics,
     classification_metrics,
     metric_bca_ci,
     pair_threshold_metrics,
@@ -157,6 +158,18 @@ def _pair_section(path: Path) -> dict[str, Any]:
     return pair_threshold_metrics(rows)
 
 
+def _category_section(path: Path) -> dict[str, Any]:
+    if not path.exists():
+        return {"status": "not_run", "reason": "category_audit_sheet.csv missing"}
+    with path.open("r", encoding="utf-8", newline="") as handle:
+        rows = list(csv.DictReader(handle))
+    if not rows:
+        return {"status": "not_run", "reason": "category_audit_sheet.csv is empty"}
+    if any(not str(row.get("human_label") or "").strip() for row in rows):
+        return {"status": "not_run", "reason": "category_audit_sheet.csv has unlabelled rows"}
+    return category_audit_metrics(rows)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(
         description="Benchmark pinned sentiment models on hand-labelled gold data."
@@ -166,6 +179,11 @@ def main() -> None:
     parser.add_argument("--relabels", type=Path, default=Path("evaluation/labels_relabel.csv"))
     parser.add_argument("--units", type=Path, default=Path("evaluation/units_gold.csv"))
     parser.add_argument("--pairs", type=Path, default=Path("evaluation/pairs_gold.csv"))
+    parser.add_argument(
+        "--category-audit",
+        type=Path,
+        default=Path("evaluation/category_audit_sheet.csv"),
+    )
     parser.add_argument("--frame-weights", type=Path, default=Path("evaluation/frame_weights.json"))
     parser.add_argument("--models-dir", type=Path, default=Path("models"))
     parser.add_argument("--out", type=Path, default=Path("evaluation/results.json"))
@@ -317,6 +335,7 @@ def main() -> None:
         "annotator_relabel": relabel,
         "complaint_units": _unit_section(args.units, shipping, Settings()),
         "theme_threshold": _pair_section(args.pairs),
+        "issue_categories": _category_section(args.category_audit),
     }
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(

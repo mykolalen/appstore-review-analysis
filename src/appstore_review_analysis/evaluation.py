@@ -646,6 +646,55 @@ def pair_threshold_metrics(rows: Sequence[dict[str, str]]) -> dict[str, object]:
     return {"status": "run", **result}
 
 
+def category_audit_metrics(rows: Sequence[dict[str, str]]) -> dict[str, object]:
+    """Validate human category labels and compute per-category precision with Wilson CIs."""
+
+    if not rows:
+        return {"status": "not_run", "reason": "category audit contains no rows"}
+    seen: set[tuple[str, str]] = set()
+    grouped: dict[str, list[bool]] = {}
+    for row_number, row in enumerate(rows, start=2):
+        category = _required(row.get("category"), row_number, "category")
+        review_id = _required(row.get("review_id"), row_number, "review_id")
+        _required(row.get("matched_phrase"), row_number, "matched_phrase")
+        _required(row.get("sentence"), row_number, "sentence")
+        key = (category, review_id)
+        if key in seen:
+            raise ValueError(f"duplicate category/review pair on row {row_number}")
+        seen.add(key)
+        label = _required(row.get("human_label"), row_number, "human_label").lower()
+        if label not in {"correct", "incorrect"}:
+            raise ValueError(
+                f"invalid human_label on row {row_number}: use 'correct' or 'incorrect'"
+            )
+        grouped.setdefault(category, []).append(label == "correct")
+
+    categories: list[dict[str, object]] = []
+    all_labels: list[bool] = []
+    for category in sorted(grouped):
+        labels = grouped[category]
+        all_labels.extend(labels)
+        precision = wilson_summary(sum(labels), len(labels))
+        categories.append(
+            {
+                "category": category,
+                "n": len(labels),
+                "correct": sum(labels),
+                "precision": precision,
+            }
+        )
+    return {
+        "status": "run",
+        "n": len(all_labels),
+        "categories": categories,
+        "overall_precision": wilson_summary(sum(all_labels), len(all_labels)),
+        "note": (
+            "Human precision audit of lexicon matches only; it does not estimate recall or replace "
+            "the sampling intervals reported for category prevalence."
+        ),
+    }
+
+
 def render_results_markdown(results: dict[str, Any]) -> str:
     """Render the complete evaluation evidence without inventing missing stages."""
 
@@ -883,6 +932,26 @@ def render_results_markdown(results: dict[str, Any]) -> str:
                 f"| {_md_number(row.get('threshold'), 2)} | {row.get('predicted_same')} | "
                 f"{row.get('true_same')} | {_md_number(row.get('precision'), 3)} | "
                 f"{bool(row.get('eligible'))} |"
+            )
+        lines.append("")
+
+    category_audit = cast(dict[str, Any], results.get("issue_categories", {}))
+    lines.extend(["## Issue-category precision audit", ""])
+    if category_audit.get("status") != "run":
+        lines.extend([f"Not audited: {category_audit.get('reason', 'audit file missing')}.", ""])
+    else:
+        lines.extend(
+            [
+                str(category_audit.get("note") or "Human precision audit of category matches."),
+                "",
+                "| Category | Audited matches | Correct | Precision (95% Wilson CI) |",
+                "| --- | ---: | ---: | --- |",
+            ]
+        )
+        for row in cast(list[dict[str, Any]], category_audit.get("categories", [])):
+            lines.append(
+                f"| {row.get('category')} | {row.get('n')} | {row.get('correct')} | "
+                f"{_md_wilson(cast(dict[str, Any], row.get('precision', {})))} |"
             )
         lines.append("")
 

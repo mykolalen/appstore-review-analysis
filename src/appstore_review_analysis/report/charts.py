@@ -70,21 +70,30 @@ def sentiment_distribution_data(analysis: dict[str, Any]) -> ChartData:
     }
 
 
-def theme_support_data(analysis: dict[str, Any]) -> ChartData:
-    items = _list(_dict(analysis.get("themes")).get("items"))
+def issue_category_support_data(analysis: dict[str, Any]) -> ChartData:
+    issue_categories = _dict(_dict(analysis.get("insights")).get("issue_categories"))
+    items = _list(issue_categories.get("items"))
     labels: list[str] = []
     values: list[float] = []
+    lows: list[float] = []
+    highs: list[float] = []
     counts: list[int] = []
-    for index, raw in enumerate(items, start=1):
+    for raw in items:
         item = _dict(raw)
-        phrases = _list(item.get("top_phrases"))
-        first = _dict(phrases[0]).get("phrase") if phrases else None
-        label = str(first or item.get("theme_id") or f"theme {index}")[:48]
-        labels.append(label)
-        share = _dict(item.get("share_of_complaint_reviews"))
-        values.append(_number(share.get("value"), default=0.0))
+        share = _number(item.get("share"), default=0.0)
+        ci = _dict(item.get("ci95"))
+        labels.append(str(item.get("label") or item.get("category_id") or "issue")[:48])
+        values.append(share)
+        lows.append(_number(ci.get("low"), default=share))
+        highs.append(_number(ci.get("high"), default=share))
         counts.append(_integer(item.get("review_count")))
-    return {"labels": labels, "values": values, "counts": counts}
+    return {
+        "labels": labels,
+        "values": values,
+        "low": lows,
+        "high": highs,
+        "counts": counts,
+    }
 
 
 def period_rating_data(analysis: dict[str, Any]) -> ChartData:
@@ -119,7 +128,7 @@ def render_all_charts(analysis: dict[str, Any], charts_dir: Path) -> dict[str, P
     outputs = {
         "rating_distribution": charts_dir / "rating_distribution.png",
         "sentiment_distribution": charts_dir / "sentiment_distribution.png",
-        "theme_support": charts_dir / "theme_support.png",
+        "issue_category_support": charts_dir / "issue_category_support.png",
         "rating_by_period": charts_dir / "rating_by_period.png",
     }
     _plot_proportion_bars(
@@ -134,7 +143,11 @@ def render_all_charts(analysis: dict[str, Any], charts_dir: Path) -> dict[str, P
         title="Sentiment distribution",
         ylabel="Share of analysable reviews",
     )
-    _plot_theme_support(theme_support_data(analysis), outputs["theme_support"])
+    legacy_theme_chart = charts_dir / "theme_support.png"
+    legacy_theme_chart.unlink(missing_ok=True)
+    _plot_issue_category_support(
+        issue_category_support_data(analysis), outputs["issue_category_support"]
+    )
     _plot_periods(period_rating_data(analysis), outputs["rating_by_period"])
     return outputs
 
@@ -164,17 +177,21 @@ def _plot_proportion_bars(
     plt.close(fig)
 
 
-def _plot_theme_support(data: ChartData, path: Path) -> None:
+def _plot_issue_category_support(data: ChartData, path: Path) -> None:
     labels = data["labels"]
     values = data["values"]
+    lows = data["low"]
+    highs = data["high"]
+    lower_errors = [max(0.0, value - low) for value, low in zip(values, lows, strict=True)]
+    upper_errors = [max(0.0, high - value) for value, high in zip(values, highs, strict=True)]
     fig, ax = plt.subplots(figsize=(8.0, max(3.8, 0.55 * max(1, len(labels)) + 1.8)))
     positions = list(range(len(labels)))
-    ax.barh(positions, values)
+    ax.barh(positions, values, xerr=[lower_errors, upper_errors], capsize=4)
     ax.set_yticks(positions, labels)
     ax.invert_yaxis()
-    ax.set_xlim(0.0, max(1.0, max(values, default=1.0) * 1.08))
+    ax.set_xlim(0.0, max(1.0, max(highs, default=1.0) * 1.08))
     ax.set_xlabel("Share of complaint reviews")
-    ax.set_title("Complaint theme support")
+    ax.set_title("Issue-category support")
     fig.tight_layout()
     fig.savefig(path, dpi=160)
     plt.close(fig)

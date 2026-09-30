@@ -196,7 +196,7 @@ def analyse_themes(
         DEFAULT_UNIT_MIN_NEGATIVE_SCORE_POSITIVE_REVIEWS
     ),
     unit_min_negative_score_other: float = DEFAULT_UNIT_MIN_NEGATIVE_SCORE_OTHER,
-) -> tuple[dict[str, object], dict[str, float]]:
+) -> tuple[dict[str, object], dict[str, float], list[ComplaintUnit]]:
     """Extract complaint sentences and cluster them without forcing a topic count."""
 
     _validate_unit_threshold(unit_min_negative_score_positive_reviews)
@@ -231,6 +231,7 @@ def analyse_themes(
                 "other": _other_bucket(units),
             },
             timings,
+            units,
         )
 
     embed_started = time.monotonic()
@@ -297,6 +298,7 @@ def analyse_themes(
             "other": _other_bucket(other_units),
         },
         timings,
+        units,
     )
 
 

@@ -92,21 +92,39 @@ def _assert_excerpts_come_from_reviews(
         for review in collection.reviews
     }
     themes = analysis.get("themes", {})
-    if not isinstance(themes, dict):
+    if isinstance(themes, dict):
+        items = themes.get("items", [])
+        if isinstance(items, list):
+            for theme in items:
+                if not isinstance(theme, dict):
+                    continue
+                representatives = theme.get("representative_units", [])
+                if not isinstance(representatives, list):
+                    continue
+                for unit in representatives:
+                    if not isinstance(unit, dict):
+                        continue
+                    review_id = str(unit.get("review_id", ""))
+                    excerpt = str(unit.get("excerpt", ""))
+                    assert review_id in by_id
+                    assert excerpt in by_id[review_id]
+
+    insights = analysis.get("insights", {})
+    if not isinstance(insights, dict):
         return
-    items = themes.get("items", [])
-    if not isinstance(items, list):
+    categories = insights.get("issue_categories", {})
+    if not isinstance(categories, dict):
         return
-    for theme in items:
-        if not isinstance(theme, dict):
+    for category in categories.get("items", []):
+        if not isinstance(category, dict):
             continue
-        representatives = theme.get("representative_units", [])
-        if not isinstance(representatives, list):
+        evidence = category.get("evidence", [])
+        if not isinstance(evidence, list):
             continue
-        for unit in representatives:
-            if not isinstance(unit, dict):
+        for item in evidence:
+            if not isinstance(item, dict):
                 continue
-            review_id = str(unit.get("review_id", ""))
-            excerpt = str(unit.get("excerpt", ""))
+            review_id = str(item.get("review_id", ""))
+            excerpt = str(item.get("excerpt", ""))
             assert review_id in by_id
             assert excerpt in by_id[review_id]

@@ -472,6 +472,63 @@ def report(
         )
 
 
+@app.command("audit-categories")
+def audit_categories(
+    analysis: Annotated[
+        Path,
+        typer.Option("--analysis", help="Analysis JSON containing issue-category matches."),
+    ] = Path("reports/nebula_us_seed42.analysis.json"),
+    out: Annotated[
+        Path,
+        typer.Option("--out", help="Human category-audit CSV to create."),
+    ] = Path("evaluation/category_audit_sheet.csv"),
+) -> None:
+    """Create a human precision-audit sheet from deterministic category matches."""
+
+    try:
+        if out.exists():
+            raise ValueError(f"refusing to overwrite existing audit sheet: {out}")
+        payload = json.loads(analysis.read_text(encoding="utf-8"))
+        if not isinstance(payload, dict):
+            raise ValueError("analysis JSON must contain an object")
+        insights = payload.get("insights")
+        if not isinstance(insights, dict):
+            raise ValueError("analysis JSON does not contain insights")
+        issue_categories = insights.get("issue_categories")
+        if not isinstance(issue_categories, dict):
+            raise ValueError("analysis JSON does not contain issue categories")
+        raw_rows = issue_categories.get("audit_rows")
+        if not isinstance(raw_rows, list) or not raw_rows:
+            raise ValueError("analysis contains no supported category matches to audit")
+
+        fields = ["category", "review_id", "matched_phrase", "sentence", "human_label"]
+        rows: list[dict[str, str]] = []
+        for index, raw in enumerate(raw_rows, start=1):
+            if not isinstance(raw, dict):
+                raise ValueError(f"invalid audit row {index}")
+            row = {field: str(raw.get(field, "")) for field in fields[:-1]}
+            if any(not row[field].strip() for field in fields[:-1]):
+                raise ValueError(f"incomplete audit row {index}")
+            row["human_label"] = ""
+            rows.append(row)
+
+        out.parent.mkdir(parents=True, exist_ok=True)
+        with out.open("w", encoding="utf-8", newline="") as handle:
+            writer = csv.DictWriter(handle, fieldnames=fields, lineterminator="\n")
+            writer.writeheader()
+            writer.writerows(rows)
+        typer.echo(json.dumps({"audit_sheet": str(out), "rows": len(rows)}, ensure_ascii=False))
+    except (OSError, ValueError, json.JSONDecodeError) as exc:
+        _emit_app_error(
+            AppError(
+                status_code=422,
+                code="INVALID_INPUT",
+                message="Category audit sheet could not be created.",
+                details={"error": str(exc)},
+            )
+        )
+
+
 @app.command("tune-threshold")
 def tune_threshold(
     pairs: Annotated[

@@ -8,9 +8,13 @@ Theme coverage: **10 of 103 complaint units (9.7%)** and **9 of 43 complaint rev
 
 **Theme coverage is below 50%.** The areas below describe only supported clusters; unclustered evidence remains in the `other` bucket and is not treated as a theme.
 
-Most actionable supported areas, ordered with recent evidence first:
+Highest-supported issue categories, ordered with recent evidence first:
 
-- Investigate scam: 9 of 43 complaint reviews (20.9%, 95% CI 11.4%-35.2%), for example 'Scam.'.
+- **Pricing and paywall**: 13 of 43 complaint reviews (30.2%; 95% CI 18.6% to 45.1%).
+- **Billing and unexpected charges**: 11 of 43 complaint reviews (25.6%; 95% CI 14.9% to 40.2%).
+- **Scam and trust**: 11 of 43 complaint reviews (25.6%; 95% CI 14.9% to 40.2%).
+- **Subscription and cancellation**: 9 of 43 complaint reviews (20.9%; 95% CI 11.4% to 35.2%).
+- **Customer support**: 5 of 43 complaint reviews (11.6%; 95% CI 5.1% to 24.5%).
 
 ## Dataset and provenance
 
@@ -184,6 +188,8 @@ Complaint-unit check: **evaluation not run** (units_gold.csv missing).
 
 Theme-threshold check: **evaluation not run** (pairs_gold.csv missing).
 
+Issue-category precision audit: **not audited**.
+
 ## Keywords and phrases in negative reviews
 
 Status: **ok**.
@@ -238,7 +244,149 @@ Theme coverage: **10 of 103 complaint units (9.7%)** and **9 of 43 complaint rev
 
 Complaint-unit score gate: kept **103** of **113** model-negative sentence candidates and removed **10** below the configured thresholds (0.85 for 4-5 star reviews; 0.50 otherwise).
 
-### 1. scam
+### Issue categories
+
+Categories use a fixed, app-agnostic whole-token lexicon over complaint sentences. A review can match multiple categories, so category shares overlap.
+
+Category precision audit: **not audited**.
+
+| Category | Reviews | Share and 95% CI | Mean stars | Recent (last 12 months) | Evidence IDs |
+| --- | --- | --- | --- | --- | --- |
+| Pricing and paywall | 13 of 43 | 30.2%; 18.6% to 45.1% | 1.23 | 30.8% | `13238168680`, `12196916604`, `11264084319` |
+| Billing and unexpected charges | 11 of 43 | 25.6%; 14.9% to 40.2% | 1.00 | 27.3% | `11075169965`, `13793435927`, `13616064815` |
+| Scam and trust | 11 of 43 | 25.6%; 14.9% to 40.2% | 1.00 | 18.2% | `12688614586`, `11075169965`, `13616064815` |
+| Subscription and cancellation | 9 of 43 | 20.9%; 11.4% to 35.2% | 1.00 | 44.4% | `13793435927`, `13228610177`, `12971587569` |
+| Customer support | 5 of 43 | 11.6%; 5.1% to 24.5% | 1.00 | 0.0% | `6904797208`, `12971587569`, `12829278222` |
+| Refunds | 5 of 43 | 11.6%; 5.1% to 24.5% | 1.00 | 0.0% | `6904797208`, `12467337584`, `11449927296` |
+| Content accuracy and relevance | 4 of 43 | 9.3%; 3.7% to 21.6% | 1.50 | 0.0% | `12164829797`, `8506856576`, `6782509379` |
+| Ads and interruptions | 2 of 43 | 4.7%; 1.3% to 15.5% | 1.50 | 0.0% | `4696528106`, `11075169965` |
+| Bugs and stability | 2 of 43 | 4.7%; 1.3% to 15.5% | 1.50 | 0.0% | `11099954190`, `5300736312` |
+| Service responsiveness | 2 of 43 | 4.7%; 1.3% to 15.5% | 1.00 | 0.0% | `11075169965`, `6444787269` |
+
+#### Pricing and paywall
+
+Complaints about price, paid access, trials, or features being blocked behind payment.
+
+Suggested investigation: Check whether pricing, trial conversion, and paid-feature boundaries are visible before users invest time in the product.
+
+Top matched phrases: `pay` (8), `paid` (3), `cost` (2), `have to pay` (1), `need to pay` (1).
+
+- `13238168680`: “I can’t even see my own birth chart without it telling me I need to pay.”
+- `12196916604`: “On top of the subscription you STILL have to pay for readings.”
+- `11264084319`: “I paid for all these supposed features and then had to pay more for a reading waste of 60.00”
+
+#### Billing and unexpected charges
+
+Complaints about billing events, debits, or charges the reviewer did not expect.
+
+Suggested investigation: Check whether purchase, renewal, and billing confirmations make the timing and amount of charges clear before money is taken.
+
+Top matched phrases: `charge` (7), `charged` (5).
+
+- `11075169965`: “I will be reporting the charge with my bank as fraudulent!”
+- `13793435927`: “Do not download this app I’ve had to order multiple debit cards because they charge your Apple account and there’s no way to cancel the subscription in the app nor does it show under your Apple subscription list”
+- `13616064815`: “But after deleting the app is was charged 50 dollars for no reason.”
+
+#### Scam and trust
+
+Complaints that question the product's honesty, legitimacy, or representation.
+
+Suggested investigation: Check whether product claims, purchase flows, and delivered value match what users are shown before they commit.
+
+Top matched phrases: `scam` (10), `rip off` (1), `fraud` (1), `fraudulent` (1).
+
+- `12688614586`: “Reporting as fraud”
+- `11075169965`: “I will be reporting the charge with my bank as fraudulent!”
+- `13616064815`: “This is a scam.”
+
+#### Subscription and cancellation
+
+Complaints about subscriptions, renewals, or difficulty cancelling recurring access.
+
+Suggested investigation: Check whether subscription terms, renewal status, and cancellation controls are easy to find and complete across supported purchase channels.
+
+Top matched phrases: `subscription` (5), `cancel` (2), `cancellation` (2), `canceled` (1), `cancelled` (1).
+
+- `13793435927`: “Do not download this app I’ve had to order multiple debit cards because they charge your Apple account and there’s no way to cancel the subscription in the app nor does it show under your Apple subscription list”
+- `13228610177`: “They will not accept your cancellation but it won’t show up on the app and they will continue to charge you despite having cancelled.”
+- `12971587569`: “I canceled the free subscription and then saw how it was still pulling from my card.”
+
+#### Customer support
+
+Complaints about getting help from the product's support or customer-service function.
+
+Suggested investigation: Check whether support requests reach an accountable owner and whether customers can see expected response and resolution paths.
+
+Top matched phrases: `support` (3), `customer service` (2), `support team` (1).
+
+- `6904797208`: “After 4 emails and prof I paid them I have been left on read by the support team.”
+- `12971587569`: “When I logged into the app to try to figure out how and to contact support I can’t seem to find the option, as if it’s not there or very well hidden.”
+- `12829278222`: “The customer service is horrible.”
+
+#### Refunds
+
+Complaints about requesting, receiving, or being denied money back.
+
+Suggested investigation: Check whether refund eligibility, request steps, ownership, and response timing are clear to customers.
+
+Top matched phrases: `refund` (4), `money back` (1), `no refund` (1).
+
+- `6904797208`: “No answer received, no refund just left on read!!!”
+- `12467337584`: “They would not refund me.”
+- `11449927296`: “I want a refund and i want this to never happen to other people.”
+
+#### Content accuracy and relevance
+
+Complaints that generated or delivered content is wrong, generic, vague, or irrelevant.
+
+Suggested investigation: Check whether the content is specific to the user's inputs and whether unsupported or generic outputs can be detected before delivery.
+
+Top matched phrases: `not accurate` (1), `generic` (1), `vague` (1), `wrong` (1).
+
+- `12164829797`: “Not only that but the horoscopes are very vague and negative.”
+- `8506856576`: “Not accurate and a waste of money.”
+- `6782509379`: “When you contact nebula’s support they give you a generic answer (exactly like the ones on all of the 1 star ratings) that they’re sorry you didn’t read their terms and conditions on what you’re buying (you never get the chance to before clicking) and that they can’t offer you a refund.”
+
+#### Ads and interruptions
+
+Complaints about advertising, pop-ups, or interruptions that disrupt product use.
+
+Suggested investigation: Check whether advertising frequency, placement, and interruption points are concentrated in flows users expect to complete without disruption.
+
+Top matched phrases: `ad` (2), `ads` (1).
+
+- `4696528106`: “The ads for this app are not only definite lies but once you download the app and get through the whole personalized astrology experience, you can’t even use the features with out paying over $10 per month.”
+- `11075169965`: “Deceiving ad - when you click on the free 3 day trial you are automatically taken to Apple Pay and once you click submit to activate the three day trial you are charged the monthly fee - what a rip off!”
+
+#### Bugs and stability
+
+Complaints about crashes, errors, broken flows, loading failures, or poor performance.
+
+Suggested investigation: Check whether the affected flows share a release, device, network condition, or backend dependency that can be reproduced from telemetry.
+
+Top matched phrases: `does not work` (1), `frozen` (1), `stuck` (1).
+
+- `11099954190`: “Your app doesn’t work, especially the compatibility, it’s just a frozen screen and automatically switched to annual when I checked out for a week option.”
+- `5300736312`: “I downloaded it twice and both times it was stuck on the loading screen.”
+
+#### Service responsiveness
+
+Complaints about live agents, advisers, readers, sellers, or other human-delivered service.
+
+Suggested investigation: Check whether human-service availability, response-time expectations, and service-quality controls match what customers are promised.
+
+Top matched phrases: `no response` (2).
+
+- `11075169965`: “I reached out via email with no response just a screen shot of frequently asked questions.”
+- `6444787269`: “Tried contacting these people through email and no response.”
+
+![Issue-category support](charts/issue_category_support.png)
+
+### Emerging clusters
+
+Semantic clusters remain a separate discovery layer; they are not merged into the fixed issue-category taxonomy.
+
+#### Cluster 1: scam
 
 Investigate scam: 9 of 43 complaint reviews (20.9%, 95% CI 11.4%-35.2%), for example 'Scam.'.
 
@@ -247,7 +395,13 @@ Investigate scam: 9 of 43 complaint reviews (20.9%, 95% CI 11.4%-35.2%), for exa
 - Share in last 12 months: 22.2%
 - Historical-only: False
 
-![Theme support](charts/theme_support.png)
+### Not categorised
+
+**8 of 43 complaint reviews** (18.6%) did not match a supported issue category.
+
+- `12936389038`: “horrible app.”
+- `12756134004`: “Not a friendly app”
+- `12517752126`: “I don’t do witchcraft!!”
 
 ## Limitations
 
@@ -260,6 +414,9 @@ Investigate scam: 9 of 43 complaint reviews (20.9%, 95% CI 11.4%-35.2%), for exa
 - The repeat-label file does not encode session timing, so its kappa measures repeat-label consistency but does not by itself prove independent later-session repeatability.
 - The complaint-unit precision/recall check was not run.
 - The labelled-pair theme-threshold check was not run.
+- Issue categories are lexicon-based heuristics with a fixed generic vocabulary; they are not learned from this app and can miss paraphrases or ambiguous uses.
+- Issue-category shares are multi-label and may overlap; they must not be summed to 100%.
+- Issue-category precision has not been measured; the optional human audit has not been run.
 - Fewer than half of complaint units or complaint reviews are represented in supported themes, so theme conclusions are necessarily partial.
 
 ## Methodology
@@ -268,6 +425,7 @@ Investigate scam: 9 of 43 complaint reviews (20.9%, 95% CI 11.4%-35.2%), for exa
 - Uncertainty: Wilson 95% intervals for proportions; seeded BCa bootstrap for means.
 - Rating metrics use every sampled review; model-derived statistics use analysable reviews only.
 - Common 1-3 grams and contrastive Fightin' Words rankings are calculated from negative reviews. Displayed phrases must contain at least one content token.
+- Issue categories use a versioned, generic whole-token lexicon over score-gated complaint sentences; category support is review-level and multi-label.
 - Complaint themes are built from score-gated negative sentences with pinned MiniLM embeddings and agglomerative clustering at cosine distance threshold 0.40.
 
 ## How to reproduce

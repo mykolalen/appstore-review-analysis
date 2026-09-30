@@ -122,7 +122,30 @@ uv run reviews tune-threshold --pairs evaluation/pairs_gold.csv
 The selected threshold is the largest tested grid value whose same-issue precision is at least 0.80. If
 none qualifies, no threshold is selected.
 
-## 6. Refresh the demo report
+## 6. Optional issue-category precision audit
+
+First regenerate the analysis so its retained complaint units and category matches are current, then
+create the audit sheet:
+
+```powershell
+uv run reviews audit-categories `
+  --analysis reports/nebula_us_seed42.analysis.json `
+  --out evaluation/category_audit_sheet.csv
+```
+
+The sheet contains `category`, `review_id`, `matched_phrase`, `sentence` and an empty `human_label`.
+Label every row as `correct` or `incorrect`, then validate it:
+
+```powershell
+uv run python evaluation/validate_category_audit.py
+```
+
+The validator writes an `issue_categories` section to `evaluation/results.json` and refreshes
+`evaluation/results.md` with per-category precision and Wilson 95% intervals. This is a precision audit
+only: it does not measure recall and it does not replace the sampling intervals reported for category
+shares. If the sheet is absent or still unlabelled, no precision value is claimed.
+
+## 7. Refresh the demo report
 
 ```powershell
 uv run reviews report
