@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import math
 import random
 import time
 from collections.abc import Callable, Mapping
@@ -12,6 +13,8 @@ from typing import Any
 import httpx
 
 from appstore_review_analysis.errors import AppError
+
+_MAX_BACKOFF_S = 8.0
 
 
 @dataclass(frozen=True)
@@ -28,9 +31,12 @@ def _retry_after_seconds(headers: Mapping[str, str]) -> int | None:
     if raw is None:
         return None
     try:
-        return max(0, int(float(raw)))
+        value = float(raw)
     except ValueError:
         return None
+    if not math.isfinite(value):
+        return None
+    return max(0, int(value))
 
 
 class JsonHttpClient:
@@ -92,7 +98,10 @@ class JsonHttpClient:
 
             if response.status_code == 429:
                 last_retry_after = _retry_after_seconds(response.headers)
-                if attempt < self.max_retries:
+                # A long Retry-After would block this synchronous request past its deadline,
+                # so only short waits are honoured; longer ones fail fast with the hint.
+                wait_is_short = last_retry_after is None or last_retry_after <= _MAX_BACKOFF_S
+                if attempt < self.max_retries and wait_is_short:
                     if last_retry_after is not None:
                         self.sleeper(float(last_retry_after))
                     else:
@@ -145,5 +154,5 @@ class JsonHttpClient:
         raise AssertionError("retry loop exhausted unexpectedly")
 
     def _sleep_backoff(self, attempt: int) -> None:
-        cap = min(8.0, float(2**attempt))
+        cap = min(_MAX_BACKOFF_S, float(2**attempt))
         self.sleeper(self.jitter() * cap)

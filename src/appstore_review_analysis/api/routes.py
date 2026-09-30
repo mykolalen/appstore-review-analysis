@@ -8,6 +8,8 @@ from typing import Literal, cast
 from fastapi import APIRouter, Query, Request, Response
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
+from sqlalchemy import text
+from sqlalchemy.exc import SQLAlchemyError
 
 from appstore_review_analysis.analysis.pipeline import analyse_collection
 from appstore_review_analysis.analysis.sentiment import SentimentAnalyzer
@@ -24,12 +26,25 @@ from appstore_review_analysis.collection.sampling import (
 from appstore_review_analysis.collection.storefronts import normalise_country
 from appstore_review_analysis.config import Settings
 from appstore_review_analysis.domain import AnalysisPayload
-from appstore_review_analysis.errors import AppError
+from appstore_review_analysis.errors import AppError, ErrorResponse
 from appstore_review_analysis.export import analysed_review_json_row, render_analysed_reviews_csv
 from appstore_review_analysis.public_mode import PublicRateLimiter, public_client_key
 from appstore_review_analysis.storage import StorageRepository
 
-router = APIRouter()
+# Every error, including request validation, uses the ErrorResponse envelope; declaring 422
+# here replaces FastAPI's default {"detail": [...]} schema in the OpenAPI document.
+router = APIRouter(
+    responses={
+        status: {"model": ErrorResponse, "description": description}
+        for status, description in (
+            (404, "Analysis not found"),
+            (422, "Invalid input"),
+            (429, "Rate limited (public mode)"),
+            (500, "Unexpected server error"),
+            (503, "Upstream, database or model unavailable"),
+        )
+    }
+)
 
 
 class HealthResponse(BaseModel):
@@ -47,9 +62,18 @@ def healthz() -> HealthResponse:
 
 @router.get("/readyz", response_model=HealthResponse, tags=["health"])
 def readyz(request: Request) -> HealthResponse:
-    """Return readiness only when the database and sentiment model are available."""
+    """Return readiness only when the database and both local models are available."""
 
-    _repository(request)
+    try:
+        with _repository(request).engine.connect() as connection:
+            connection.execute(text("SELECT 1"))
+    except SQLAlchemyError as exc:
+        raise AppError(
+            status_code=503,
+            code="DATABASE_UNAVAILABLE",
+            message="Database is not available.",
+            details={"error": type(exc).__name__},
+        ) from exc
     if _sentiment(request) is None:
         raise AppError(
             status_code=503,

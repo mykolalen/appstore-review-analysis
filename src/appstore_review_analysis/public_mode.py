@@ -13,7 +13,8 @@ from uuid import NAMESPACE_URL, uuid5
 
 from fastapi import Request
 
-from appstore_review_analysis.domain import AnalysisPayload
+from appstore_review_analysis.domain import AnalysedReview, AnalysisPayload
+from appstore_review_analysis.errors import AppError
 
 PUBLIC_SEED_NAME = "nebula-us-seed42"
 PUBLIC_SEED_ANALYSIS_ID = str(uuid5(NAMESPACE_URL, PUBLIC_SEED_NAME))
@@ -96,7 +97,9 @@ class PublicRateLimiter:
 def public_client_key(request: Request) -> str:
     """Use the right-most X-Forwarded-For hop appended by the trusted front end."""
 
-    forwarded = request.headers.get("X-Forwarded-For", "")
+    # A repeated header is equivalent to one comma-joined list (RFC 9110), so join every
+    # occurrence before taking the right-most hop.
+    forwarded = ",".join(request.headers.getlist("X-Forwarded-For"))
     if forwarded:
         parts = [part.strip() for part in forwarded.split(",") if part.strip()]
         if parts:
@@ -112,3 +115,36 @@ def load_public_seed_analysis(path: Path) -> AnalysisPayload:
     with path.open("r", encoding="utf-8") as handle:
         payload = AnalysisPayload.model_validate(json.load(handle))
     return payload.model_copy(update={"analysis_id": PUBLIC_SEED_ANALYSIS_ID})
+
+
+def public_seed_rows(seed: AnalysisPayload, fixture_dir: Path) -> list[AnalysedReview]:
+    """Rebuild the seed's downloadable review rows by replaying its committed snapshot.
+
+    The committed analysis JSON carries aggregates only. Replaying the recorded snapshot with
+    the same app, storefront, size and seed restores the raw review rows (title, body, rating
+    and preprocessing fields) without loading any model, so startup stays fast. Per-review
+    sentiment columns stay empty for the seed; aggregates come from the committed analysis.
+    """
+
+    # Imported lazily: the pipeline pulls in the analysis stack, which public_mode does not
+    # need for rate limiting.
+    from appstore_review_analysis.analysis.pipeline import analyse_collection
+    from appstore_review_analysis.collection.fixture import FixtureProvider
+
+    try:
+        collection = FixtureProvider(fixture_dir).sample(
+            seed.app.app_id,
+            seed.app.country,
+            seed.sampling.requested,
+            seed.sampling.seed,
+        )
+    except AppError:
+        return []
+    _payload, rows = analyse_collection(
+        collection,
+        request_payload=dict(seed.request),
+        sentiment=None,
+        analyze=False,
+        request_deadline_s=60.0,
+    )
+    return rows

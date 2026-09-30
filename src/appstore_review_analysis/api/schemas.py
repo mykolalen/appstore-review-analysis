@@ -4,18 +4,20 @@ from __future__ import annotations
 
 from typing import Literal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, StrictInt, StrictStr
+
+MAX_WINDOW_DAYS = 36_500
 
 
 class AnalysisRequest(BaseModel):
     """Create-analysis request."""
 
-    app: str | int
+    app: StrictStr | StrictInt
     country: str = Field(default="us", min_length=2, max_length=2)
     sample_size: int = Field(default=100, ge=1, le=200)
     seed: int | None = Field(default=None, ge=0, lt=2**53)
     provider: Literal["itunes", "fixture", "rss"] | None = None
-    window_days: int | None = Field(default=None, ge=1)
+    window_days: int | None = Field(default=None, ge=1, le=MAX_WINDOW_DAYS)
     analyze: bool = True
 
 

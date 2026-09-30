@@ -130,3 +130,31 @@ def test_population_checks_lookup_before_treating_empty_feed_as_unavailable() ->
 
     assert exc_info.value.status_code == 404
     assert exc_info.value.code == "APP_NOT_FOUND"
+
+
+def test_feed_ending_exactly_on_a_page_boundary_is_not_an_outage() -> None:
+    template = _fixture("page_populated.json")["feed"]["entry"][1]  # type: ignore[index]
+    full_page = {
+        "feed": {
+            "entry": [
+                {**template, "id": {"label": f"rss-{index}"}}  # type: ignore[dict-item]
+                for index in range(50)
+            ]
+        }
+    }
+    empty = _fixture("page_empty.json")
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.url.path == "/lookup":
+            return httpx.Response(200, json=_lookup())
+        return httpx.Response(200, json=full_page if "page=1/" in request.url.path else empty)
+
+    provider = RSSProvider(
+        _settings(rss_empty_retries=0),
+        client=httpx.Client(transport=httpx.MockTransport(handler)),
+        nonce_factory=lambda: "n",
+    )
+    result = provider.sample(1459969523, "us", 10, 42)
+
+    assert result.sampling.reachable == 50
+    assert result.sampling.actual == 10

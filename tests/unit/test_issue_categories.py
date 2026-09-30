@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import math
 from datetime import UTC, datetime, timedelta
+from pathlib import Path
 
 import pytest
 
@@ -9,9 +10,15 @@ from appstore_review_analysis.analysis.issue_categories import (
     ISSUE_CATEGORIES,
     analyse_issue_categories,
     match_category_phrases,
+    validate_category_table,
 )
-from appstore_review_analysis.analysis.themes import ComplaintUnit
+from appstore_review_analysis.analysis.pipeline import analyse_collection
+from appstore_review_analysis.analysis.sentiment import FakeSentiment
+from appstore_review_analysis.analysis.themes import ComplaintUnit, FakeEmbedder
+from appstore_review_analysis.collection.fixture import FixtureProvider
 from appstore_review_analysis.text import lexical_text
+
+ROOT = Path(__file__).resolve().parents[2]
 
 REFERENCE_DATE = datetime(2026, 9, 30, tzinfo=UTC)
 
@@ -122,9 +129,7 @@ def test_review_denominator_wilson_recency_and_multilabel() -> None:
         _unit("r3", "It crashes every time.", rating=1, days_ago=20),
         _unit("r4", "Horrible experience, that is all.", rating=1, days_ago=30),
     ]
-    result = analyse_issue_categories(
-        units, reference_date=REFERENCE_DATE, app_name="Example Product"
-    )
+    result = analyse_issue_categories(units, reference_date=REFERENCE_DATE)
     assert result["denominator"] == 4
     assert result["multi_label"] is True
 
@@ -252,20 +257,47 @@ def test_lexicon_is_generic_and_investigations_are_hypotheses() -> None:
     )
 
 
-def test_app_name_validation_rejects_app_specific_lexicon(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_table_guard_rejects_app_specific_lexicon() -> None:
     # The shipped table is generic; guard against future app-specific edits.
     original = ISSUE_CATEGORIES[0]
     mutated = type(original)(
         id=original.id,
         label=original.label,
         description=original.description,
-        phrases=(*original.phrases, "example product"),
+        phrases=(*original.phrases, "nebula readings"),
         suggested_investigation=original.suggested_investigation,
     )
-    import appstore_review_analysis.analysis.issue_categories as module
 
-    monkeypatch.setattr(module, "ISSUE_CATEGORIES", (mutated, *ISSUE_CATEGORIES[1:]))
+    validate_category_table()
     with pytest.raises(ValueError, match="app-specific"):
-        module.analyse_issue_categories(
-            [], reference_date=REFERENCE_DATE, app_name="Example Product"
-        )
+        validate_category_table((mutated, *ISSUE_CATEGORIES[1:]))
+
+
+class _EnglishIdentifier:
+    def classify(self, _text: str) -> tuple[str, float]:
+        return "en", 0.99
+
+
+@pytest.mark.parametrize("app_name", ["X", "Pay", "Ads"])
+def test_short_app_names_never_break_the_analysis(
+    app_name: str, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    # Regression: the table guard used to test the app name as a substring of every phrase,
+    # so an app called "X" (inside "expensive") crashed the whole analysis with a 500.
+    monkeypatch.setattr(
+        "appstore_review_analysis.text._language_identifier", lambda: _EnglishIdentifier()
+    )
+    collection = FixtureProvider(ROOT / "data/fixtures").sample(1459969523, "us", 100, 42)
+    renamed = collection.model_copy(
+        update={"app": collection.app.model_copy(update={"name": app_name})}
+    )
+    analysis, _rows = analyse_collection(
+        renamed,
+        request_payload={"app": "1459969523", "country": "us", "sample_size": 100, "seed": 42},
+        sentiment=FakeSentiment(),
+        embedder=FakeEmbedder(),
+        analyze=True,
+        request_deadline_s=90,
+    )
+    payload = analysis.model_dump(mode="json")
+    assert payload["insights"]["issue_categories"]["status"] == "ok"

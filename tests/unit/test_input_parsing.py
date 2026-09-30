@@ -15,8 +15,24 @@ def test_parse_numeric_and_apple_urls_without_fetching() -> None:
     assert parse_app_id("https://itunes.apple.com/app/id1459969523") == 1459969523
 
 
-@pytest.mark.parametrize("value", ["abc", "0", "-1", "https://example.com/id1459969523"])
-def test_invalid_app_is_rejected(value: str) -> None:
+@pytest.mark.parametrize(
+    "value",
+    [
+        "abc",
+        "0",
+        "-1",
+        "https://example.com/id1459969523",
+        # Non-ASCII "digits" pass str.isdigit() but int() rejects them.
+        "\u00b2",
+        "\u2460",
+        "1" * 5000,
+        "https://[::1/app/id1",
+        "https://apps.apple.com/us/app/x/id0",
+        "https://apps.apple.com/us/app/x/id" + "1" * 5000,
+        True,
+    ],
+)
+def test_invalid_app_is_rejected(value: str | bool) -> None:
     with pytest.raises(AppError) as exc_info:
         parse_app_id(value)
     assert exc_info.value.code == "INVALID_INPUT"

@@ -2,7 +2,11 @@ from datetime import UTC, datetime
 
 import pytest
 
-from appstore_review_analysis.analysis.metrics import rating_metrics, wilson_interval
+from appstore_review_analysis.analysis.metrics import (
+    rating_metrics,
+    rating_proportion_interval,
+    wilson_interval,
+)
 from appstore_review_analysis.domain import Review, SamplingMetadata
 
 
@@ -97,3 +101,30 @@ def test_period_metrics_are_asserted_by_value() -> None:
     assert [item["n"] for item in periods] == [15, 15]
     assert [item["mean"] for item in periods] == [5.0, 1.0]
     assert [item["one_two_star_share"] for item in periods] == [0.0, 1.0]
+
+
+def test_wilson_interval_has_exact_bounds_at_zero_and_full_counts() -> None:
+    for n in range(1, 201):
+        zero = wilson_interval(0, n)
+        full = wilson_interval(n, n)
+        assert zero is not None and zero[0] == 0.0
+        assert full is not None and full[1] == 1.0
+
+
+@pytest.mark.parametrize("population", [120, 500])
+def test_finite_population_interval_always_contains_the_observed_share(population: int) -> None:
+    n = 100
+    for successes in range(n + 1):
+        ci = rating_proportion_interval(successes, n, population=population)
+        assert ci["low"] <= successes / n <= ci["high"]
+
+
+def test_period_intervals_are_null_when_the_whole_frame_was_sampled() -> None:
+    ratings = [1] * 30 + [3] * 20 + [5] * 50
+    reviews = [_review(i, rating, year=2026 if i % 2 else 2025) for i, rating in enumerate(ratings)]
+    metrics = rating_metrics(reviews, _sampling(requested=100, actual=100, reachable=100), 42)
+
+    assert metrics["mean_ci95"]["reason"] == "census"
+    for period in metrics["periods"]:
+        assert period["mean_ci95"] == {"low": None, "high": None, "reason": "census"}
+        assert period["one_two_star_ci95"] == {"low": None, "high": None, "reason": "census"}

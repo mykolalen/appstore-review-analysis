@@ -445,3 +445,39 @@ def test_window_days_90_selects_exact_newest_prefix() -> None:
     assert result.sampling.population_total == total
     assert result.sampling.actual == 7
     assert result.sampling.sample_complete is False
+
+
+def test_429_with_long_retry_after_fails_fast_instead_of_blocking_the_request() -> None:
+    sleeps: list[float] = []
+    provider = ITunesProvider(
+        _settings(http_max_retries=3),
+        client=httpx.Client(
+            transport=httpx.MockTransport(
+                lambda _: httpx.Response(429, headers={"Retry-After": "120"}, json={})
+            )
+        ),
+        sleeper=sleeps.append,
+    )
+    with pytest.raises(AppError) as exc_info:
+        provider.app_info(1459969523, "us")
+    assert exc_info.value.code == "UPSTREAM_RATE_LIMITED"
+    assert exc_info.value.retry_after == 120
+    assert sleeps == []
+
+
+def test_429_with_non_finite_retry_after_uses_bounded_backoff() -> None:
+    sleeps: list[float] = []
+    provider = ITunesProvider(
+        _settings(http_max_retries=1),
+        client=httpx.Client(
+            transport=httpx.MockTransport(
+                lambda _: httpx.Response(429, headers={"Retry-After": "inf"}, json={})
+            )
+        ),
+        sleeper=sleeps.append,
+    )
+    with pytest.raises(AppError) as exc_info:
+        provider.app_info(1459969523, "us")
+    assert exc_info.value.code == "UPSTREAM_RATE_LIMITED"
+    assert exc_info.value.retry_after is None
+    assert len(sleeps) == 1 and 0.0 <= sleeps[0] <= 8.0

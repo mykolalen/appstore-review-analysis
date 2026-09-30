@@ -10,34 +10,44 @@ from urllib.parse import urlparse
 from appstore_review_analysis.errors import AppError
 
 MAX_JSON_SAFE_SEED = 2**53
-_APP_PATH_RE = re.compile(r"/id(\d+)(?:[/?#]|$)")
+# App Store ids are positive ASCII integers that fit a signed 64-bit column. The ASCII class
+# matters: str.isdigit() also accepts superscript or circled digits, which int() rejects.
+_APP_ID_RE = re.compile(r"[0-9]{1,19}")
+_APP_PATH_RE = re.compile(r"/id([0-9]{1,19})(?:[/?#]|$)")
+_MAX_APP_ID = 2**63 - 1
 
 
 def parse_app_id(value: str | int) -> int:
     """Parse a numeric App Store id or an Apple App Store URL without fetching it."""
 
-    if isinstance(value, int):
-        if value > 0:
-            return value
+    if isinstance(value, bool):
         raise _invalid_app(value)
+    if isinstance(value, int):
+        return _positive_app_id(value, value)
 
     raw = str(value).strip()
-    if raw.isdigit():
-        parsed = int(raw)
-        if parsed > 0:
-            return parsed
-        raise _invalid_app(value)
+    if _APP_ID_RE.fullmatch(raw):
+        return _positive_app_id(int(raw), value)
 
-    parsed_url = urlparse(raw)
+    try:
+        parsed_url = urlparse(raw)
+        host = (parsed_url.hostname or "").lower()
+    except ValueError:
+        raise _invalid_app(value) from None
     if parsed_url.scheme not in {"http", "https"}:
         raise _invalid_app(value)
-    host = (parsed_url.hostname or "").lower()
     if host not in {"apps.apple.com", "itunes.apple.com"}:
         raise _invalid_app(value)
     match = _APP_PATH_RE.search(parsed_url.path)
     if not match:
         raise _invalid_app(value)
-    return int(match.group(1))
+    return _positive_app_id(int(match.group(1)), value)
+
+
+def _positive_app_id(parsed: int, value: object) -> int:
+    if 0 < parsed <= _MAX_APP_ID:
+        return parsed
+    raise _invalid_app(value)
 
 
 def _invalid_app(value: object) -> AppError:

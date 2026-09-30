@@ -53,3 +53,21 @@ def test_preprocessing_flags_edge_cases(monkeypatch) -> None:  # type: ignore[no
     long_review = preprocess_review(_review(title="Long", body="word " * 3001))
     assert "long_text" in long_review.flags
     assert long_review.analysable is True
+
+
+def test_title_is_a_duplicate_only_at_a_word_boundary() -> None:
+    assert analysis_text("Great", "Great app")[1] is True
+    assert analysis_text("Scam", "Scammers took my money")[1] is False
+    assert analysis_text("Scam", "Scammers took my money")[0].startswith("Scam. Scammers")
+    assert analysis_text("No", "Nothing works")[1] is False
+
+
+def test_blank_review_is_not_analysable(monkeypatch) -> None:  # type: ignore[no-untyped-def]
+    monkeypatch.setattr(
+        "appstore_review_analysis.text._language_identifier", lambda: _EnglishIdentifier()
+    )
+    processed = preprocess_review(_review(title="  ", body=""))
+
+    assert processed.analysable is False
+    assert "no_text" in processed.flags
+    assert "non_english" not in processed.flags

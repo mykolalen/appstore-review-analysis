@@ -9,6 +9,7 @@ from datetime import datetime, timedelta
 from typing import Any
 
 from appstore_review_analysis.domain import AnalysedReview
+from appstore_review_analysis.text import lexical_text
 
 DEFAULT_A0 = 100.0
 MAX_PHRASES = 15
@@ -269,7 +270,7 @@ def distinctive_phrases_for_texts(
 def app_display_tokens(app_name: str) -> set[str]:
     """Return tokens that must not qualify a phrase for display on their own."""
 
-    return set(GENERIC_APP_TOKENS) | set(_tokens(app_name))
+    return set(GENERIC_APP_TOKENS) | set(lexical_text(app_name).split())
 
 
 def displayable_phrase(phrase: str, blocked_app_tokens: set[str] | None = None) -> bool:

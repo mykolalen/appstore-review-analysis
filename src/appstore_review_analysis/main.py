@@ -23,6 +23,7 @@ from appstore_review_analysis.logging import configure_logging
 from appstore_review_analysis.public_mode import (
     PublicRateLimiter,
     load_public_seed_analysis,
+    public_seed_rows,
 )
 from appstore_review_analysis.storage import StorageRepository
 
@@ -55,7 +56,9 @@ def create_app(
         app.state.repository = repository
         if resolved_settings.public_mode:
             seed_analysis = load_public_seed_analysis(resolved_settings.public_seed_analysis_path)
-            repository.upsert_seed_analysis(seed_analysis)
+            repository.upsert_seed_analysis(
+                seed_analysis, public_seed_rows(seed_analysis, resolved_settings.fixture_dir)
+            )
             app.state.public_limiter = PublicRateLimiter(
                 global_capacity=resolved_settings.public_global_post_limit,
                 client_capacity=resolved_settings.public_client_post_limit,

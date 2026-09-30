@@ -364,11 +364,9 @@ def analyse_issue_categories(
     units: list[ComplaintUnit],
     *,
     reference_date: datetime,
-    app_name: str = "",
 ) -> dict[str, object]:
     """Apply the closed issue lexicon to retained complaint units at review level."""
 
-    _validate_category_table(app_name)
     complaint_review_ids = sorted({unit.review_id for unit in units})
     denominator = len(complaint_review_ids)
     by_category: dict[str, dict[str, _ReviewMatch]] = {
@@ -595,22 +593,35 @@ def _truncate_excerpt(value: str) -> str:
     return clean if len(clean) <= 300 else clean[:297].rstrip() + "..."
 
 
-def _validate_category_table(app_name: str) -> None:
-    ids = [category.id for category in ISSUE_CATEGORIES]
+_APP_SPECIFIC_TOKENS = frozenset({"nebula", "astrology"})
+
+
+def validate_category_table(
+    categories: tuple[IssueCategory, ...] | None = None,
+    *,
+    forbidden_tokens: frozenset[str] = _APP_SPECIFIC_TOKENS,
+) -> None:
+    """Static guard that the shipped lexicon stays generic and well-formed.
+
+    This checks the table itself, never the analysed app: a store name such as "Pay" or "X"
+    must not stop an analysis just because it shares a token or substring with a phrase.
+    """
+
+    table = ISSUE_CATEGORIES if categories is None else categories
+    ids = [category.id for category in table]
     if len(ids) != len(set(ids)):
         raise ValueError("issue category ids must be unique")
-    forbidden = {"nebula", "astrology"}
-    normalised_app_name = lexical_text(app_name)
-    if normalised_app_name:
-        forbidden.add(normalised_app_name)
-    for category in ISSUE_CATEGORIES:
+    for category in table:
         if not category.suggested_investigation.startswith("Check whether "):
             raise ValueError("issue category investigations must be phrased as hypotheses")
         for phrase in category.phrases:
             if phrase != phrase.lower() or lexical_text(phrase) != phrase:
                 raise ValueError(f"issue category phrase is not lexical-normalised: {phrase!r}")
-            if any(value and value in phrase for value in forbidden):
+            if set(phrase.split()) & forbidden_tokens:
                 raise ValueError("issue category table contains app-specific vocabulary")
+
+
+validate_category_table()
 
 
 def _dict(value: object) -> dict[str, Any]:

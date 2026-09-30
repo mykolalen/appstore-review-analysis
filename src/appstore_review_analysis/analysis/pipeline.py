@@ -11,7 +11,7 @@ from uuid import uuid4
 from appstore_review_analysis.analysis.evidence import build_areas_of_improvement
 from appstore_review_analysis.analysis.issue_categories import analyse_issue_categories
 from appstore_review_analysis.analysis.keywords import analyse_keywords
-from appstore_review_analysis.analysis.metrics import rating_metrics, wilson_interval
+from appstore_review_analysis.analysis.metrics import rating_metrics, rating_proportion_interval
 from appstore_review_analysis.analysis.sentiment import SentimentAnalyzer, SentimentResult
 from appstore_review_analysis.analysis.themes import (
     DEFAULT_DISTANCE_THRESHOLD,
@@ -230,7 +230,6 @@ def analyse_collection(
             issue_categories = analyse_issue_categories(
                 complaint_units,
                 reference_date=reference_date,
-                app_name=collection.app.name,
             )
 
         insights = build_areas_of_improvement(
@@ -249,9 +248,9 @@ def analyse_collection(
         }
     )
 
-    analysis_complete = not budget.expired
+    analysis_complete = analyze and not budget.expired
     warnings = list(collection.warnings)
-    if not analysis_complete:
+    if analyze and budget.expired:
         warnings.append("Request deadline reached after sentiment; later stages may be skipped.")
 
     payload = AnalysisPayload(
@@ -468,22 +467,7 @@ def _label_ci(
     population: int,
     census: bool,
 ) -> dict[str, float | str | None]:
-    if n == 0:
-        return {"low": None, "high": None, "reason": "no_reviews"}
-    if census:
-        return {"low": None, "high": None, "reason": "census"}
-    interval = wilson_interval(successes, n)
-    assert interval is not None
-    low, high = interval
-    if population > 1 and n / population > 0.05:
-        import math
-
-        correction = math.sqrt(max(0.0, (population - n) / (population - 1)))
-        center = (low + high) / 2.0
-        half = (high - low) / 2.0 * correction
-        low = max(0.0, center - half)
-        high = min(1.0, center + half)
-    return {"low": low, "high": high, "reason": None}
+    return rating_proportion_interval(successes, n, population=population, census=census)
 
 
 def _sentiment_provenance(payload: dict[str, object]) -> dict[str, object] | None:

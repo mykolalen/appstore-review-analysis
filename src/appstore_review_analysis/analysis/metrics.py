@@ -73,7 +73,7 @@ def rating_metrics(reviews: list[Review], sampling: SamplingMetadata, seed: int)
                 "sampled written reviews."
             ),
         },
-        "periods": _period_metrics(reviews, sampling, seed),
+        "periods": _period_metrics(reviews, sampling, seed, census=census),
         "bootstrap": {
             "method": "BCa",
             "n_resamples": 9999,
@@ -92,7 +92,11 @@ def wilson_interval(successes: int, n: int) -> tuple[float, float] | None:
     denominator = 1.0 + z2 / n
     center = (p + z2 / (2.0 * n)) / denominator
     half = _Z_95 * math.sqrt((p * (1.0 - p) + z2 / (4.0 * n)) / n) / denominator
-    return max(0.0, center - half), min(1.0, center + half)
+    # Pin the exact bounds at k=0 and k=n; floating-point rounding otherwise leaves 3e-18 or
+    # 0.9999999999999999, so the interval would not contain an observed 0% or 100%.
+    low = 0.0 if successes <= 0 else max(0.0, center - half)
+    high = 1.0 if successes >= n else min(1.0, center + half)
+    return low, high
 
 
 def _proportion_ci(
@@ -110,10 +114,12 @@ def _proportion_ci(
     assert interval is not None
     low, high = interval
     if population > 1 and n / population > 0.05:
+        # Shrink towards the observed share, as _mean_ci does around the sample mean. The
+        # Wilson interval is asymmetric, so shrinking around its midpoint can exclude p.
         correction = math.sqrt(max(0.0, (population - n) / (population - 1)))
-        center = (low + high) / 2.0
-        half = (high - low) / 2.0 * correction
-        low, high = max(0.0, center - half), min(1.0, center + half)
+        p = successes / n
+        low = max(0.0, p - (p - low) * correction)
+        high = min(1.0, p + (high - p) * correction)
     return {"low": low, "high": high, "reason": None}
 
 
@@ -159,6 +165,8 @@ def _period_metrics(
     reviews: list[Review],
     sampling: SamplingMetadata,
     seed: int,
+    *,
+    census: bool,
 ) -> list[dict[str, Any]]:
     dated = [review for review in reviews if review.created_at is not None]
     if not dated:
@@ -188,14 +196,14 @@ def _period_metrics(
                     seed=seed,
                     stage_id=100 + index,
                     population=max(sampling.reachable, len(bucket)),
-                    census=False,
+                    census=census,
                 ),
                 "one_two_star_share": low_ratings / len(bucket),
                 "one_two_star_ci95": _proportion_ci(
                     low_ratings,
                     len(bucket),
                     population=max(sampling.reachable, len(bucket)),
-                    census=False,
+                    census=census,
                 ),
             }
         )

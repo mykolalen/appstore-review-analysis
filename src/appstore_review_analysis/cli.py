@@ -24,6 +24,7 @@ from appstore_review_analysis.analysis.themes import (
     download_embedding_model,
     select_distance_threshold,
 )
+from appstore_review_analysis.api.schemas import MAX_WINDOW_DAYS
 from appstore_review_analysis.collection.fixture import FixtureProvider
 from appstore_review_analysis.collection.itunes import ITunesProvider
 from appstore_review_analysis.collection.rss import RSSProvider
@@ -190,7 +191,9 @@ def download_models(
 @app.command()
 def collect(
     app_value: Annotated[str, typer.Option("--app", help="Numeric App Store id or Apple URL.")],
-    country: Annotated[str, typer.Option("--country", help="ISO alpha-2 storefront.")] = "us",
+    country: Annotated[
+        str, typer.Option("--country", help="Verified storefront: us or gb.")
+    ] = "us",
     n: Annotated[int, typer.Option("--n", min=1, max=200, help="Number of reviews.")] = 100,
     seed: Annotated[int | None, typer.Option("--seed", help="Seed in [0, 2**53).")] = None,
     provider: Annotated[
@@ -201,6 +204,7 @@ def collect(
         typer.Option(
             "--window-days",
             min=1,
+            max=MAX_WINDOW_DAYS,
             help="Sample only reviews from the last N days (iTunes).",
         ),
     ] = None,
@@ -227,6 +231,14 @@ def collect(
                 code="INVALID_INPUT",
                 message="--window-days is supported only with --provider itunes.",
             )
+        out_path = out or Path("reviews.json")
+        if out_path.suffix.lower() == ".csv":
+            raise AppError(
+                status_code=422,
+                code="INVALID_INPUT",
+                message="--out is the JSON path; the CSV is written next to it with a .csv suffix.",
+                details={"out": str(out_path)},
+            )
         instance = _provider(selected_provider, settings)
         if isinstance(instance, ITunesProvider):
             result = instance.sample(
@@ -238,7 +250,6 @@ def collect(
             )
         else:
             result = instance.sample(app_id, storefront, sample_size, effective_seed)
-        out_path = out or Path("reviews.json")
         write_collection_json(result, out_path)
         write_reviews_csv(result.reviews, out_path.with_suffix(".csv"), excel=excel)
         if record_snapshot is not None:
@@ -256,6 +267,15 @@ def collect(
         )
     except AppError as exc:
         _emit_app_error(exc)
+    except OSError as exc:
+        _emit_app_error(
+            AppError(
+                status_code=422,
+                code="INVALID_INPUT",
+                message="Output could not be written.",
+                details={"error": type(exc).__name__},
+            )
+        )
     finally:
         if isinstance(instance, (ITunesProvider, RSSProvider)):
             instance.close()
@@ -264,7 +284,9 @@ def collect(
 @app.command()
 def walk(
     app_value: Annotated[str, typer.Option("--app", help="Numeric App Store id or Apple URL.")],
-    country: Annotated[str, typer.Option("--country", help="ISO alpha-2 storefront.")] = "us",
+    country: Annotated[
+        str, typer.Option("--country", help="Verified storefront: us or gb.")
+    ] = "us",
 ) -> None:
     """Walk the reachable written-review population for one-off validation."""
 
@@ -403,7 +425,7 @@ def analyze(
                 ensure_ascii=False,
             )
         )
-    except (AppError, OSError, json.JSONDecodeError) as exc:
+    except (AppError, OSError, ValueError) as exc:
         if isinstance(exc, AppError):
             _emit_app_error(exc)
         _emit_app_error(

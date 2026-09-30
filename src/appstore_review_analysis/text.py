@@ -45,12 +45,19 @@ def analysis_text(title: str, body: str) -> tuple[str, bool]:
 
     clean_title = normalise_text(title)
     clean_body = normalise_text(body)
+    title_cf = clean_title.casefold()
+    body_cf = clean_body.casefold()
+    # A title repeated at the start of the body is a duplicate only at a word boundary:
+    # "Scam" + "Scammers took my money" keeps the title, "Great" + "Great app" does not.
     duplicate = bool(
-        clean_title
-        and clean_body
+        title_cf
+        and body_cf
         and (
-            clean_title.casefold() == clean_body.casefold()
-            or clean_body.casefold().startswith(clean_title.casefold())
+            title_cf == body_cf
+            or (
+                body_cf.startswith(title_cf)
+                and not body_cf[len(title_cf) : len(title_cf) + 1].isalnum()
+            )
         )
     )
     if duplicate:
@@ -131,9 +138,14 @@ def preprocess_review(review: Review) -> ProcessedText:
         flags.append("long_text")
     if duplicate:
         flags.append("duplicate_title_body")
-    analysable = language in {"en", "und"}
-    if not analysable:
-        flags.append("non_english")
+    if not joined:
+        # Nothing to classify: the sentiment model would otherwise score "" as positive.
+        flags.append("no_text")
+        analysable = False
+    else:
+        analysable = language in {"en", "und"}
+        if not analysable:
+            flags.append("non_english")
 
     return ProcessedText(
         analysis_text=joined,

@@ -44,7 +44,9 @@ DIAGNOSTIC_THRESHOLDS = (0.30, 0.40, 0.50, 0.60)
 # The evaluation pair strata span [0.20, 0.65); a 0.05 grid covers that range without
 # selecting a threshold from the demo sample itself.
 THRESHOLD_TUNING_GRID = tuple(round(0.20 + 0.05 * index, 2) for index in range(10))
-_SENTENCE_SPLIT_RE = re.compile(r"(?<=[.!?])\s+|[\r\n]+")
+# Review text is whitespace-normalised before it gets here, so units split on terminal
+# punctuation only; line breaks inside a review do not start a new complaint unit.
+_SENTENCE_SPLIT_RE = re.compile(r"(?<=[.!?])\s+")
 _DISTANCE_HISTOGRAM_EDGES = (0.0, 0.20, 0.30, 0.40, 0.50, 0.60, 0.80, 1.00, 2.00)
 
 

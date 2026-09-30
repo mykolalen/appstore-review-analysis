@@ -229,3 +229,8 @@ def test_committed_snapshot_never_displays_only_blocked_tokens(
     for table_name in ("common", "distinctive"):
         for item in payload["keywords"][table_name]:
             assert displayable_phrase(item["phrase"], blocked), item["phrase"]
+
+
+def test_brand_token_with_trailing_punctuation_is_blocked() -> None:
+    blocked = app_display_tokens("Headspace: Sleep & Meditation")
+    assert displayable_phrase("headspace", blocked) is False

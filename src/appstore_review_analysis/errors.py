@@ -1,5 +1,6 @@
 """Shared domain/API error schema and exception handlers."""
 
+import logging
 from collections.abc import Mapping
 from typing import Any
 
@@ -8,6 +9,8 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 from starlette.exceptions import HTTPException as StarletteHTTPException
+
+_LOGGER = logging.getLogger(__name__)
 
 
 class AppError(Exception):
@@ -59,6 +62,7 @@ def error_response(
     message: str,
     details: Mapping[str, Any] | None = None,
     retry_after: int | None = None,
+    headers: Mapping[str, str] | None = None,
 ) -> JSONResponse:
     """Create one consistent API error response."""
 
@@ -70,11 +74,13 @@ def error_response(
             details=dict(details or {}),
         )
     )
-    headers = {"Retry-After": str(retry_after)} if retry_after is not None else None
+    response_headers = dict(headers or {})
+    if retry_after is not None:
+        response_headers["Retry-After"] = str(retry_after)
     return JSONResponse(
         status_code=status_code,
         content=payload.model_dump(mode="json"),
-        headers=headers,
+        headers=response_headers or None,
     )
 
 
@@ -105,6 +111,7 @@ def install_exception_handlers(app: FastAPI) -> None:
             status_code=exc.status_code,
             code=code,
             message=message,
+            headers=exc.headers,
         )
 
     @app.exception_handler(RequestValidationError)
@@ -127,4 +134,15 @@ def install_exception_handlers(app: FastAPI) -> None:
             code="INVALID_INPUT",
             message="Request validation failed.",
             details=details,
+        )
+
+    @app.exception_handler(Exception)
+    async def unexpected_exception_handler(request: Request, exc: Exception) -> JSONResponse:
+        # Last resort: never answer with a bare text/plain 500 or leak a traceback.
+        _LOGGER.exception("unhandled error", extra={"request_id": request_id_from(request)})
+        return error_response(
+            request=request,
+            status_code=500,
+            code="INTERNAL_ERROR",
+            message="Unexpected server error.",
         )

@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import csv
+import io
 from pathlib import Path
 
 import pytest
@@ -152,3 +154,33 @@ def test_public_seed_is_recreated_under_fixed_id_after_empty_db_restart(tmp_path
         second = client.get(f"/v1/analyses/{PUBLIC_SEED_ANALYSIS_ID}")
         assert second.status_code == 200
         assert second.json()["analysis_id"] == PUBLIC_SEED_ANALYSIS_ID
+
+
+def test_public_seed_serves_its_reviews_for_download(tmp_path: Path) -> None:
+    # Regression: the seed used to be stored without rows, so its download was empty.
+    with TestClient(
+        create_app(_settings(tmp_path), sentiment=FakeSentiment(), embedder=FakeEmbedder())
+    ) as client:
+        analysis = client.get(f"/v1/analyses/{PUBLIC_SEED_ANALYSIS_ID}").json()
+        reviews = client.get(f"/v1/analyses/{PUBLIC_SEED_ANALYSIS_ID}/reviews?format=json")
+        csv_response = client.get(f"/v1/analyses/{PUBLIC_SEED_ANALYSIS_ID}/reviews?format=csv")
+
+    assert reviews.status_code == 200
+    assert len(reviews.json()) == analysis["sampling"]["actual"] == 100
+    assert len(list(csv.DictReader(io.StringIO(csv_response.text)))) == 100
+
+
+def test_repeated_forwarded_for_headers_use_the_right_most_hop(tmp_path: Path) -> None:
+    from starlette.requests import Request
+
+    from appstore_review_analysis.public_mode import public_client_key
+
+    scope = {
+        "type": "http",
+        "headers": [
+            (b"x-forwarded-for", b"203.0.113.9"),
+            (b"x-forwarded-for", b"198.51.100.7"),
+        ],
+        "client": ("10.0.0.1", 1234),
+    }
+    assert public_client_key(Request(scope)) == "198.51.100.7"

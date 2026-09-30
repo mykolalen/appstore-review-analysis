@@ -215,3 +215,45 @@ def test_audit_categories_writes_empty_human_labels_and_refuses_overwrite(tmp_pa
     )
     assert second.exit_code != 0
     assert "INVALID_INPUT" in second.output
+
+
+def test_collect_rejects_a_csv_out_path_instead_of_overwriting_the_json(tmp_path: Path) -> None:
+    get_settings.cache_clear()
+    result = runner.invoke(
+        app,
+        [
+            "collect",
+            "--app",
+            "1459969523",
+            "--provider",
+            "fixture",
+            "--out",
+            str(tmp_path / "x.csv"),
+        ],
+    )
+    get_settings.cache_clear()
+    assert result.exit_code != 0
+    assert "INVALID_INPUT" in result.output
+    assert not (tmp_path / "x.csv").exists()
+
+
+def test_analyze_reports_a_wrong_shape_snapshot_cleanly(tmp_path: Path) -> None:
+    snapshot = tmp_path / "not-a-snapshot.json"
+    snapshot.write_text('{"foo": 1}', encoding="utf-8")
+    get_settings.cache_clear()
+    result = runner.invoke(
+        app,
+        [
+            "analyze",
+            "--provider",
+            "fixture",
+            "--snapshot",
+            str(snapshot),
+            "--out",
+            str(tmp_path / "analysis.json"),
+        ],
+    )
+    get_settings.cache_clear()
+    assert result.exit_code != 0
+    assert "Snapshot could not be read" in result.output
+    assert "Traceback" not in result.output

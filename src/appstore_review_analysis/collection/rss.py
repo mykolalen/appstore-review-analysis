@@ -182,6 +182,9 @@ class RSSProvider:
             requests_made += page_requests
             retries += page_retries
             if feed_was_empty:
+                if page > 1:
+                    # The previous page was full and the feed ends exactly on a page boundary.
+                    break
                 raise AppError(
                     status_code=503,
                     code="UPSTREAM_UNAVAILABLE",

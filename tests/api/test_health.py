@@ -74,3 +74,31 @@ def test_readyz_reports_embedder_unavailable_when_load_fails(monkeypatch, tmp_pa
 
     assert response.status_code == 503
     assert response.json()["error"]["code"] == "MODEL_UNAVAILABLE"
+
+
+def test_readyz_reports_database_unavailable() -> None:
+    from sqlalchemy.exc import OperationalError
+
+    from appstore_review_analysis.analysis.sentiment import FakeSentiment
+
+    application = create_app(Settings(), sentiment=FakeSentiment())
+    with TestClient(application) as client:
+        engine = application.state.repository.engine
+
+        def broken_connect() -> None:
+            raise OperationalError("SELECT 1", {}, Exception("database is gone"))
+
+        engine.connect = broken_connect  # type: ignore[method-assign]
+        response = client.get("/readyz")
+
+    assert response.status_code == 503
+    assert response.json()["error"]["code"] == "DATABASE_UNAVAILABLE"
+
+
+def test_openapi_documents_the_error_envelope_for_validation_errors() -> None:
+    with TestClient(create_app(Settings())) as client:
+        spec = client.get("/openapi.json").json()
+
+    post = spec["paths"]["/v1/analyses"]["post"]["responses"]
+    assert post["422"]["content"]["application/json"]["schema"]["$ref"].endswith("/ErrorResponse")
+    assert "HTTPValidationError" not in spec["components"]["schemas"]

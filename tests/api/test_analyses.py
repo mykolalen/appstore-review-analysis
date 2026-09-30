@@ -218,6 +218,8 @@ def test_collect_only_does_not_need_sentiment_model(tmp_path: Path, monkeypatch)
         )
         assert response.status_code == 201
         assert response.json()["sentiment"]["status"] == "not_requested"
+        # Collect-only is not a complete analysis; insights were never computed.
+        assert response.json()["analysis_complete"] is False
 
         unavailable = client.post(
             "/v1/analyses",
