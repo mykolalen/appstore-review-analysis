@@ -1,0 +1,474 @@
+id,review_id,star,review_gold_label,text,human_label
+10072891498:s0,10072891498,1,negative,FRAUD.,complaint
+10072891498:s1,10072891498,1,negative,They steal money after you cancel and there’s no way of getting in contact with them,complaint
+10271567764:s0,10271567764,1,negative,Well I’m gonna be honest.,not_complaint
+10271567764:s1,10271567764,1,negative,It’s kinda lame and not worth it,complaint
+10369949410:s0,10369949410,1,negative,SCAM!,complaint
+10369949410:s1,10369949410,1,negative,Hidden charges.,complaint
+10369949410:s2,10369949410,1,negative,I signed up for a $1 trial and was randomly charged $19 after about a week.,complaint
+10369949410:s3,10369949410,1,negative,I politely requested a refund and was told that I signed up for this.,complaint
+10369949410:s4,10369949410,1,negative,This app is a money grab and a scam.,complaint
+10369949410:s5,10369949410,1,negative,Purely and simply.,complaint
+10375806765:s0,10375806765,1,negative,Scam.,complaint
+10375806765:s1,10375806765,1,negative,The advisors are not real people.,complaint
+10375806765:s2,10375806765,1,negative,All of their “images” are made with AI.,complaint
+10375806765:s3,10375806765,1,negative,I reverse searched multiple advisors pictures and found that they are used on photoshop websites and similar faces are merged to make different version of the same person.,complaint
+10512237801:s0,10512237801,5,positive,New love.,not_complaint
+10512237801:s1,10512237801,5,positive,Thanks u nebula for the encouraging words and being so nice by keeping anyone feel uplifted and happy.,not_complaint
+10512237801:s2,10512237801,5,positive,The world needs more loving people .,not_complaint
+10512237801:s3,10512237801,5,positive,I’ve experienced the worst 2 years of my life bc of someone who has wrecked my life.,not_complaint
+10512237801:s4,10512237801,5,positive,I need a new experience with someone who is always doing things that attract happiness and good intentions.,not_complaint
+10512237801:s5,10512237801,5,positive,Where is real love at when u have a distraction in ur way.,not_complaint
+10512237801:s6,10512237801,5,positive,Continue to keep pushing the encouraging horoscopes that fulfill ur soul with goodness.,not_complaint
+10522378927:s0,10522378927,1,mixed,Terrible interface.,complaint
+10522378927:s1,10522378927,1,mixed,"While I do enjoy the app, the advisors section needs major work!",complaint
+10522378927:s2,10522378927,1,mixed,Many do not reply in the allotted time for how expensive it is.,complaint
+10522378927:s3,10522378927,1,mixed,Twice I’ve been charged $25 for the in app currency and never received the currency.,complaint
+10770025568:s0,10770025568,3,negative,"This app used to be good, but now it’s not!",complaint
+10770025568:s1,10770025568,3,negative,This app used to be good because I talked to multiple astrologers in over a few months but then it started changing.,complaint
+10770025568:s2,10770025568,3,negative,"It started demanding credit cards, Apple Pay and PayPal.",complaint
+10770025568:s3,10770025568,3,negative,"To top that all off, I lost my credits which went to waste, and now, it’s gotten expensive and it’s gotten to the point where I couldn’t afford to talk to the astrologers on this app anymore.",complaint
+10770025568:s4,10770025568,3,negative,I mostly talked them about my love life.,not_complaint
+10770025568:s5,10770025568,3,negative,Such a ripoff.,complaint
+10770025568:s6,10770025568,3,negative,I felt the app was gaslighting me.,complaint
+10796803766:s0,10796803766,4,positive,The first lifetime achievement.,not_complaint
+10796803766:s1,10796803766,4,positive,They aren’t wrong about my current situation,not_complaint
+10830425243:s0,10830425243,1,negative,Scam.,complaint
+10830425243:s1,10830425243,1,negative,They charged my card $50 when I only wanted 10$ to be taken out they scammed me and I have not gotten my refund!!!,complaint
+10910776582:s0,10910776582,2,mixed,Lacking.,complaint
+10910776582:s1,10910776582,2,mixed,"The horoscope aspect is a nice read, but everything else is SO spammy.",complaint
+10910776582:s2,10910776582,2,mixed,Constant notifications from “readers” and no way of disabling.,complaint
+10910776582:s3,10910776582,2,mixed,Majority of the perks they offer are paid.,complaint
+10910776582:s4,10910776582,2,mixed,Not ideal,complaint
+11129602293:s0,11129602293,1,negative,Scam.,complaint
+11129602293:s1,11129602293,1,negative,I was charged without authorization.,complaint
+11301262563:s0,11301262563,1,negative,"Everything is an up charge, even with paid subscription.",complaint
+11301262563:s1,11301262563,1,negative,Just like the title says.,complaint
+11301262563:s2,11301262563,1,negative,A paid subscription doesn’t get you anything as far as I’ve found.,complaint
+11301262563:s3,11301262563,1,negative,Everything you click on worth using is an upcharge.,complaint
+11301262563:s4,11301262563,1,negative,So frustrating.,complaint
+11314641775:s0,11314641775,1,negative,Deceives its users into paying large amount of money for a FREE trial.,complaint
+11314641775:s1,11314641775,1,negative,Clicked 3 days free trial.,not_complaint
+11314641775:s2,11314641775,1,negative,immediately charged me over $50 apparently this is common thing.,complaint
+11320898417:s0,11320898417,2,negative,Don’t get this app!!,complaint
+11320898417:s1,11320898417,2,negative,They were supposed to send me my compatibility report for my partner and I because yes I did pay for it.,complaint
+11320898417:s2,11320898417,2,negative,I never got it!,complaint
+11320898417:s3,11320898417,2,negative,It’s just not worth $49.00 a month!!,complaint
+11320898417:s4,11320898417,2,negative,Money wasted!!!,complaint
+11320898417:s5,11320898417,2,negative,I can’t seem to cancel it and they charge me a ridiculous amount each month!!,complaint
+11320898417:s6,11320898417,2,negative,It’s all the same!,complaint
+11320898417:s7,11320898417,2,negative,There’s nothing super special about this app!!,complaint
+11388658897:s0,11388658897,1,negative,BIG SCAM.,complaint
+11388658897:s1,11388658897,1,negative,I only got curious for the “personalize” compatibility report that you supposedly get after answering detail questions about your relationship.,not_complaint
+11388658897:s2,11388658897,1,negative,They will then prompt you to pay and after payment all you get is a list of all the zodiac signs in each moon phase.,complaint
+11388658897:s3,11388658897,1,negative,There is not personalize report!!,complaint
+11457245651:s0,11457245651,2,mixed,why does everything cost money?,complaint
+11457245651:s1,11457245651,2,mixed,I’ve used this app for years and thought it was leagues better than costar.,not_complaint
+11457245651:s2,11457245651,2,mixed,very disappointed that it’s now decided to put all of it’s features behind a paywall.,complaint
+11457245651:s3,11457245651,2,mixed,"i understand monetizing some features like chatting with astrologists, and even breakdowns of each of your houses and placements.",not_complaint
+11457245651:s4,11457245651,2,mixed,but now i can’t even view my full birth chart??,complaint
+11457245651:s5,11457245651,2,mixed,"there are many FREE websites that i can look that up on anyways, so i fear they made a poor decision with that one.",complaint
+11457245651:s6,11457245651,2,mixed,i will not pay 8 bucks a week just so i can view my chart and my houses.,complaint
+11457245651:s7,11457245651,2,mixed,no thank you,complaint
+11570996940:s0,11570996940,3,mixed,Reading.,not_complaint
+11570996940:s1,11570996940,3,mixed,I like chatting with them but it costs entirely too much my opinion,complaint
+11602909364:s0,11602909364,1,negative,Probably just for profit??,complaint
+11602909364:s1,11602909364,1,negative,"So I've had Nebula for about a couple years now, in the beginning I loved it, but as time passed on they've been offers to make me buy their sub.",complaint
+11602909364:s2,11602909364,1,negative,Today I went on to look at my MC / midheaven since I forgot it and ALL OF A SUDDEN I can't see my placements???,complaint
+11602909364:s3,11602909364,1,negative,It's asking to pay a price to unlock them??,complaint
+11602909364:s4,11602909364,1,negative,"I'm not sure why these apps think they're so special, I can simply go on Google and look up my placements but I just enjoyed the little tips and tricks, and guidance that nebula would offer but im sure now because they want more profit they're charging some perks of the app?",complaint
+11602909364:s5,11602909364,1,negative,"I let it slide back then when you had to all of a sudden pay to see your horoscope for the next few days, it would ask for either payment or to watch a video and I never paid mind to it.",not_complaint
+11602909364:s6,11602909364,1,negative,"But now, it's asking for payment to see my houses, placement and traits??",complaint
+11602909364:s7,11602909364,1,negative,"No, thanks, but I'm good.",complaint
+11602909364:s8,11602909364,1,negative,I'll probably end up deleting this app since there's nothing to do now on it.,complaint
+11786598854:s0,11786598854,1,negative,Scammers.,complaint
+11786598854:s1,11786598854,1,negative,"I was just checking the website because it looked interesting then the first thing they charged me 20 dollars for something I didn’t order, now second time I’m getting another notification of them charging me another 45.",complaint
+11786598854:s2,11786598854,1,negative,I don’t have a subscription and I ll definitely use my legal ways to get all my money back.,complaint
+11786598854:s3,11786598854,1,negative,DONT CLICK ON THIS SITE,complaint
+11885867653:s0,11885867653,1,negative,Scam.,complaint
+11885867653:s1,11885867653,1,negative,Don’t waste your time.,complaint
+11885867653:s2,11885867653,1,negative,This app is terrible and has so many bugs it won’t even load your keyboard.,complaint
+11885867653:s3,11885867653,1,negative,It doesn’t link your email correctly if you do it through the website first and then gives you a different account.,complaint
+11885867653:s4,11885867653,1,negative,I wasted $1 just to cancel because the app is weird to navigate.,complaint
+11885867653:s5,11885867653,1,negative,It didn’t even give me my quiz results either.,complaint
+11975231543:s0,11975231543,2,negative,Scammy and disappointing.,complaint
+11975231543:s1,11975231543,2,negative,I saw an ad on Instagram to take a quiz and get a palmistry and witch power reading for fun.,not_complaint
+11975231543:s2,11975231543,2,negative,I went through the quiz and paid $1 for my result.,not_complaint
+11975231543:s3,11975231543,2,negative,Turns out I was enrolled to be billed WEEKLY for $45 and there was no option to turn off the subscription through my iPhone because they routed it through their web platform.,complaint
+11975231543:s4,11975231543,2,negative,"Then, when I went to view the palmistry and witch power reading report, it was showing a “404 error” even though I hadn’t cancelled my subscription yet.",complaint
+11975231543:s5,11975231543,2,negative,"Contacting support gives you a bot and I have to wait to be contacted via email by support - hopefully, I hear back before they charge me $45 for nothing!",complaint
+11975231543:s6,11975231543,2,negative,Should be illegal.,complaint
+11975231543:s7,11975231543,2,negative,I wasted all morning trying to sort this out when I just wanted to pay $1 for a quick and fun online quiz.,complaint
+11978863823:s0,11978863823,4,mixed,They are spot on.,not_complaint
+11978863823:s1,11978863823,4,mixed,I just wish the minutes go by slower but they are great,complaint
+12175541816:s0,12175541816,1,negative,Doesn’t do what it claims to.,complaint
+12175541816:s1,12175541816,1,negative,"False advertising, incorrect information provided, basic charts and guides you could have pulled yourself from Google.",complaint
+12175541816:s2,12175541816,1,negative,Save your $.,complaint
+12199469589:s0,12199469589,4,mixed,Extremely Accurate.,not_complaint
+12199469589:s1,12199469589,4,mixed,It’s shocking how accurate this app is.,not_complaint
+12199469589:s2,12199469589,4,mixed,The horoscopes even.,not_complaint
+12199469589:s3,12199469589,4,mixed,I advise finding an advisor and sticking with them.,not_complaint
+12199469589:s4,12199469589,4,mixed,My only complaint is how pricey it is.,complaint
+12249498861:s0,12249498861,1,negative,Scam.,complaint
+12249498861:s1,12249498861,1,negative,"They just keep charging me, don’t sign up, you’ll never be able to cancel it.",complaint
+12353401811:s0,12353401811,5,positive,Trust this app.,not_complaint
+12353401811:s1,12353401811,5,positive,No parlor tricks in this app!!,not_complaint
+12415909540:s0,12415909540,1,negative,Lame.,complaint
+12415909540:s1,12415909540,1,negative,Used to love this app.,not_complaint
+12415909540:s2,12415909540,1,negative,"There was some great free info, then They removed all the best parts and charge for every aspect now.",complaint
+12415909540:s3,12415909540,1,negative,What a scam.,complaint
+12466129894:s0,12466129894,4,mixed,First time.,not_complaint
+12466129894:s1,12466129894,4,mixed,They are vague but I found a very supportive and positive person to talk to.,complaint
+12466129894:s2,12466129894,4,mixed,Would use again!,not_complaint
+12479187919:s0,12479187919,1,negative,Impossible to Cancel Subscription.,complaint
+12479187919:s1,12479187919,1,negative,You should be absolutely sure you want this fairly expensive app before you start even a trial subscription because it is almost impossible to cancel once you’ve started.,complaint
+12479187919:s2,12479187919,1,negative,"I have been working for about an hour, still can’t get the cancellation completed and cannot get any assistance on the chat support either.",complaint
+12480029088:s0,12480029088,5,mixed,There’s a lot going on.,not_complaint
+12480029088:s1,12480029088,5,mixed,"Love the guided meditations, horoscopes, and archetype lessons.",not_complaint
+12480029088:s2,12480029088,5,mixed,I do wish the psychics were less expensive!,complaint
+12480029088:s3,12480029088,5,mixed,$40/minute isn’t sustainable but I understand a living still has to be made.,complaint
+12517854013:s0,12517854013,2,negative,Outdated.,complaint
+12517854013:s1,12517854013,2,negative,App is clearly outdated stating that a full solar eclipse occurred in 4/8/2025.,complaint
+12517854013:s2,12517854013,2,negative,"This happened in 2024, there is not full solar eclipse in April 2025 as a partial just occurred at the end of March",complaint
+12614118185:s0,12614118185,1,negative,No way to cancel.,complaint
+12614118185:s1,12614118185,1,negative,Can’t figure out how to cancel or how to get help to do it so they billed me $$45 for one one month.,complaint
+12614118185:s2,12614118185,1,negative,trapped now!,complaint
+12647338161:s0,12647338161,4,mixed,Take it with a grain of salt.,not_complaint
+12647338161:s1,12647338161,4,mixed,If you’re into astrology this app isn’t completely useless or that bad.,not_complaint
+12647338161:s2,12647338161,4,mixed,It’s fun but I think you have to take it with a grain of salt.,not_complaint
+12647338161:s3,12647338161,4,mixed,Believe what you wish but don’t let it rule you.,not_complaint
+12661209878:s0,12661209878,1,negative,Used to be a good app..,complaint
+12661209878:s1,12661209878,1,negative,Ive been using nebula for at least 3 years now and it used to be so good at giving useful information but now they just give a short paragraph and all the important stuff is behind a paywall.,complaint
+12661209878:s2,12661209878,1,negative,Even your birth chart.,complaint
+12661209878:s3,12661209878,1,negative,Total waste now..,complaint
+12661209878:s4,12661209878,1,negative,better off using chatgpt.,complaint
+12751769376:s0,12751769376,1,negative,Don’t do it.,complaint
+12751769376:s1,12751769376,1,negative,Could not even go by correct date if birth even though I entered it correctly.,complaint
+12751769376:s2,12751769376,1,negative,Don’t waste your time or money.,complaint
+12751769376:s3,12751769376,1,negative,Not even worth a dollar.,complaint
+12859753425:s0,12859753425,2,negative,Subscription price.,not_complaint
+12859753425:s1,12859753425,2,negative,"A little upset because I really wanted to subscribe to this app, but was shocked to see that the amount that was being pulled out of my account was 75+ dollars instead of the 39.99 yearly subscription price?",complaint
+12859753425:s2,12859753425,2,negative,I am aware that it does jump up to 49.99 at a later time but why was I being charged 75+ dollars??,complaint
+12859753425:s3,12859753425,2,negative,False advertisement on subscription price.,complaint
+12859753425:s4,12859753425,2,negative,SMH,complaint
+12873829581:s0,12873829581,1,negative,I need my money back cause I don’t use this app and it charge me 49.99 give it a 0 star.,complaint
+12873829581:s1,12873829581,1,negative,0,complaint
+12888865299:s0,12888865299,2,negative,Great idea but ultimately scamming you.,complaint
+12888865299:s1,12888865299,2,negative,Each time I pay for a Nebula service I get the runaround and ultimately don’t get what I paid for.,complaint
+12888865299:s2,12888865299,2,negative,The most recent scam was I clicked on one of their ads to get a palm reading and after they gave me the runaround with the survey they make you do EVERY TIME it asked for a dollar.,complaint
+12888865299:s3,12888865299,2,negative,"I said why not and paid the dollar, only to be redirected to the app that doesn’t offer the palm reading feature.",complaint
+12888865299:s4,12888865299,2,negative,Yes it’s just a dollar but this has happened at least one other time before for a different feature.,complaint
+12888865299:s5,12888865299,2,negative,It just seems like they are trying to get every dollar out of you in a sneaky way,complaint
+12991594901:s0,12991594901,1,negative,Nowhere to cancel.,complaint
+12991594901:s1,12991594901,1,negative,"I've tried to cancel this, but I can't get a hold of anyone.",complaint
+13040276075:s0,13040276075,5,positive,love,not_complaint
+13099507355:s0,13099507355,1,negative,Scam.,complaint
+13099507355:s1,13099507355,1,negative,This website is a scam!,complaint
+13099507355:s2,13099507355,1,negative,I did not get my reading on time.,complaint
+13099507355:s3,13099507355,1,negative,Then they would not cancel my account signing me up for a website and app account even though I did not agree to that.,complaint
+13099507355:s4,13099507355,1,negative,Fighting with someone to get a refund is ridiculous as you just talk to AI bots all the time.,complaint
+13130662622:s0,13130662622,5,positive,Great place.,not_complaint
+13130662622:s1,13130662622,5,positive,This is great and I would love to meet again,not_complaint
+13157481750:s0,13157481750,3,negative,Fraud.,complaint
+13157481750:s1,13157481750,3,negative,I downloaded this app and was later charged $29.90 for downloading a free app they assume you started trial and subscription same day so why would the charge you for a subscription you never ordered I looked on my reaccuring subscriptions list no nebula subscription there I looked at media purchases no purchases there prior to this payment so what’s up,complaint
+13201661996:s0,13201661996,1,negative,Fees.,complaint
+13201661996:s1,13201661996,1,negative,Be careful and read all the fine print.,complaint
+13201661996:s2,13201661996,1,negative,They will come for the money and there's not easy way to cancel it.,complaint
+13233522546:s0,13233522546,5,positive,Insightful.,not_complaint
+13233522546:s1,13233522546,5,positive,Discovering what all the lines meant on my palm was fascinating.,not_complaint
+13233522546:s2,13233522546,5,positive,I resonated with so much of what it said.,not_complaint
+13233522546:s3,13233522546,5,positive,I’m amazed that this app can do so much.,not_complaint
+13263362564:s0,13263362564,1,negative,Scam.,complaint
+13263362564:s1,13263362564,1,negative,I did trail for 1 day canceled and I just got an alert from my bank that they tried to charge me 39.99 .,complaint
+13263362564:s2,13263362564,1,negative,The app is a whole scam,complaint
+13403097671:s0,13403097671,4,mixed,Unexpected.,not_complaint
+13403097671:s1,13403097671,4,mixed,I was very pleased with the depth of the reading.,not_complaint
+13403097671:s2,13403097671,4,mixed,It was much longer than I had expected it to be it was great although I wish it was more personalized it felt like it could be a general or one size fits all type of explanation.,complaint
+13448090784:s0,13448090784,5,positive,Future.,not_complaint
+13448090784:s1,13448090784,5,positive,This app Is the best I never knew they know all of this,not_complaint
+13518634146:s0,13518634146,3,mixed,Insightful app.,not_complaint
+13518634146:s1,13518634146,3,mixed,Very insightful app.,not_complaint
+13518634146:s2,13518634146,3,mixed,To get a reading.,not_complaint
+13518634146:s3,13518634146,3,mixed,I spend 30.00 and did not get a complete reading.,complaint
+13518634146:s4,13518634146,3,mixed,It leaves you hanging with no real reading.,complaint
+13518634146:s5,13518634146,3,mixed,But other part that comes with buying the app is ok.,not_complaint
+13561975986:s0,13561975986,3,mixed,Cool.,not_complaint
+13561975986:s1,13561975986,3,mixed,I like it but it cost money for reading and writing but it’s worth your time,complaint
+13599803155:s0,13599803155,4,mixed,I really liked it.,not_complaint
+13599803155:s1,13599803155,4,mixed,"My psychic was very quick answering my questions and she gave me more details about it as I was asking and clearing my brain fog but only 3 free minutes, they go quick so make sure you plan your question really good before asking anything",complaint
+13624308575:s0,13624308575,5,positive,The best.,not_complaint
+13624308575:s1,13624308575,5,positive,She was completely emphatic and genuine.,not_complaint
+13624308575:s2,13624308575,5,positive,She was kind and helpful and really helped me understand what I need to do.,not_complaint
+13735373653:s0,13735373653,5,positive,Kind people.,not_complaint
+13735373653:s1,13735373653,5,positive,All the people I spoke to were extremely empathetic and helpful,not_complaint
+13823398070:s0,13823398070,1,negative,Scam.,complaint
+13823398070:s1,13823398070,1,negative,They charged me $99 without consulting me even though I had ended my subscription after 1 day of using it.,complaint
+13823398070:s2,13823398070,1,negative,Their website is a total scam and their app is a total ripoff.,complaint
+13823398070:s3,13823398070,1,negative,There is no place to even ask for a refund even though it is illegal to charge your card without an email notification.🤬,complaint
+13838985509:s0,13838985509,5,positive,I had a great experience!,not_complaint
+13838985509:s1,13838985509,5,positive,The app visuals is comforting - with truly professional psychics.,not_complaint
+13875115364:s0,13875115364,2,mixed,Forced subscription.,complaint
+13875115364:s1,13875115364,2,mixed,Oh man this app used to be so fun and neat!,not_complaint
+13875115364:s2,13875115364,2,mixed,But the focus shift to psychic advisory has made the app ineffective for regular self discovery and usage.,complaint
+13875115364:s3,13875115364,2,mixed,You can’t even open the home screen without a forced submission to access what was once free information.,complaint
+13875115364:s4,13875115364,2,mixed,If you’re not interested in psychic advice this app is not for you.,complaint
+13887424511:s0,13887424511,4,positive,Site review.,not_complaint
+13887424511:s1,13887424511,4,positive,Great site!,not_complaint
+13887424511:s2,13887424511,4,positive,Thoughtful psychics and helpful resources,not_complaint
+13986114092:s0,13986114092,5,positive,Informative.,not_complaint
+13986114092:s1,13986114092,5,positive,Physics here are the real deal.,not_complaint
+13986114092:s2,13986114092,5,positive,The person I was connected to was accurate and informative.,not_complaint
+13993337492:s0,13993337492,1,negative,Worst app ever.,complaint
+13993337492:s1,13993337492,1,negative,They try to sell you something for $.99 and then hit your card up for $45.00 and you’ll complain and then they’ll refund it but will continue to hit your card up for $45 continuously after that.,complaint
+13993337492:s2,13993337492,1,negative,These people are horrible,complaint
+14009167510:s0,14009167510,5,positive,Soulmate sketch.,not_complaint
+14009167510:s1,14009167510,5,positive,Detailed analysis and information for personality traits,not_complaint
+14014885707:s0,14014885707,4,positive,Love.,not_complaint
+14014885707:s1,14014885707,4,positive,I’m loving the Nebula app so far it’s given me so much advice and knowledge.,not_complaint
+14016861720:s0,14016861720,5,positive,Great.,not_complaint
+14016861720:s1,14016861720,5,positive,Site is easy to use,not_complaint
+14017371871:s0,14017371871,1,negative,Premium.,not_complaint
+14017371871:s1,14017371871,1,negative,Why does it keep trying to sign me up for premium?,complaint
+14017371871:s2,14017371871,1,negative,I had to update the app and keeps asking me for payment.,complaint
+14017371871:s3,14017371871,1,negative,It also signed me out when I updated so I was already annoyed having to start over.,complaint
+14017371871:s4,14017371871,1,negative,Who can decide if premium is worth it in 3 days?,complaint
+14017371871:s5,14017371871,1,negative,At least make the free trial a week,complaint
+14020789622:s0,14020789622,4,mixed,Insightful.,not_complaint
+14020789622:s1,14020789622,4,mixed,"As someone who’s beginning their journey into connecting more fully with their intuition and deity, this app has allowed me a space for guidance and reflection.",not_complaint
+14020789622:s2,14020789622,4,mixed,I just wish certain things didn’t have a paywall.,complaint
+14020789622:s3,14020789622,4,mixed,:),not_complaint
+14047381132:s0,14047381132,1,negative,Not as advertised.,complaint
+14047381132:s1,14047381132,1,negative,Does not come with any sort of palm reading scanner.,complaint
+14047381132:s2,14047381132,1,negative,Does not have a soulmate sketch.,complaint
+14047381132:s3,14047381132,1,negative,It’s just a bunch of AI “psychics” you can talk to in a chat room for 3 min free and then you have to pay again.,complaint
+14047381132:s4,14047381132,1,negative,It’s a scam.,complaint
+14099028992:s0,14099028992,2,negative,It’s not calculating my chart correctly.,complaint
+14099028992:s1,14099028992,2,negative,It gave me a slightly different chart than every other source I have used.,complaint
+14099028992:s2,14099028992,2,negative,I believe it is because it is not correctly determining time zone based on the location you put in.,complaint
+14099028992:s3,14099028992,2,negative,I put in my birth place (which it did have in its database) but the chart is still reading GMT instead of CST.,complaint
+14099028992:s4,14099028992,2,negative,"Even a few hours off can change many of the placements, so this should be fixed.",complaint
+14113342874:s0,14113342874,2,mixed,Doesnt work for me anymore.,complaint
+14113342874:s1,14113342874,2,mixed,For some reason my app doesn’t work for me anymore.,complaint
+14113342874:s2,14113342874,2,mixed,I previously loved using this app regularly but now it doesn’t seem to work at all.,complaint
+14113342874:s3,14113342874,2,mixed,Its been like this for a very long time maybe almost a year through every update.,complaint
+14113342874:s4,14113342874,2,mixed,I have no idea why it just randomly stopped working for me one day.,complaint
+14128722580:s0,14128722580,3,mixed,Aura type.,not_complaint
+14128722580:s1,14128722580,3,mixed,It was accurate but the psychics not to much I ask a question that I already knew the answer and false Time frame,complaint
+14133844939:s0,14133844939,2,negative,Not the best.,complaint
+14133844939:s1,14133844939,2,negative,"First of all, be careful.",complaint
+14133844939:s2,14133844939,2,negative,They will trick you to spend money that you don’t want to and the readings are vague and not worth what they charge.,complaint
+14133844939:s3,14133844939,2,negative,Pretty lack luster.,complaint
+14144475289:s0,14144475289,5,mixed,Not the usual.,not_complaint
+14144475289:s1,14144475289,5,mixed,I first just did this for humour on free trial.,not_complaint
+14144475289:s2,14144475289,5,mixed,Something in the trial triggered my intuition to be more open.,not_complaint
+14144475289:s3,14144475289,5,mixed,Not all mediums are legit on here but they’re pretty good at compensating you so you can funds legit person.,complaint
+14144475289:s4,14144475289,5,mixed,They’re not gonna tell you your future but more of a guide letting you know your going in the right direction no matter what aspect of your life your inquiry is for.,not_complaint
+14147041085:s0,14147041085,3,positive,Relations.,not_complaint
+14147041085:s1,14147041085,3,positive,The sketch looks good,not_complaint
+14154926004:s0,14154926004,1,negative,Completely Bogus.,complaint
+14154926004:s1,14154926004,1,negative,Don’t waste your money,complaint
+14162228638:s0,14162228638,3,mixed,Time issue.,complaint
+14162228638:s1,14162228638,3,mixed,Reading was great!,not_complaint
+14162228638:s2,14162228638,3,mixed,But I got charged $14 instead of $9.99 for less than 3 mn.,complaint
+14162228638:s3,14162228638,3,mixed,"There, I have a concern.",complaint
+14162228638:s4,14162228638,3,mixed,Time issue.,complaint
+14273962639:s0,14273962639,5,positive,Honest.,not_complaint
+14273962639:s1,14273962639,5,positive,Very honest,not_complaint
+14301405029:s0,14301405029,5,positive,Not bad!,not_complaint
+14301405029:s1,14301405029,5,positive,"It's one of those things that I have to read a couple times but personally, an open mind makes it easier to interpret.",not_complaint
+4733747678:s0,4733747678,1,negative,Not great.,complaint
+4733747678:s1,4733747678,1,negative,I have two apps doing what this does for free but with more accurate information.,complaint
+4733747678:s2,4733747678,1,negative,There’s misspellings.,complaint
+4733747678:s3,4733747678,1,negative,On compatibility it doesn’t seem to consider my other placements.,complaint
+4821101198:s0,4821101198,2,negative,Expensive for generic astrology.,complaint
+4821101198:s1,4821101198,2,negative,Co—Star is a better app.,complaint
+4821101198:s2,4821101198,2,negative,It’s free and very in depth.,not_complaint
+4821101198:s3,4821101198,2,negative,The subscription for this app is pretty expensive and the information is generic.,complaint
+4847131343:s0,4847131343,2,negative,Typos and price of app seem off.,complaint
+4847131343:s1,4847131343,2,negative,Too many typos and misspellings to take even the free version seriously.,complaint
+4847131343:s2,4847131343,2,negative,I would never pay $10 a month for this.,complaint
+4847131343:s3,4847131343,2,negative,The advertisement made it look interesting but definitely not what it seems.,complaint
+4894681127:s0,4894681127,5,positive,Alex.,not_complaint
+4894681127:s1,4894681127,5,positive,I really like getting my daily horoscope in this beautiful app and I absolutely love that this one has a daily reminder that lets you know not to forget to read your horoscope for that day ..,not_complaint
+4894681127:s10,4894681127,5,positive,"And so on, and so forth, I can actually tell a lot about this app.",not_complaint
+4894681127:s11,4894681127,5,positive,But you’d better try yourself.,not_complaint
+4894681127:s12,4894681127,5,positive,I highly recommend this app...,not_complaint
+4894681127:s13,4894681127,5,positive,"The theme, the colors, daily reminder, and much more...",not_complaint
+4894681127:s14,4894681127,5,positive,Thank you for this app I rate it as 5 stars!!!,not_complaint
+4894681127:s2,4894681127,5,positive,"And if you are so curious as I am you may sometimes read your horoscope for tomorrow, but I don’t recommend to do that.",not_complaint
+4894681127:s3,4894681127,5,positive,"I prefer to read my horoscope in the evening, to analyze the whole day and to remember the details which my daily horoscope describes, it’s like you summarize your day and remember everything the most significant from it.",not_complaint
+4894681127:s4,4894681127,5,positive,"Another way to have fun is that you can learn for instance how Moon in Libra, that is ending already, influences your life.",not_complaint
+4894681127:s5,4894681127,5,positive,You can learn that from astrology course inside an app..,not_complaint
+4894681127:s6,4894681127,5,positive,And then you can discover what actually happens in your life and see this huge connection!,not_complaint
+4894681127:s7,4894681127,5,positive,Or you can learn about previous month and analyze it as well!,not_complaint
+4894681127:s8,4894681127,5,positive,"And then you will be able to plan some important events by yourself, taking into account the planetary movement, you will choose the right time for some changes and for big decisions.",not_complaint
+4894681127:s9,4894681127,5,positive,"Or you can just go for personal reading from astrologist, but this is more exciting for me.",not_complaint
+5013475661:s0,5013475661,3,mixed,I’m not made of money.,complaint
+5013475661:s1,5013475661,3,mixed,"While this app is a entertaining source for astrology, it’s expensive!",complaint
+5013475661:s2,5013475661,3,mixed,9.99$ per week or 117$ for life?!,complaint
+5013475661:s3,5013475661,3,mixed,No thanks.,complaint
+5109568687:s0,5109568687,3,negative,Missing Horoscope signs.,complaint
+5109568687:s1,5109568687,3,negative,When looking at sign compatibilities Aquarius and Pisces are not listed as an option to choose from.,complaint
+5462519213:s0,5462519213,4,mixed,great app!,not_complaint
+5462519213:s1,5462519213,4,mixed,this app is super cool and almost everything is accurate but i’m a gemini and it says that on my sun sign but it’s telling me my element is taurus and the girl (Nebula) has a taurus necklace on.,complaint
+5462519213:s2,5462519213,4,mixed,i’m assuming because i was born on the taurus cut off date that the app doesn’t register that i’m a gemini :/,complaint
+5607245831:s0,5607245831,2,negative,Not that good.,complaint
+5607245831:s1,5607245831,2,negative,The information could be more detailed and the grammar could be improved.,complaint
+5630777596:s0,5630777596,3,negative,Needs more comprehensive info.,complaint
+5630777596:s1,5630777596,3,negative,"In short, it does not break down the individual weeks of each sign, nor the cusps.",complaint
+5630777596:s2,5630777596,3,negative,"This is incredibly disappointing since, despite falling more on the libra side of my cusp, I act way more like a Scorpio.",complaint
+5630777596:s3,5630777596,3,negative,So I can’t help but feel like everything is a bit off.,complaint
+5630777596:s4,5630777596,3,negative,This is even more important if we’re talking compatibility between signs.,not_complaint
+5630777596:s5,5630777596,3,negative,"Signs could be very compatible with libra, and not at all with Scorpio.",not_complaint
+5630777596:s6,5630777596,3,negative,So they really need to get the cusps involved at least.,complaint
+5780333379:s0,5780333379,2,negative,Refund please!!,complaint
+5780333379:s1,5780333379,2,negative,I went on the site to get a good view and the trial I signed up for billed me upfront in full with no way to cancel.,complaint
+5780333379:s2,5780333379,2,negative,I can’t get my $119 back since Apple says it’s ineligible for a refund!,complaint
+5780333379:s3,5780333379,2,negative,Don’t sign up unless you can comfortably part with your money in times of Corona!,complaint
+5794530618:s0,5794530618,2,mixed,Great app but.,complaint
+5794530618:s1,5794530618,2,mixed,Needs a settings options to change status/sign of relationship I got the same message under the relationship tab two days in a row.,complaint
+5794530618:s2,5794530618,2,mixed,I might stop paying for the subscription.,complaint
+5940652244:s0,5940652244,3,negative,Don’t use.,complaint
+5940652244:s1,5940652244,3,negative,"Like non of them was true, and especially career💁 I’m so disappointed.",complaint
+5995194811:s0,5995194811,3,negative,Stop selling.,complaint
+5995194811:s1,5995194811,3,negative,Tryna sell you add-ons every five goddamn minuted.,complaint
+6108762900:s0,6108762900,1,negative,A scam.,complaint
+6108762900:s1,6108762900,1,negative,"terrible astrology app, you have to pay or watch an add for everything you do.",complaint
+6108762900:s2,6108762900,1,negative,"& even if you do, the quality of horoscope description is 1/10.",complaint
+6144823258:s0,6144823258,2,mixed,Great app bogged by big problem.,complaint
+6144823258:s1,6144823258,2,mixed,I genuinely love this app.,not_complaint
+6144823258:s2,6144823258,2,mixed,"The information it provides is pretty detailed and accurate, and the UI is amazing and easy to navigate.",not_complaint
+6144823258:s3,6144823258,2,mixed,"I also like that you don’t necessarily need to sign up for an account, it just uses your birth information.",not_complaint
+6144823258:s4,6144823258,2,mixed,"The reason I have to give it 2 stars is because no matter where I go, I will always get a full screen prompt to download the companion messages stickers app literally every 5 seconds even after dismissing it.",complaint
+6144823258:s5,6144823258,2,mixed,It literally makes the app unusable when I can’t even load certain information because I get a full screen prompt asking to download this companion app over and over again.,complaint
+6144823258:s6,6144823258,2,mixed,This happens even after force quitting and deleting/reinstalling the app.,complaint
+6144823258:s7,6144823258,2,mixed,Hopefully the next update fixes it and it isn’t a wide spread issue.,not_complaint
+6144823258:s8,6144823258,2,mixed,I’d love to continue using this app if I can!,not_complaint
+6300707055:s0,6300707055,3,mixed,Very nice.,not_complaint
+6300707055:s1,6300707055,3,mixed,I love this app and it’s very accurate.I was also wondering how do u stop the free trial?Will it stop by itself?And why is it true that it will charge a lot of money and all of that stuff?If so please fix it.Ive also been reading more and it feels like there are bots responding sometimes because this app is very busy and that just doesn’t sound right.,complaint
+6408213313:s0,6408213313,4,mixed,What happened to the Relationship Horoscope?,complaint
+6408213313:s1,6408213313,4,mixed,Newest update looks nice but what happened to the relationship/companion horoscope.,complaint
+6408213313:s2,6408213313,4,mixed,I love that function and now I can’t find it.,complaint
+6416197128:s0,6416197128,2,mixed,Bring it back?,complaint
+6416197128:s1,6416197128,2,mixed,👉🏻👈🏻🥺 My favorite part was the relationship tab and it just got removed.,complaint
+6416197128:s2,6416197128,2,mixed,I used it everyday and looked forward to it.,not_complaint
+6416197128:s3,6416197128,2,mixed,It was seriously scary accurate.,not_complaint
+6416197128:s4,6416197128,2,mixed,"Already miss it, and I find myself using the app a lot less.",complaint
+6534713055:s0,6534713055,3,mixed,Ok app.,not_complaint
+6534713055:s1,6534713055,3,mixed,Forces me to put apple password in every time I log in which is sus.,complaint
+6691004172:s0,6691004172,1,negative,Suhmydeenebula.,not_complaint
+6691004172:s1,6691004172,1,negative,Terrible.,complaint
+6691004172:s2,6691004172,1,negative,Waste of time.,complaint
+6691004172:s3,6691004172,1,negative,Rip.,complaint
+6778192260:s0,6778192260,4,mixed,Really cool!,not_complaint
+6778192260:s1,6778192260,4,mixed,I love astrology (Aries) and I’ve had this app for a few months now.,not_complaint
+6778192260:s2,6778192260,4,mixed,I love looking at it but it’s not always accurate.,complaint
+6778192260:s3,6778192260,4,mixed,But then every once in awhile it will be really accurate and I’m just like woah.,not_complaint
+6778192260:s4,6778192260,4,mixed,Like yesterday it said I would argue and break up with a toxic friend and that what actually happened down to a T.,not_complaint
+6778192260:s5,6778192260,4,mixed,It’s crazy.,not_complaint
+6778192260:s6,6778192260,4,mixed,I also love how on the app you can look at other horoscopes play games and get compatibly.,not_complaint
+6778192260:s7,6778192260,4,mixed,Love it!,not_complaint
+6826849827:s0,6826849827,1,mixed,Freezes or has Error.,complaint
+6826849827:s1,6826849827,1,mixed,I signed up and loved the app at first but it kept freezing or not loading.,complaint
+6826849827:s2,6826849827,1,mixed,I deleted the app and signed up again...it still isn’t working.,complaint
+6826849827:s3,6826849827,1,mixed,I’ve spent $20 for a day of horoscopes.,complaint
+6826849827:s4,6826849827,1,mixed,I’ll stick to Yodha.,complaint
+6883520996:s0,6883520996,4,mixed,Accurate.,not_complaint
+6883520996:s1,6883520996,4,mixed,Its genuinely so accurate id just gotten done telling a friend not to k*ll himself and helped another out of an ab*sive relationship and i go on to the app for it to say my focus of the day is “support”.,not_complaint
+6883520996:s2,6883520996,4,mixed,Like it really couldn't be more accurate I just wish i had full access for free.,complaint
+6883520996:s3,6883520996,4,mixed,"Im not going to pay for it because Im 13 and fine with not being able to access everything, its just annoying.",complaint
+6883520996:s4,6883520996,4,mixed,I wish i wouldn't have to pay for an app because I know they get money off of downloads and its not costing anything to give predictions.,complaint
+6890970832:s0,6890970832,3,negative,Trial.,not_complaint
+6890970832:s1,6890970832,3,negative,There is a 3 month subscription but I thought I only did the free trial.,complaint
+6890970832:s2,6890970832,3,negative,What is wrong?,complaint
+6967325874:s0,6967325874,1,negative,Virgo was not born in August🤡 Virgo was born on December,complaint
+6985841986:s0,6985841986,2,negative,lgbt inclusion.,complaint
+6985841986:s1,6985841986,2,negative,the app is quite lgbt+ exclusionary.,complaint
+6985841986:s2,6985841986,2,negative,"id highly recommend to the developers to add an “other” or “prefer not to say” choice to the gender options, and to change the marriage symbol from male and female to something more inclusive.",complaint
+7190142154:s0,7190142154,3,mixed,Money hungry in my opinion.,complaint
+7190142154:s1,7190142154,3,mixed,It is very obvious from the beginning that this app has no shame asking for your money.,complaint
+7190142154:s2,7190142154,3,mixed,To unlock what you were genuinely curious about you have to pay...which I’m not blaming them it is a very smart tactic.,complaint
+7190142154:s3,7190142154,3,mixed,Now it gets three stars because the information they provide that is not locked is pretty spot on and honestly just interesting to read over,not_complaint
+7257327687:s0,7257327687,1,negative,SPAM AFTER SPAM.,complaint
+7257327687:s1,7257327687,1,negative,Am pretty sure once you download the app it says they promise not to spam but WHAT THE HECK they started spamming me at 10:18PM.,complaint
+7257327687:s2,7257327687,1,negative,I had over 18 notifications about “Ask an Astrologer and find the answer” By the way they kept spamming for 2 minutes.,complaint
+7257327687:s3,7257327687,1,negative,And stopped when I opened the app!!,complaint
+7257327687:s4,7257327687,1,negative,"Am deleting, very creepy!!!",complaint
+7275566345:s0,7275566345,4,mixed,Daily Treat.,not_complaint
+7275566345:s1,7275566345,4,mixed,I use this app as a daily treat.,not_complaint
+7275566345:s2,7275566345,4,mixed,It’s really fun to open up and see accurate readings on my horoscope.,not_complaint
+7275566345:s3,7275566345,4,mixed,"That being said, it isn’t free from flaws.",complaint
+7275566345:s4,7275566345,4,mixed,It gave me a gift for each day that I opened the app this week.,not_complaint
+7275566345:s5,7275566345,4,mixed,One of the gifts was getting a question answered by an astrologist.,not_complaint
+7275566345:s6,7275566345,4,mixed,"I submitted my question, got a message saying they had 24 hours to answer it.",not_complaint
+7275566345:s7,7275566345,4,mixed,It has been well over 24 hours and the question goes unanswered.,complaint
+7275566345:s8,7275566345,4,mixed,"Now, it tells me it’s $8 to ask a question.",complaint
+7342103309:s0,7342103309,2,negative,My zodiac sign doesn’t just change out of nowhere.,complaint
+7342103309:s1,7342103309,2,negative,Being born a Virgo I will stay a Virgo for my entire life it doesn’t just magically change.,complaint
+7342103309:s2,7342103309,2,negative,"My birthday is still the same as it was since you know, THE DAY I WAS BORN🤦‍♀️🤦‍♀️",complaint
+7455034781:s0,7455034781,3,negative,question?,not_complaint
+7455034781:s1,7455034781,3,negative,is the app down or something because for the last two days it hasn’t shown me my horoscopes and my internet is working just fine but it just says try again?,complaint
+7455034781:s2,7455034781,3,negative,what should i do?,complaint
+7503262635:s0,7503262635,1,negative,Y’all sum liars.,complaint
+7503262635:s1,7503262635,1,negative,Y’all over lyin to people😭 got these people thinkin this shi weird.,complaint
+7728020195:s0,7728020195,3,negative,Wrong Zodiac Sign.,complaint
+7728020195:s1,7728020195,3,negative,I am a Taurus but it put me as a Gemini for some reason??,complaint
+7728020195:s2,7728020195,3,negative,I kept trying to change it but it wouldn't fix,complaint
+7740844475:s0,7740844475,4,mixed,do not buy any of the subscriptions.,complaint
+7740844475:s1,7740844475,4,mixed,i actually really love nebula.,not_complaint
+7740844475:s2,7740844475,4,mixed,"that’s why i purchased the lifetime subscription, thinking i was going to get access to those features, such as the advanced compatibility reports but i never got them.",complaint
+7740844475:s3,7740844475,4,mixed,the only thing that changed was all the calendars unlocked and my year section got bigger with more info.,complaint
+7740844475:s4,7740844475,4,mixed,but the advanced compatibility reports DO NOT exist.,complaint
+7740844475:s5,7740844475,4,mixed,it is a waste of 50 bucks and i can’t even get a refund on it.,complaint
+7740844475:s6,7740844475,4,mixed,"i do love the app, please but stick to the free version.",complaint
+7740844475:s7,7740844475,4,mixed,there is no need to spend money on it.,complaint
+7854026683:s0,7854026683,2,negative,Not very good.,complaint
+7854026683:s1,7854026683,2,negative,This was not good because of the new update the update could not even let me pick my birthday I am not very happy with this.,complaint
+8231905128:s0,8231905128,2,negative,It doesn’t let me put my birthday.,complaint
+8231905128:s1,8231905128,2,negative,I can’t put my birthday for some reason when I put the rest I was born it just goes back to January,complaint
+8240119101:s0,8240119101,3,mixed,Good but could be better.,complaint
+8240119101:s1,8240119101,3,mixed,Love the app but the watch an ad option never works at all.,complaint
+8240119101:s2,8240119101,3,mixed,I’ve tried several times even making sure the app is up to date.,complaint
+8240119101:s3,8240119101,3,mixed,Would rather watch an ad to see more than pay for something that’s already having issues.,complaint
+8292946680:s0,8292946680,1,negative,Whack.,complaint
+8292946680:s1,8292946680,1,negative,I literally have not even been able to get 5 full minutes of use from this app without relentless adds that play multiple in a row.,complaint
+8292946680:s2,8292946680,1,negative,This has been an absurd trial and I don’t want to even attempt to read my main 3 descriptors.,complaint
+8292946680:s3,8292946680,1,negative,I read part of my sun sign before receiving THREE long adds.,complaint
+8292946680:s4,8292946680,1,negative,I couldn’t even exit out of the file before receiving TWO more adds.,complaint
+8292946680:s5,8292946680,1,negative,I tried clicking on my moon sign file and another set of adds came up.,complaint
+8292946680:s6,8292946680,1,negative,I shut down the app and I am deleting it now.,complaint
+8292946680:s7,8292946680,1,negative,What a joke.,complaint
+8652992064:s0,8652992064,5,positive,Fun app to see if your a good match with your bf or gf.,not_complaint
+8652992064:s1,8652992064,5,positive,It is very fun to use,not_complaint
+8654829034:s0,8654829034,2,mixed,I want my money back!,complaint
+8654829034:s1,8654829034,2,mixed,"As interesting is the information is, I was charged twice for things that were said to be free.",complaint
+8654829034:s2,8654829034,2,mixed,"Then was told I would be refunded the amount that is stated on the app, not the taxes incurred.",complaint
+8654829034:s3,8654829034,2,mixed,So I have paid for nothing.,complaint
+8654829034:s4,8654829034,2,mixed,I very disappointed and wouldn’t recommend.,complaint
+8654829034:s5,8654829034,2,mixed,Is there anyone who works for this app that can help me?,complaint
+8741494470:s0,8741494470,3,mixed,It’s okay I guess.,not_complaint
+8741494470:s1,8741494470,3,mixed,Right off the bat I’m going to say I’m eleven.,not_complaint
+8741494470:s10,8741494470,3,mixed,Thank you for letting me know.,not_complaint
+8741494470:s2,8741494470,3,mixed,I downloaded this app because I think zodiac stuff is interesting.,not_complaint
+8741494470:s3,8741494470,3,mixed,"So as I was setting it up and got to the part where you select your birthday, I noticed if you use 2010, 2011, 2012 etc, it would automatically go to 2009.",complaint
+8741494470:s4,8741494470,3,mixed,I do not know if it was programmed this way or if it’s an error.,complaint
+8741494470:s5,8741494470,3,mixed,I was really disappointed with this.,complaint
+8741494470:s6,8741494470,3,mixed,"I believe the app should let people use any age they would like, whether it’s for their children, a friend or just anyone, because zodiac stuff is super fun!",complaint
+8741494470:s7,8741494470,3,mixed,Even though it isn’t always quite accurate.,complaint
+8741494470:s8,8741494470,3,mixed,"I hope that people will be able to use ages younger than thirteen in the future with this app :/ — btw I believe this is a great app, again, I’m a bit upset that you aren’t able to use ages under thirteen 😕 Response to developer: Okay, that makes sense.",complaint
+8741494470:s9,8741494470,3,mixed,I would be looking up to the update if it comes out!,not_complaint
+8751416161:s0,8751416161,3,negative,Liberal Review.,not_complaint
+8751416161:s1,8751416161,3,negative,Could use more features,complaint
+9222293121:s0,9222293121,2,negative,Houses are incorrect.,complaint
+9222293121:s1,9222293121,2,negative,Incorrect information,complaint
+9355664082:s0,9355664082,2,negative,DONT USE TRIAL!,complaint
+9355664082:s1,9355664082,2,negative,I tend to lock my card for any foreseen charges & good thing I did.,not_complaint
+9355664082:s2,9355664082,2,negative,1.,not_complaint
+9355664082:s3,9355664082,2,negative,"The 3 day free trial isn’t free, it’s 8.52 cents exactly.",complaint
+9355664082:s4,9355664082,2,negative,2.,not_complaint
+9355664082:s5,9355664082,2,negative,"After the 3 day trial ends it said that you would be charged 29.99 every 3 months, yet then it changed & said 39.99 on the apple receipt for the 3 day trial.",complaint
+9355664082:s6,9355664082,2,negative,"I will be contacting my lawyer & will take further action to sue, unless I get some feedback or a response with actual help & genuine concern, because all I see right now is defamation & false claims.",complaint
+9583314201:s0,9583314201,1,negative,Extreme amount of Ads.,complaint
+9583314201:s1,9583314201,1,negative,Im ok with ads on a free version but the amount of ads and purchases makes this feel like a fake money grab.,complaint
+9796955165:s0,9796955165,1,negative,Wrong compatibility.,complaint
+9796955165:s1,9796955165,1,negative,"It kept generating the wrong sign for me, when my profile was set to the correct one, so the compatibility information was never correct.",complaint

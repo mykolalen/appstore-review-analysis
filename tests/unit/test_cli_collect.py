@@ -110,7 +110,13 @@ def test_collect_invalid_app_exits_nonzero_with_code(tmp_path: Path) -> None:
 def test_tune_threshold_reads_labelled_pairs_and_prints_selected_value(tmp_path: Path) -> None:
     pairs = tmp_path / "pairs_gold.csv"
     pairs.write_text(
-        "distance,same_issue\n0.18,true\n0.22,true\n0.27,true\n0.32,false\n0.36,true\n0.42,false\n",
+        "distance,human_label\n"
+        "0.18,same_issue\n"
+        "0.22,same_issue\n"
+        "0.27,same_issue\n"
+        "0.32,different_issue\n"
+        "0.36,same_issue\n"
+        "0.42,different_issue\n",
         encoding="utf-8",
     )
     result = runner.invoke(app, ["tune-threshold", "--pairs", str(pairs)])
@@ -120,9 +126,16 @@ def test_tune_threshold_reads_labelled_pairs_and_prints_selected_value(tmp_path:
     assert payload["minimum_precision"] == 0.8
 
 
+def test_tune_threshold_keeps_legacy_same_issue_column_support(tmp_path: Path) -> None:
+    pairs = tmp_path / "pairs_legacy.csv"
+    pairs.write_text("distance,same_issue\n0.20,true\n0.30,false\n", encoding="utf-8")
+    result = runner.invoke(app, ["tune-threshold", "--pairs", str(pairs)])
+    assert result.exit_code == 0, result.output
+
+
 def test_tune_threshold_rejects_invalid_pair_label(tmp_path: Path) -> None:
     pairs = tmp_path / "pairs_gold.csv"
-    pairs.write_text("distance,same_issue\n0.20,maybe\n", encoding="utf-8")
+    pairs.write_text("distance,human_label\n0.20,maybe\n", encoding="utf-8")
     result = runner.invoke(app, ["tune-threshold", "--pairs", str(pairs)])
     assert result.exit_code != 0
     assert "INVALID_INPUT" in result.output

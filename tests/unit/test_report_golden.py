@@ -100,7 +100,7 @@ def test_committed_report_has_no_empty_sections_or_unexplained_na() -> None:
         if current.startswith("##"):
             assert not following.startswith("#"), f"empty report section after {current!r}"
     assert "| n/a |" not in markdown.lower()
-    assert "evaluation not run" in markdown.lower()
+    assert "none met the precision target" in markdown.lower()
 
 
 def test_report_explains_recent_window_frame(monkeypatch: pytest.MonkeyPatch) -> None:

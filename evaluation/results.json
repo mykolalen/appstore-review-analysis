@@ -74,7 +74,7 @@
           },
           "prevalence_reweighted_accuracy": 0.9315017333640134
         },
-        "latency_per_100_ms": 5004.424210525477
+        "latency_per_100_ms": 4141.36789473368
       },
       {
         "name": "tabularisai_robust_sentiment",
@@ -143,7 +143,7 @@
           },
           "prevalence_reweighted_accuracy": 0.873016850224946
         },
-        "latency_per_100_ms": 5289.3885964805495
+        "latency_per_100_ms": 4447.32543859445
       },
       {
         "name": "star_rating_floor",
@@ -309,12 +309,149 @@
     }
   },
   "complaint_units": {
-    "status": "not_run",
-    "reason": "units_gold.csv missing"
+    "status": "run",
+    "n": 473,
+    "precision": {
+      "successes": 196,
+      "n": 199,
+      "value": 0.9849246231155779,
+      "low": 0.9566220180797402,
+      "high": 0.9948599970964882
+    },
+    "recall": {
+      "successes": 196,
+      "n": 325,
+      "value": 0.6030769230769231,
+      "low": 0.5489787398436656,
+      "high": 0.6547668591458242
+    },
+    "missed_complaints": [
+      {
+        "id": "10369949410:s0",
+        "text": "SCAM!"
+      },
+      {
+        "id": "10369949410:s1",
+        "text": "Hidden charges."
+      },
+      {
+        "id": "10369949410:s5",
+        "text": "Purely and simply."
+      },
+      {
+        "id": "10375806765:s3",
+        "text": "I reverse searched multiple advisors pictures and found that they are used on photoshop websites and similar faces are merged to make different version of the same person."
+      },
+      {
+        "id": "10522378927:s1",
+        "text": "While I do enjoy the app, the advisors section needs major work!"
+      }
+    ],
+    "subgroups": {
+      "mixed_reviews": {
+        "successes": 42,
+        "n": 101,
+        "value": 0.4158415841584158,
+        "low": 0.32453157052896825,
+        "high": 0.5133188353007105
+      },
+      "rating_4_5": {
+        "successes": 2,
+        "n": 28,
+        "value": 0.07142857142857142,
+        "low": 0.01981206411530574,
+        "high": 0.22645362568399052
+      }
+    }
   },
   "theme_threshold": {
-    "status": "not_run",
-    "reason": "pairs_gold.csv missing"
+    "status": "run",
+    "minimum_precision": 0.8,
+    "grid": [
+      0.2,
+      0.25,
+      0.3,
+      0.35,
+      0.4,
+      0.45,
+      0.5,
+      0.55,
+      0.6,
+      0.65
+    ],
+    "selected_threshold": null,
+    "table": [
+      {
+        "threshold": 0.2,
+        "predicted_same": 0,
+        "true_same": 0,
+        "precision": null,
+        "eligible": false
+      },
+      {
+        "threshold": 0.25,
+        "predicted_same": 3,
+        "true_same": 2,
+        "precision": 0.6666666666666666,
+        "eligible": false
+      },
+      {
+        "threshold": 0.3,
+        "predicted_same": 4,
+        "true_same": 3,
+        "precision": 0.75,
+        "eligible": false
+      },
+      {
+        "threshold": 0.35,
+        "predicted_same": 15,
+        "true_same": 8,
+        "precision": 0.5333333333333333,
+        "eligible": false
+      },
+      {
+        "threshold": 0.4,
+        "predicted_same": 17,
+        "true_same": 9,
+        "precision": 0.5294117647058824,
+        "eligible": false
+      },
+      {
+        "threshold": 0.45,
+        "predicted_same": 22,
+        "true_same": 10,
+        "precision": 0.45454545454545453,
+        "eligible": false
+      },
+      {
+        "threshold": 0.5,
+        "predicted_same": 30,
+        "true_same": 12,
+        "precision": 0.4,
+        "eligible": false
+      },
+      {
+        "threshold": 0.55,
+        "predicted_same": 31,
+        "true_same": 12,
+        "precision": 0.3870967741935484,
+        "eligible": false
+      },
+      {
+        "threshold": 0.6,
+        "predicted_same": 36,
+        "true_same": 12,
+        "precision": 0.3333333333333333,
+        "eligible": false
+      },
+      {
+        "threshold": 0.65,
+        "predicted_same": 45,
+        "true_same": 14,
+        "precision": 0.3111111111111111,
+        "eligible": false
+      }
+    ]
   },
   "issue_categories": {
     "status": "not_run",

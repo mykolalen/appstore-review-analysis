@@ -12,8 +12,8 @@ Decision rule fixed before running: Switch only if an eligible licence-clean 3-c
 
 | Model | Revision | Size MiB | Accuracy (95% CI) | Macro-F1 (95% CI) | Negative F1 (95% CI) | Reweighted accuracy | CPU ms / 100 |
 | --- | --- | ---: | --- | --- | --- | ---: | ---: |
-| shipping_cardiffnlp | 3216a57f2a0d9c45a2e6c20157c20c49fb4bf9c7 | 479.1 | 0.930 [0.868, 0.965] | 0.752 [0.641, 0.905] | 0.968 [0.917, 0.992] | 0.932 | 5004.4 |
-| tabularisai_robust_sentiment | c542a281e22b3d840a0b3f6c129acf8e357aed50 | 256.3 | 0.851 [0.781, 0.912] | 0.643 [0.586, 0.795] | 0.919 [0.855, 0.960] | 0.873 | 5289.4 |
+| shipping_cardiffnlp | 3216a57f2a0d9c45a2e6c20157c20c49fb4bf9c7 | 479.1 | 0.930 [0.868, 0.965] | 0.752 [0.641, 0.905] | 0.968 [0.917, 0.992] | 0.932 | 4141.4 |
+| tabularisai_robust_sentiment | c542a281e22b3d840a0b3f6c129acf8e357aed50 | 256.3 | 0.851 [0.781, 0.912] | 0.643 [0.586, 0.795] | 0.919 [0.855, 0.960] | 0.873 | 4447.3 |
 | star_rating_floor | fixed-rule-v1 | 0.0 | 0.868 [0.798, 0.921] | 0.660 [0.613, 0.804] | 0.917 [0.850, 0.959] | 0.943 | 0.0 |
 
 Tabularis minus shipping negative-F1 paired BCa 95% CI: [-0.104, -0.009].
@@ -89,11 +89,43 @@ Session separation is not encoded in labels_relabel.csv; interpret this as repea
 
 ## Complaint-unit check
 
-Evaluation not run: units_gold.csv missing.
+Evaluated sentences: **473**.
+
+Precision: 0.985 [0.957, 0.995], n=199.
+
+Recall: 0.603 [0.549, 0.655], n=325.
+
+| Subgroup | Complaint recall (95% Wilson CI) |
+| --- | --- |
+| Mixed reviews | 0.416 [0.325, 0.513], n=101 |
+| 4-5 star reviews | 0.071 [0.020, 0.226], n=28 |
+
+Five missed complaints (or all, when fewer than five):
+
+- `10369949410:s0` — SCAM!
+- `10369949410:s1` — Hidden charges.
+- `10369949410:s5` — Purely and simply.
+- `10375806765:s3` — I reverse searched multiple advisors pictures and found that they are used on photoshop websites and similar faces are merged to make different version of the same person.
+- `10522378927:s1` — While I do enjoy the app, the advisors section needs major work!
 
 ## Theme threshold
 
-Evaluation not run: pairs_gold.csv missing.
+Selection rule: largest grid threshold with same-issue precision >= 0.80.
+
+Selected threshold: **none**.
+
+| Threshold | Predicted same | True same | Precision | Eligible |
+| ---: | ---: | ---: | ---: | --- |
+| 0.20 | 0 | 0 | n/a | False |
+| 0.25 | 3 | 2 | 0.667 | False |
+| 0.30 | 4 | 3 | 0.750 | False |
+| 0.35 | 15 | 8 | 0.533 | False |
+| 0.40 | 17 | 9 | 0.529 | False |
+| 0.45 | 22 | 10 | 0.455 | False |
+| 0.50 | 30 | 12 | 0.400 | False |
+| 0.55 | 31 | 12 | 0.387 | False |
+| 0.60 | 36 | 12 | 0.333 | False |
+| 0.65 | 45 | 14 | 0.311 | False |
 
 ## Issue-category precision audit
 

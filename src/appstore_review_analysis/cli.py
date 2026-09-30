@@ -535,7 +535,7 @@ def tune_threshold(
         Path,
         typer.Option(
             "--pairs",
-            help="CSV with distance and same_issue columns from hand-labelled complaint pairs.",
+            help="CSV with distance and human_label columns from hand-labelled complaint pairs.",
         ),
     ],
 ) -> None:
@@ -545,15 +545,15 @@ def tune_threshold(
         labelled_pairs: list[tuple[float, bool]] = []
         with pairs.open("r", encoding="utf-8", newline="") as handle:
             reader = csv.DictReader(handle)
-            if reader.fieldnames is None or not {"distance", "same_issue"}.issubset(
-                reader.fieldnames
-            ):
-                raise ValueError("pairs CSV must contain distance and same_issue columns")
+            fieldnames = set(reader.fieldnames or [])
+            if "distance" not in fieldnames or not ({"human_label", "same_issue"} & fieldnames):
+                raise ValueError("pairs CSV must contain distance plus human_label or same_issue")
+            label_field = "human_label" if "human_label" in fieldnames else "same_issue"
             for row_number, row in enumerate(reader, start=2):
                 distance = float(str(row.get("distance", "")).strip())
                 if not 0.0 <= distance <= 2.0:
                     raise ValueError(f"distance out of range on row {row_number}")
-                same_issue = _parse_same_issue(str(row.get("same_issue", "")), row_number)
+                same_issue = _parse_same_issue(str(row.get(label_field, "")), row_number)
                 labelled_pairs.append((distance, same_issue))
         if not labelled_pairs:
             raise ValueError("pairs CSV contains no labelled pairs")
@@ -572,9 +572,9 @@ def tune_threshold(
 
 def _parse_same_issue(value: str, row_number: int) -> bool:
     normalised = value.strip().lower()
-    if normalised in {"1", "true", "yes", "same"}:
+    if normalised in {"1", "true", "yes", "same", "same_issue"}:
         return True
-    if normalised in {"0", "false", "no", "different"}:
+    if normalised in {"0", "false", "no", "different", "different_issue"}:
         return False
     raise ValueError(f"invalid same_issue value on row {row_number}: {value!r}")
 

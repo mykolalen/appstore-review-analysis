@@ -184,9 +184,9 @@ Annotator repeatability: kappa **1.000** on **30** repeated labels.
 
 The repeat-label file does not encode session timing; this measures consistency of the supplied repeat labels and should be treated as an independent later-session estimate only when that timing is documented.
 
-Complaint-unit check: **evaluation not run** (units_gold.csv missing).
+Complaint-unit check: precision **98.5%**, recall **60.3%**.
 
-Theme-threshold check: **evaluation not run** (pairs_gold.csv missing).
+Theme-threshold check: selected threshold **none met the precision target**.
 
 Issue-category precision audit: **not audited**.
 
@@ -412,8 +412,9 @@ Investigate scam: 9 of 43 complaint reviews (20.9%, 95% CI 11.4%-35.2%), for exa
 - Theme shares are conditional on the sentence classifier and clustering policy.
 - The complaint-unit score thresholds are heuristics based on observed classifier errors and should be re-tuned on hand-labelled complaint units.
 - The repeat-label file does not encode session timing, so its kappa measures repeat-label consistency but does not by itself prove independent later-session repeatability.
-- The complaint-unit precision/recall check was not run.
-- The labelled-pair theme-threshold check was not run.
+- Complaint-unit recall is low on mixed reviews (41.6%); theme extraction may miss embedded complaints.
+- Complaint-unit recall is low on 4-5 star reviews (7.1%); theme extraction may miss embedded complaints.
+- No evaluated theme distance threshold met the 0.80 same-issue precision target.
 - Issue categories are lexicon-based heuristics with a fixed generic vocabulary; they are not learned from this app and can miss paraphrases or ambiguous uses.
 - Issue-category shares are multi-label and may overlap; they must not be summed to 100%.
 - Issue-category precision has not been measured; the optional human audit has not been run.
