@@ -18,7 +18,7 @@ def main() -> None:
     if args.out.exists():
         raise FileExistsError(f"refusing to overwrite relabel results: {args.out}")
     rows: list[dict[str, str]] = []
-    with args.sheet.open("r", encoding="utf-8", newline="") as handle:
+    with args.sheet.open("r", encoding="utf-8-sig", newline="") as handle:
         reader = csv.DictReader(handle)
         if reader.fieldnames != ["review_id", "text", "human_label"]:
             raise ValueError("relabel_sheet.csv has an unexpected schema")

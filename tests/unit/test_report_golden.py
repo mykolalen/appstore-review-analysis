@@ -369,3 +369,43 @@ def test_limitations_state_when_no_audited_category_is_below_target(
 
     assert "No audited category fell below 80% precision." in markdown
     assert "Categories below" not in markdown
+
+
+def test_window_report_skips_the_lifetime_population_comparison(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    analysis = _pipeline_analysis(monkeypatch)
+    analysis["request"] = {**analysis["request"], "window_days": 90}  # type: ignore[dict-item]
+
+    markdown = render_report(
+        analysis, population=_population(), evaluation=None, chart_links=_chart_links()
+    )
+
+    assert "not this 90-day frame, so no population comparison is shown" in markdown
+    assert "CI covers population?" not in markdown
+    # Reproduction commands must not point at the seed-42 demo snapshot.
+    assert "<recorded-snapshot.json>" in markdown
+    assert "nebula_us_seed42.snapshot.json" not in markdown
+
+
+def test_chart_links_resolve_when_charts_live_outside_the_report_folder(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    analysis_path = tmp_path / "analysis.json"
+    analysis_path.write_text(json.dumps(_pipeline_analysis(monkeypatch)), encoding="utf-8")
+    report_path = tmp_path / "out" / "report.md"
+
+    written, charts = write_report_files(
+        analysis_path=analysis_path,
+        population_path=tmp_path / "missing-population.json",
+        evaluation_path=tmp_path / "missing-evaluation.json",
+        output_path=report_path,
+        charts_dir=tmp_path / "charts",
+    )
+
+    markdown = written.read_text(encoding="utf-8")
+    for chart in charts.values():
+        link = f"../charts/{chart.name}"
+        assert link in markdown
+        assert (report_path.parent / link).resolve() == chart.resolve()

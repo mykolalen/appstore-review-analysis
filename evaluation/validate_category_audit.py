@@ -14,7 +14,7 @@ _EXPECTED_FIELDS = ["category", "review_id", "matched_phrase", "sentence", "huma
 def _section(path: Path) -> dict[str, object]:
     if not path.exists():
         return {"status": "not_run", "reason": "category_audit_sheet.csv missing"}
-    with path.open("r", encoding="utf-8", newline="") as handle:
+    with path.open("r", encoding="utf-8-sig", newline="") as handle:
         reader = csv.DictReader(handle)
         if reader.fieldnames != _EXPECTED_FIELDS:
             raise ValueError("category audit sheet has an unexpected schema")

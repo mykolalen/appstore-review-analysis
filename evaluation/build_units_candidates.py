@@ -13,7 +13,7 @@ from appstore_review_analysis.evaluation import GOLD_SEED, read_gold_items
 
 def _final_labels(path: Path) -> dict[str, str]:
     result: dict[str, str] = {}
-    with path.open("r", encoding="utf-8", newline="") as handle:
+    with path.open("r", encoding="utf-8-sig", newline="") as handle:
         reader = csv.DictReader(handle)
         for row in reader:
             result[str(row["review_id"]).strip()] = str(row["human_label"]).strip().lower()

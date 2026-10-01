@@ -160,8 +160,8 @@ class UnitGateResult:
                 "rating_1_3_below_threshold": self.removed_other_reviews,
             },
             "note": (
-                "Default score gates are heuristics based on observed classifier errors and "
-                "must be re-tuned on hand-labelled complaint units when evaluation data exists."
+                "Default score gates are heuristics based on observed classifier errors; they are "
+                "measured against, not tuned on, the hand-labelled complaint units."
             ),
         }
 

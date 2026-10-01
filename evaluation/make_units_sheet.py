@@ -13,7 +13,9 @@ def main() -> None:
     parser.add_argument("--candidates", type=Path, default=Path("evaluation/units_candidates.csv"))
     parser.add_argument("--out", type=Path, default=Path("evaluation/units_label_sheet.csv"))
     args = parser.parse_args()
-    with args.candidates.open("r", encoding="utf-8", newline="") as handle:
+    if args.out.exists():
+        raise FileExistsError(f"refusing to overwrite existing complaint-unit sheet: {args.out}")
+    with args.candidates.open("r", encoding="utf-8-sig", newline="") as handle:
         rows = list(csv.DictReader(handle))
     with args.out.open("w", encoding="utf-8", newline="") as handle:
         writer = csv.DictWriter(

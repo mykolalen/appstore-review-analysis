@@ -10,6 +10,7 @@ themes, and exposes the result through a REST API and downloadable review export
 2. `text.py` normalises review text and applies the language/analysis eligibility rules.
 3. `analysis/` computes rating metrics, local sentiment, negative phrases, generic issue categories, themes and grounded evidence.
 4. `api/` + `storage.py` expose synchronous REST endpoints backed by SQLite; `report/` renders the reproducible demo report.
+5. `evaluation/` holds the hand labels and scripts behind every reported precision, recall and F1 figure.
 
 ## Requirements mapped to the repository
 
@@ -271,7 +272,9 @@ uv run reviews report --analysis reports/nebula_us_90d.analysis.json `
 ```
 
 The renderer adds a `Recent-window frame` subsection whenever the analysed snapshot carries
-`window_days`; no recent-window findings are committed without a separately captured source frame.
+`window_days`, and it skips the population check there, because the committed population walk describes
+all written reviews rather than the window. No recent-window findings are committed without a separately
+captured source frame.
 
 ### Data-source reality and production boundary
 
@@ -339,10 +342,11 @@ shares may be overstated (see `evaluation/results.md`).
 
 Accepted complaint units are embedded by pinned `all-MiniLM-L6-v2`, then clustered with cosine/average
 agglomerative clustering and an adaptive minimum-support policy. The clustering distance threshold is
-configurable (`THEME_DISTANCE_THRESHOLD`, default `0.40`). Once labelled unit pairs exist, run
-`reviews tune-threshold --pairs evaluation/pairs_gold.csv`; it selects the largest tested threshold whose
-same-issue precision is at least 0.80. Until then, `reviews analyze` emits pairwise-distance and cluster-size
-diagnostics at 0.30, 0.40, 0.50 and 0.60 without changing the default. Small/unsupported groups remain
+configurable (`THEME_DISTANCE_THRESHOLD`, default `0.40`). `reviews tune-threshold --pairs
+evaluation/pairs_gold.csv` selects the largest tested threshold whose same-issue precision is at least 0.80.
+On the 45 hand-labelled pairs no tested threshold qualified (best: 0.75 at 0.30, from only 4 predicted pairs),
+so the default 0.40 is kept; `reviews analyze` still emits pairwise-distance and cluster-size diagnostics at
+0.30, 0.40, 0.50 and 0.60. Small/unsupported groups remain
 explicit outliers, and the report states both unit and complaint-review theme coverage. Every displayed
 area of improvement carries source review IDs and evidence excerpts.
 
@@ -382,15 +386,18 @@ evaluation file does not exist, both `evaluation/results.md` and the demo report
 evaluation was not run.
 The issue-category audit is human-only. `evaluation/category_audit_sheet.csv` holds every category match in the
 demo sample (one best-matching sentence per review and category), each labelled `correct` or `incorrect`; the
-validator turns it into per-category precision with Wilson intervals. To repeat it on another analysis, generate a
-fresh sheet (the command refuses to overwrite an existing one), label every `human_label`, then validate it:
+validator turns it into per-category precision with Wilson intervals. To audit another analysis, write a new
+sheet next to the committed one (the command refuses to overwrite an existing file), label every
+`human_label`, then validate it into separate result files:
 
 ```powershell
 uv run reviews audit-categories `
-  --analysis reports/nebula_us_seed42.analysis.json `
-  --out evaluation/category_audit_sheet.csv
+  --analysis <analysis.json> `
+  --out evaluation/category_audit_sheet_new.csv
 # Fill human_label with correct or incorrect.
-uv run python evaluation/validate_category_audit.py
+uv run python evaluation/validate_category_audit.py `
+  --sheet evaluation/category_audit_sheet_new.csv `
+  --results evaluation/results_new.json --markdown evaluation/results_new.md
 ```
 
 ## API surface
@@ -405,8 +412,9 @@ uv run python evaluation/validate_category_audit.py
 | `GET` | `/healthz` | liveness |
 | `GET` | `/readyz` | database + local-model readiness |
 
-`POST /v1/analyses` accepts `provider=itunes|fixture|rss`; `window_days` is available only with
-`provider=itunes`. In public mode, omitted provider values are forced to `fixture`, RSS is rejected, and
+`POST /v1/analyses` accepts `provider=itunes|fixture|rss`; `window_days` (1-36500) is available only with
+`provider=itunes`. `country` must be a verified storefront (`us` or `gb`); any other code returns 422
+`STOREFRONT_UNSUPPORTED` with the supported list. In public mode, omitted provider values are forced to `fixture`, RSS is rejected, and
 the public sample-size/rate limits apply before collection.
 
 All error responses use one envelope: `{"error":{"code":"...","message":"...","request_id":"...","details":{...}}}`.
@@ -441,7 +449,7 @@ instead of estimated.
 |---|---:|---|
 | Nebula fixture sample size | 100 reviews | committed `seed=42` fixture |
 | Native analysis of the fixture, n=100, all stages | 6.4 s (sentiment 3.3 s, complaint sentences 2.3 s, embeddings 0.2 s) | `provenance.timings_ms` in the committed analysis JSON; Windows 11, Python 3.13, CPU only |
-| Fast test suite | 174 passed, 5 deselected in 25.9 s | local Windows run |
+| Fast test suite | 208 passed, 5 deselected in 140.6 s | local Windows run (machine under load) |
 | Slow real-model tests | 3 passed in 22.7 s | local Windows run |
 | CardiffNLP model download/reconstruction | about 502 MB | local `reviews download-models` output |
 | MiniLM model download/reconstruction | about 91.6 MB | local `reviews download-models` output |
@@ -531,8 +539,10 @@ The decision record is in [`docs/decisions.md`](docs/decisions.md); the componen
 Persisted/exported review data follows an allowlist: review ID, title, body, rating/date, edit/vote
 fields, developer-response flag/id/date, and provider-specific app version when present. Nickname,
 profile URL and `userProfileId` are deliberately excluded. The repository's committed-data test enforces
-that boundary. Evaluation labelling sheets contain only an evaluation ID and review/sentence text; star
-rating, provider metadata and model outputs are not included.
+that boundary. The blind sentiment, relabel, complaint-unit and pair labelling sheets contain only an
+evaluation ID and review/sentence text, with no star rating, provider metadata or model output. The
+category precision-audit sheet (`evaluation/category_audit_sheet.csv`) intentionally adds the matched
+category and phrase so each match can be judged; it has no star rating or personal fields.
 
 Code is MIT licensed; see [`LICENSE`](LICENSE). Model attributions and redistribution notes are in
 [`NOTICE`](NOTICE). Model weights are downloaded at setup/build time and are excluded from git.

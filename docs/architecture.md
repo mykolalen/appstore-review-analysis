@@ -6,19 +6,19 @@
 flowchart LR
     C[CLI / REST client] --> V[Input validation]
     V --> P[Provider: iTunes, RSS fallback or fixture]
-    P --> S[Uniform rank sampler + D16 sanitizer]
+    P --> S[Uniform rank sampler + allowlist sanitizer]
     S --> T[Text preprocessing + language gate]
     T --> M[Ratings + local sentiment]
     M --> K[Negative phrase tables]
     M --> U[Negative sentence units]
-    U --> C[Generic issue categories + evidence]
+    U --> IC[Generic issue categories + evidence]
     U --> E[MiniLM embeddings]
     E --> H[Agglomerative themes + evidence]
     K --> I[Deterministic evidence-backed insights]
-    C --> I
+    IC --> I
     H --> I
     I --> DB[(SQLite)]
-    I --> R[Markdown report + 4 charts]
+    I --> R[Markdown report + 8 charts]
     DB --> A[GET metrics / insights / review export]
 ```
 

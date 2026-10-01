@@ -318,3 +318,19 @@ def test_evaluation_model_pin_marker_is_required(tmp_path: Path) -> None:
         assert_pinned_model(tmp_path, "abc")
     (tmp_path / ".pinned_revision").write_text("abc\n", encoding="utf-8")
     assert_pinned_model(tmp_path, "abc")
+
+
+def test_category_audit_validator_accepts_an_excel_utf8_bom_sheet(tmp_path: Path) -> None:
+    # Excel's "CSV UTF-8" format prepends a BOM; the header must still be recognised.
+    sheet = tmp_path / "sheet.csv"
+    sheet.write_text(
+        "category,review_id,matched_phrase,sentence,human_label\n"
+        "billing_charges,r1,charged,I was charged twice.,correct\n",
+        encoding="utf-8-sig",
+    )
+    validator = runpy.run_path(str(Path("evaluation/validate_category_audit.py")))
+
+    result = validator["_section"](sheet)
+
+    assert result["status"] == "run"
+    assert result["n"] == 1

@@ -23,7 +23,7 @@ def main() -> None:
     parser.add_argument("--models-dir", type=Path, default=Path("models"))
     parser.add_argument("--out", type=Path, default=Path("evaluation/pairs_candidates.csv"))
     args = parser.parse_args()
-    with args.units.open("r", encoding="utf-8", newline="") as handle:
+    with args.units.open("r", encoding="utf-8-sig", newline="") as handle:
         complaints = [row for row in csv.DictReader(handle) if row["human_label"] == "complaint"]
     if len(complaints) < 2:
         raise ValueError("at least two human-labelled complaint units are required")

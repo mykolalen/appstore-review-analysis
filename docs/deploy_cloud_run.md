@@ -29,6 +29,11 @@ REPOSITORY="appstore-review-analysis"
 IMAGE="$REGION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/api:latest"
 SERVICE="appstore-review-analysis"
 
+# One-time project setup; skip the repository step if it already exists.
+gcloud config set project "$PROJECT_ID"
+gcloud services enable run.googleapis.com cloudbuild.googleapis.com artifactregistry.googleapis.com
+gcloud artifacts repositories create "$REPOSITORY" --repository-format=docker --location="$REGION"
+
 gcloud builds submit --tag "$IMAGE"
 
 gcloud run deploy "$SERVICE" \

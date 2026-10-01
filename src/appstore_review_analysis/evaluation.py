@@ -188,7 +188,7 @@ def write_gold_items(path: Path, items: Sequence[GoldItem]) -> None:
 
 
 def read_gold_items(path: Path) -> list[GoldItem]:
-    with path.open("r", encoding="utf-8", newline="") as handle:
+    with path.open("r", encoding="utf-8-sig", newline="") as handle:
         reader = csv.DictReader(handle)
         expected = {"review_id", "rank", "stratum", "star", "text"}
         if reader.fieldnames is None or set(reader.fieldnames) != expected:

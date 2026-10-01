@@ -130,24 +130,28 @@ complaint of that category as the lexicon defines it, with borderline cases mark
 precision is 82.8% (Wilson 95% CI 71.8%-90.1%); the per-category table is in `results.md`. The lexicon was
 not re-tuned on these labels, and changing it would require auditing a fresh sheet.
 
-To repeat the audit on a new analysis, first regenerate the analysis so its retained complaint units and
-category matches are current, then create a new sheet (the command refuses to overwrite an existing one):
+To audit a new analysis, write a new sheet next to the committed one (the command refuses to overwrite an
+existing file):
 
 ```powershell
 uv run reviews audit-categories `
-  --analysis reports/nebula_us_seed42.analysis.json `
-  --out evaluation/category_audit_sheet.csv
+  --analysis <analysis.json> `
+  --out evaluation/category_audit_sheet_new.csv
 ```
 
 The sheet contains `category`, `review_id`, `matched_phrase`, `sentence` and an empty `human_label`.
-Label every row as `correct` or `incorrect`, then validate it:
+Label every row as `correct` or `incorrect` (Excel's "CSV UTF-8" format is accepted), then validate it
+into separate result files so the committed evidence stays intact:
 
 ```powershell
-uv run python evaluation/validate_category_audit.py
+uv run python evaluation/validate_category_audit.py `
+  --sheet evaluation/category_audit_sheet_new.csv `
+  --results evaluation/results_new.json --markdown evaluation/results_new.md
 ```
 
-The validator writes an `issue_categories` section to `evaluation/results.json` and refreshes
-`evaluation/results.md` with per-category precision and Wilson 95% intervals. This is a precision audit
+The validator writes an `issue_categories` section to the results JSON and renders the Markdown with
+per-category precision and Wilson 95% intervals; run without arguments, it reads the committed sheet and
+refreshes `evaluation/results.json` and `results.md`. This is a precision audit
 only: it does not measure recall and it does not replace the sampling intervals reported for category
 shares. If the sheet is absent or still unlabelled, no precision value is claimed.
 

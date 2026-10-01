@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import os
 from collections.abc import Sequence
 from pathlib import Path
 from typing import Any
@@ -69,7 +70,9 @@ def render_report(
     lines.extend(_executive_summary(metrics, sentiment, insights, chart_links))
     lines.extend(_dataset_and_provenance(analysis, app, sampling, provenance))
     lines.extend(_recent_window_frame(analysis, sampling))
-    lines.extend(_ratings(metrics, population, chart_links))
+    lines.extend(
+        _ratings(metrics, population, chart_links, _population_mismatch(analysis, population))
+    )
     lines.extend(_periods(metrics, chart_links))
     lines.extend(_preprocessing(preprocessing))
     lines.extend(_sentiment(sentiment, evaluation, chart_links))
@@ -77,7 +80,7 @@ def render_report(
     lines.extend(_areas(insights, themes, evaluation, chart_links))
     lines.extend(_limitations(population, evaluation, themes))
     lines.extend(_methodology(themes))
-    lines.extend(_reproduce())
+    lines.extend(_reproduce(analysis))
     return "\n".join(lines).rstrip() + "\n"
 
 
@@ -229,7 +232,10 @@ def _dataset_and_provenance(
 
 
 def _ratings(
-    metrics: dict[str, Any], population: dict[str, Any] | None, chart_links: dict[str, str]
+    metrics: dict[str, Any],
+    population: dict[str, Any] | None,
+    chart_links: dict[str, str],
+    population_mismatch: str | None = None,
 ) -> list[str]:
     lines = ["## Ratings", ""]
     mean = _number(metrics.get("mean"))
@@ -262,8 +268,44 @@ def _ratings(
         )
     lines.extend(_table(["Stars", "Count", "Share", "95% CI"], dist_rows))
     lines.append("")
-    lines.extend(_population_check(metrics, population))
+    if population_mismatch is not None:
+        lines.extend(["### Population check", "", population_mismatch, ""])
+    else:
+        lines.extend(_population_check(metrics, population))
     return lines
+
+
+def _population_mismatch(analysis: dict[str, Any], population: dict[str, Any] | None) -> str | None:
+    """Explain why the population walk cannot validate this sample, or return None."""
+
+    if population is None:
+        return None
+    request = _dict(analysis.get("request"))
+    sampling = _dict(analysis.get("sampling"))
+    app = _dict(analysis.get("app"))
+    population_app = _dict(population.get("app"))
+    window_days = request.get("window_days", sampling.get("window_days"))
+    walked = _fmt_int(population.get("walked"))
+    if isinstance(window_days, int) and window_days > 0:
+        return (
+            f"The population walk describes all {walked} written reviews, not this "
+            f"{window_days}-day frame, so no population comparison is shown."
+        )
+    same_app = population_app.get("app_id") in (None, app.get("app_id"))
+    same_country = population.get("country") in (None, app.get("country"))
+    if not (same_app and same_country):
+        return (
+            "The population walk belongs to a different app or storefront, so no population "
+            "comparison is shown."
+        )
+    reachable = sampling.get("reachable")
+    if isinstance(reachable, int) and reachable != population.get("reachable"):
+        return (
+            f"The population walk covers a frame of {_fmt_int(population.get('reachable'))} "
+            f"reviews, not this analysis frame of {_fmt_int(reachable)}, so no population "
+            "comparison is shown."
+        )
+    return None
 
 
 def _population_check(metrics: dict[str, Any], population: dict[str, Any] | None) -> list[str]:
@@ -941,7 +983,7 @@ def _limitations(
         "replaces them deterministically.",
         "Theme shares are conditional on the sentence classifier and clustering policy.",
         "The complaint-unit score thresholds are heuristics based on observed classifier "
-        "errors and should be re-tuned on hand-labelled complaint units.",
+        "errors; hand labels measured them but were not used to tune them.",
     ]
     if population is None:
         bullets.append(
@@ -1035,15 +1077,36 @@ def _methodology(themes: dict[str, Any]) -> list[str]:
     ]
 
 
-def _reproduce() -> list[str]:
+def _reproduce(analysis: dict[str, Any]) -> list[str]:
+    app = _dict(analysis.get("app"))
+    sampling = _dict(analysis.get("sampling"))
+    request = _dict(analysis.get("request"))
+    is_committed_demo = (
+        app.get("app_id") == 1459969523
+        and app.get("country") == "us"
+        and sampling.get("seed") == 42
+        and request.get("window_days", sampling.get("window_days")) is None
+    )
+    if is_committed_demo:
+        commands = [
+            "uv run reviews analyze --provider fixture `",
+            "  --snapshot data/fixtures/nebula_us_seed42.snapshot.json `",
+            "  --out reports/nebula_us_seed42.analysis.json",
+            "uv run reviews report",
+        ]
+    else:
+        commands = [
+            "# Replay the snapshot recorded for this analysis (reviews collect --record-snapshot).",
+            "uv run reviews analyze --provider fixture `",
+            "  --snapshot <recorded-snapshot.json> --out <analysis.json>",
+            "uv run reviews report --analysis <analysis.json> `",
+            "  --out <report.md> --charts-dir <charts-dir>",
+        ]
     return [
         "## How to reproduce",
         "",
         "```powershell",
-        "uv run reviews analyze --provider fixture `",
-        "  --snapshot data/fixtures/nebula_us_seed42.snapshot.json `",
-        "  --out reports/nebula_us_seed42.analysis.json",
-        "uv run reviews report",
+        *commands,
         "```",
         "",
         REPRODUCTION_NOTE,
@@ -1089,10 +1152,9 @@ def _clip(value: str, limit: int) -> str:
 
 def _relative_markdown_path(path: Path, base: Path) -> str:
     try:
-        relative = path.relative_to(base)
-    except ValueError:
-        relative = path
-    return relative.as_posix()
+        return Path(os.path.relpath(path.resolve(), base.resolve())).as_posix()
+    except ValueError:  # a different Windows drive has no relative path
+        return path.resolve().as_posix()
 
 
 def _dict(value: object) -> dict[str, Any]:

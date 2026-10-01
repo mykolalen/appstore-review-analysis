@@ -257,3 +257,18 @@ def test_analyze_reports_a_wrong_shape_snapshot_cleanly(tmp_path: Path) -> None:
     assert result.exit_code != 0
     assert "Snapshot could not be read" in result.output
     assert "Traceback" not in result.output
+
+
+def test_with_siebert_without_eval_fails_before_any_download(monkeypatch) -> None:  # type: ignore[no-untyped-def]
+    def forbidden(*_args: object, **_kwargs: object) -> None:
+        raise AssertionError("no model may be downloaded for an invalid flag combination")
+
+    monkeypatch.setattr("appstore_review_analysis.cli.download_sentiment_model", forbidden)
+    monkeypatch.setattr("appstore_review_analysis.cli.download_embedding_model", forbidden)
+    get_settings.cache_clear()
+    result = runner.invoke(app, ["download-models", "--with-siebert"])
+    get_settings.cache_clear()
+
+    assert result.exit_code != 0
+    assert "INVALID_INPUT" in result.output
+    assert "--with-siebert requires --eval" in result.output

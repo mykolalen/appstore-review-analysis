@@ -31,6 +31,7 @@ _WARNING = "#f2a23a"
 _STAR_COLORS = ["#d6455d", "#ef8a5a", "#f2c14e", "#8cc084", "#2f9e77"]
 _FUNNEL_COLORS = ["#cfc9f7", "#9b8df0", "#6d5ae6"]
 _TOP_PHRASES = 12
+_FUNNEL_INSIDE_LABEL_SHARE = 0.25
 
 
 class ChartData(TypedDict, total=False):
@@ -327,7 +328,8 @@ def render_all_charts(
 ) -> dict[str, Path]:
     """Render every report chart and return stable logical names -> paths.
 
-    The category-precision chart is rendered only when a human category audit was run.
+    The negative-phrases chart is rendered only when negative reviews yielded phrases, and the
+    category-precision chart only when a human category audit was run.
     """
 
     charts_dir.mkdir(parents=True, exist_ok=True)
@@ -362,7 +364,12 @@ def render_all_charts(
             issue_category_support_data(analysis), outputs["issue_category_support"]
         )
         _plot_periods(period_rating_data(analysis), outputs["rating_by_period"])
-        _plot_negative_phrases(negative_phrases_data(analysis), outputs["negative_phrases"])
+        phrases = negative_phrases_data(analysis)
+        if phrases["labels"]:
+            _plot_negative_phrases(phrases, outputs["negative_phrases"])
+        else:
+            del outputs["negative_phrases"]
+            (charts_dir / "negative_phrases.png").unlink(missing_ok=True)
         _plot_complaint_funnel(complaint_funnel_data(analysis), outputs["complaint_funnel"])
         legacy_theme_chart = charts_dir / "theme_support.png"
         legacy_theme_chart.unlink(missing_ok=True)
@@ -414,6 +421,13 @@ def _save(fig: Any, path: Path) -> None:
     plt.close(fig)
 
 
+def _cap_percent_ticks(axis: Any, limit: float) -> None:
+    """A share cannot exceed 100%, so drop the ticks the label headroom would add past it."""
+
+    if limit > 1.0:
+        axis.set_ticks([0.0, 0.2, 0.4, 0.6, 0.8, 1.0])
+
+
 def _errors(values: list[float], lows: list[float], highs: list[float]) -> list[list[float]]:
     return [
         [max(0.0, value - low) for value, low in zip(values, lows, strict=True)],
@@ -462,6 +476,7 @@ def _plot_proportion_bars(
         positions, [f"{label}\nn={count}" for label, count in zip(tick_labels, counts, strict=True)]
     )
     ax.set_ylim(0.0, top * 1.2)
+    _cap_percent_ticks(ax.yaxis, top * 1.2)
     ax.yaxis.set_major_formatter(PercentFormatter(1.0, decimals=0))
     ax.grid(axis="x", visible=False)
     ax.tick_params(axis="x", length=0)
@@ -508,6 +523,7 @@ def _plot_horizontal_shares(
     ax.set_yticks(positions, labels)
     ax.invert_yaxis()
     ax.set_xlim(0.0, top * 1.42)
+    _cap_percent_ticks(ax.xaxis, top * 1.42)
     ax.xaxis.set_major_formatter(PercentFormatter(1.0, decimals=0))
     ax.grid(axis="y", visible=False)
     ax.tick_params(axis="y", length=0)
@@ -545,7 +561,12 @@ def _plot_periods(data: ChartData, path: Path) -> None:
     counts = data["counts"][::-1]
     positions = list(range(len(labels)))
     fig, ax = plt.subplots(figsize=(7.4, 4.6))
-    if positions:
+    if len(positions) == 1:
+        # fill_between over one x value draws nothing; show the interval as a short band.
+        ax.fill_between(
+            [-0.12, 0.12], [lows[0]] * 2, [highs[0]] * 2, color=_ACCENT, alpha=0.15, linewidth=0
+        )
+    elif positions:
         ax.fill_between(positions, lows, highs, color=_ACCENT, alpha=0.15, linewidth=0, zorder=1)
         ax.plot(positions, values, marker="o", color=_ACCENT, linewidth=2.4, markersize=8, zorder=3)
         for position, value in zip(positions, values, strict=True):
@@ -603,17 +624,31 @@ def _plot_complaint_funnel(data: ChartData, path: Path) -> None:
     fig, ax = plt.subplots(figsize=(8.4, 3.9))
     lefts = [(first - count) / 2 for count in counts]
     ax.barh(positions, counts, left=lefts, height=0.68, color=_FUNNEL_COLORS[: len(counts)])
-    for position, count in zip(positions, counts, strict=True):
-        ax.text(
-            first / 2,
-            position,
-            f"{count}" if position == 0 else f"{count}  ({count / first:.0%})",
-            ha="center",
-            va="center",
-            fontsize=13,
-            fontweight="bold",
-            color="white" if position > 0 else _INK,
-        )
+    for position, (left, count) in enumerate(zip(lefts, counts, strict=True)):
+        text = f"{count}" if position == 0 else f"{count}  ({count / first:.0%})"
+        if position == 0 or count / first >= _FUNNEL_INSIDE_LABEL_SHARE:
+            ax.text(
+                first / 2,
+                position,
+                text,
+                ha="center",
+                va="center",
+                fontsize=13,
+                fontweight="bold",
+                color="white" if position > 0 else _INK,
+            )
+        else:
+            # A narrow bar cannot hold its label, so write it beside the bar in dark ink.
+            ax.text(
+                left + count + first * 0.015,
+                position,
+                text,
+                ha="left",
+                va="center",
+                fontsize=13,
+                fontweight="bold",
+                color=_INK,
+            )
     ax.set_yticks(positions, labels)
     ax.invert_yaxis()
     ax.set_xlim(-first * 0.02, first * 1.02)
@@ -622,14 +657,23 @@ def _plot_complaint_funnel(data: ChartData, path: Path) -> None:
     ax.tick_params(axis="y", length=0)
     ax.spines["left"].set_visible(False)
     ax.spines["bottom"].set_visible(False)
-    uncategorised = counts[1] - counts[2] if len(counts) == 3 else 0
-    note = (
-        f"{uncategorised} complaint reviews fit no category and are listed separately"
-        if uncategorised > 0
-        else "Every complaint review fits at least one category"
-    )
-    _headline(fig, "From sampled reviews to categorised complaints", note)
+    _headline(fig, "From sampled reviews to categorised complaints", funnel_note(counts))
     _save(fig, path)
+
+
+def funnel_note(counts: list[int]) -> str:
+    """Subtitle for the complaint funnel: what happened to the complaint reviews."""
+
+    if len(counts) != 3:
+        return ""
+    if counts[1] == 0:
+        return "No complaint reviews in this sample"
+    uncategorised = counts[1] - counts[2]
+    if uncategorised == 1:
+        return "1 complaint review fits no category and is listed separately"
+    if uncategorised > 1:
+        return f"{uncategorised} complaint reviews fit no category and are listed separately"
+    return "Every complaint review fits at least one category"
 
 
 def _plot_category_precision(data: ChartData, path: Path) -> None:

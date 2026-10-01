@@ -431,7 +431,7 @@ Investigate scam: 9 of 43 complaint reviews (20.9%, 95% CI 11.4%-35.2%), for exa
 - The Apple endpoint used for this demo is undocumented and may change without notice.
 - Rank drift during live collection can cause duplicate/empty rows; the collector replaces them deterministically.
 - Theme shares are conditional on the sentence classifier and clustering policy.
-- The complaint-unit score thresholds are heuristics based on observed classifier errors and should be re-tuned on hand-labelled complaint units.
+- The complaint-unit score thresholds are heuristics based on observed classifier errors; hand labels measured them but were not used to tune them.
 - The repeat-label file does not encode session timing, so its kappa measures repeat-label consistency but does not by itself prove independent later-session repeatability.
 - Complaint-unit recall is low on mixed reviews (41.6%); theme extraction may miss embedded complaints.
 - Complaint-unit recall is low on 4-5 star reviews (7.1%); theme extraction may miss embedded complaints.

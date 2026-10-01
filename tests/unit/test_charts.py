@@ -9,6 +9,7 @@ from appstore_review_analysis.report.charts import (
     CATEGORY_PRECISION_TARGET,
     category_precision_data,
     complaint_funnel_data,
+    funnel_note,
     negative_phrases_data,
     render_all_charts,
     summary_card_data,
@@ -183,3 +184,30 @@ def test_render_all_charts_writes_valid_pngs_and_adds_precision_chart_only_after
         payload = path.read_bytes()
         assert payload.startswith(PNG_SIGNATURE)
         assert len(payload) > 1000
+
+
+def test_funnel_note_is_honest_about_small_and_empty_complaint_sets() -> None:
+    assert funnel_note([100, 0, 0]) == "No complaint reviews in this sample"
+    assert funnel_note([100, 5, 4]) == (
+        "1 complaint review fits no category and is listed separately"
+    )
+    assert funnel_note([100, 43, 35]) == (
+        "8 complaint reviews fit no category and are listed separately"
+    )
+    assert funnel_note([100, 12, 12]) == "Every complaint review fits at least one category"
+
+
+def test_edge_case_analyses_render_without_errors_or_empty_charts(tmp_path: Path) -> None:
+    analysis = _analysis()
+    analysis["preprocessing"] = {"n_all": 100, "n_complaint_reviews": 0}
+    analysis["insights"]["issue_categories"]["items"] = []
+    analysis["insights"]["issue_categories"]["not_categorised"] = {"review_count": 0}
+    analysis["keywords"] = {"n_negative": 0, "common": []}
+    analysis["metrics"]["periods"] = analysis["metrics"]["periods"][:1]
+
+    outputs = render_all_charts(analysis, tmp_path)
+
+    assert "negative_phrases" not in outputs
+    assert not (tmp_path / "negative_phrases.png").exists()
+    for path in outputs.values():
+        assert path.read_bytes().startswith(PNG_SIGNATURE)

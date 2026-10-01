@@ -10,7 +10,7 @@ from appstore_review_analysis.evaluation import GOLD_LABELS, read_gold_items
 
 def _read_human(path: Path) -> dict[str, str]:
     labels: dict[str, str] = {}
-    with path.open("r", encoding="utf-8", newline="") as handle:
+    with path.open("r", encoding="utf-8-sig", newline="") as handle:
         reader = csv.DictReader(handle)
         if reader.fieldnames != ["review_id", "text", "human_label"]:
             raise ValueError("labels_sheet.csv has an unexpected schema")

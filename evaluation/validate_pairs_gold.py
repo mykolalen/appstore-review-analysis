@@ -18,10 +18,10 @@ def main() -> None:
     args = parser.parse_args()
     if args.out.exists():
         raise FileExistsError(f"refusing to overwrite pair gold: {args.out}")
-    with args.candidates.open("r", encoding="utf-8", newline="") as handle:
+    with args.candidates.open("r", encoding="utf-8-sig", newline="") as handle:
         candidates = {row["pair_id"]: row for row in csv.DictReader(handle)}
     labels: dict[str, str] = {}
-    with args.sheet.open("r", encoding="utf-8", newline="") as handle:
+    with args.sheet.open("r", encoding="utf-8-sig", newline="") as handle:
         for row in csv.DictReader(handle):
             pair_id = str(row["pair_id"]).strip()
             label = str(row["human_label"]).strip().lower()

@@ -41,7 +41,7 @@ from appstore_review_analysis.evaluation import (
 
 def _read_final_labels(path: Path) -> dict[str, str]:
     labels: dict[str, str] = {}
-    with path.open("r", encoding="utf-8", newline="") as handle:
+    with path.open("r", encoding="utf-8-sig", newline="") as handle:
         reader = csv.DictReader(handle)
         for row in reader:
             item_id = str(row["review_id"]).strip()
@@ -53,7 +53,7 @@ def _read_final_labels(path: Path) -> dict[str, str]:
 
 
 def _read_simple_labels(path: Path) -> dict[str, str]:
-    with path.open("r", encoding="utf-8", newline="") as handle:
+    with path.open("r", encoding="utf-8-sig", newline="") as handle:
         return {
             str(row["review_id"]).strip(): str(row["human_label"]).strip().lower()
             for row in csv.DictReader(handle)
@@ -109,7 +109,7 @@ def _model_record(
 def _unit_section(path: Path, shipping: TransformerSentiment, settings: Settings) -> dict[str, Any]:
     if not path.exists():
         return {"status": "not_run", "reason": "units_gold.csv missing"}
-    with path.open("r", encoding="utf-8", newline="") as handle:
+    with path.open("r", encoding="utf-8-sig", newline="") as handle:
         rows = list(csv.DictReader(handle))
     predictions = shipping.predict([row["text"] for row in rows])
     evaluated: list[dict[str, str]] = []
@@ -151,7 +151,7 @@ def _recall_subgroup(
 def _pair_section(path: Path) -> dict[str, Any]:
     if not path.exists():
         return {"status": "not_run", "reason": "pairs_gold.csv missing"}
-    with path.open("r", encoding="utf-8", newline="") as handle:
+    with path.open("r", encoding="utf-8-sig", newline="") as handle:
         rows = list(csv.DictReader(handle))
     if len(rows) != 45:
         raise ValueError("pairs_gold.csv must contain exactly 45 pairs")
@@ -161,7 +161,7 @@ def _pair_section(path: Path) -> dict[str, Any]:
 def _category_section(path: Path) -> dict[str, Any]:
     if not path.exists():
         return {"status": "not_run", "reason": "category_audit_sheet.csv missing"}
-    with path.open("r", encoding="utf-8", newline="") as handle:
+    with path.open("r", encoding="utf-8-sig", newline="") as handle:
         rows = list(csv.DictReader(handle))
     if not rows:
         return {"status": "not_run", "reason": "category_audit_sheet.csv is empty"}

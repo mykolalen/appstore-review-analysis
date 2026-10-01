@@ -17,6 +17,8 @@ def main() -> None:
     parser.add_argument("--gold", type=Path, default=Path("evaluation/gold_items.csv"))
     parser.add_argument("--out", type=Path, default=Path("evaluation/relabel_sheet.csv"))
     args = parser.parse_args()
+    if args.out.exists():
+        raise FileExistsError(f"refusing to overwrite existing relabel sheet: {args.out}")
     items = sorted(read_gold_items(args.gold), key=lambda item: item.review_id)
     indexes = sample_ranks(len(items), 30, random.Random(RELABEL_SEED))
     with args.out.open("w", encoding="utf-8", newline="") as handle:

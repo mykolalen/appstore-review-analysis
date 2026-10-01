@@ -151,6 +151,14 @@ def download_models(
     """Download pinned offline inference and optional evaluation artefacts."""
 
     settings = get_settings()
+    if with_siebert and not eval_models:
+        _emit_app_error(
+            AppError(
+                status_code=422,
+                code="INVALID_INPUT",
+                message="--with-siebert requires --eval.",
+            )
+        )
     try:
         sentiment_path = download_sentiment_model(settings.models_dir)
         embedding_path = download_embedding_model(settings.models_dir)
@@ -158,8 +166,6 @@ def download_models(
             "sentiment_model": str(sentiment_path),
             "embedding_model": str(embedding_path),
         }
-        if with_siebert and not eval_models:
-            raise ValueError("--with-siebert requires --eval")
         if eval_models:
             tabularis_path = download_evaluation_model(
                 settings.models_dir,
