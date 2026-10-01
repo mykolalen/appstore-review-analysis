@@ -4,6 +4,8 @@ A reproducible Python service that collects a uniform random sample of written A
 computes rating and sentiment metrics, surfaces negative phrases, generic issue categories and complaint
 themes, and exposes the result through a REST API and downloadable review exports.
 
+**Video demo (Ukrainian):** https://youtu.be/zS7baAPDRgM · **Sample report:** [`reports/nebula_us_seed42.md`](reports/nebula_us_seed42.md)
+
 **Architecture in five lines**
 
 1. `collection/` validates the target and provides iTunes rank sampling, an explicit RSS fallback, and fixture replay.
@@ -31,7 +33,7 @@ themes, and exposes the result through a REST API and downloadable review export
 | Visualisations | `reports/charts/` | chart-data and render tests |
 | Local setup/docs | this README + [`docs/architecture.md`](docs/architecture.md) | README smoke workflow |
 | Design decisions | [`docs/decisions.md`](docs/decisions.md) | ADR structure test |
-| Video demo | recording link: _to be added_ | link opens while logged out |
+| Video demo | [youtu.be/zS7baAPDRgM](https://youtu.be/zS7baAPDRgM) (in Ukrainian) | link opens while logged out |
 
 ## Quickstart
 
@@ -507,7 +509,6 @@ The decision record is in [`docs/decisions.md`](docs/decisions.md); the componen
 [`docs/architecture.md`](docs/architecture.md). The repository currently does not include:
 
 - a public deployment (CI publishes the tested image to GHCR for any container host);
-- a published demo recording;
 - RAG, a vector database or agents.
 
 ## Limitations and scaling path
