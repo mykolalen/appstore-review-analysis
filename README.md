@@ -497,6 +497,22 @@ the steps and live checks are in [`docs/deploy_azure_container_apps.md`](docs/de
 [`docs/deploy_cloud_run.md`](docs/deploy_cloud_run.md) documents the same image on Cloud Run, which needs a
 billing account. CI publishes the tested image to `ghcr.io/mykolalen/appstore-review-analysis`.
 
+#### Temporary public link without any cloud account
+
+For a live demo from a laptop, the published image can be exposed through a Cloudflare Quick Tunnel,
+which needs no account and no payment card. The link lives only while the machine and both containers
+run, changes on every restart and has no uptime guarantee, so it is a demo convenience rather than a
+deployment:
+
+```bash
+docker network create ras-demo
+docker run -d --name ras-api --network ras-demo -e PUBLIC_MODE=true \
+  ghcr.io/mykolalen/appstore-review-analysis:latest
+docker run -d --name ras-tunnel --network ras-demo cloudflare/cloudflared:latest \
+  tunnel --no-autoupdate --url http://ras-api:8080
+docker logs ras-tunnel 2>&1 | grep -o 'https://[a-z0-9-]*\.trycloudflare\.com'
+```
+
 Stop/restart without deleting the named volume:
 
 ```bash
@@ -509,7 +525,8 @@ docker compose up -d
 The decision record is in [`docs/decisions.md`](docs/decisions.md); the component/data-flow view is in
 [`docs/architecture.md`](docs/architecture.md). The repository currently does not include:
 
-- a public Cloud Run deployment (the public-mode code and deployment instructions are included);
+- a permanent public deployment: CI publishes the tested image to GHCR, the Azure Container Apps and
+  Cloud Run guides are included, and a temporary public link can be opened with a Cloudflare Quick Tunnel;
 - a published demo recording;
 - RAG, a vector database or agents.
 
