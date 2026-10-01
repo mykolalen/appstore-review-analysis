@@ -1,4 +1,4 @@
-"""Small container launcher that honours Cloud/container PORT configuration."""
+"""Small container launcher that honours the container PORT configuration."""
 
 from __future__ import annotations
 

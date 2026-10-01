@@ -75,7 +75,6 @@ def test_container_files_keep_fixture_and_reports() -> None:
     assert "app_data:/app/var" in compose
     assert "API_KEY" not in compose
     assert "PUBLIC_MODE" in compose
-    assert (ROOT / "docs/deploy_cloud_run.md").is_file()
 
 
 FORBIDDEN_REVIEWER_WORDS = re.compile(

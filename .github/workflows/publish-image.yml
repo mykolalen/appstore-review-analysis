@@ -1,7 +1,7 @@
 name: Publish image
 
-# Publish the API image to GitHub Container Registry only after CI passed on main, so a
-# deployment (for example Azure Container Apps) can pull a tested image without a paid registry.
+# Publish the API image to GitHub Container Registry only after CI passed on main, so any
+# container host can pull a tested image without a paid registry.
 on:
   workflow_run:
     workflows: [CI]
