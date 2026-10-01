@@ -484,16 +484,18 @@ report stay in the image.
 - `sample_size` is capped at 100 and `provider=rss` is disabled;
 - POSTs use process-local token buckets: 10 globally and 5 per client per 10 minutes by default;
 - the per-client key is the **right-most** `X-Forwarded-For` hop, matching the value appended by the
-  trusted Google front end in the intended deployment;
+  platform's trusted front end (Azure Container Apps ingress or Cloud Run);
 - the committed Nebula analysis is loaded at startup under fixed id
   `62ce32e6-406d-5c6b-b94a-d153e37f78f6`;
 - the normal relative `Location` header is retained.
 
 The limits are configurable with `PUBLIC_GLOBAL_POST_LIMIT`, `PUBLIC_CLIENT_POST_LIMIT` and
 `PUBLIC_RATE_WINDOW_S`. Analyses created on a public container are SQLite-local and therefore last only
-for the lifetime of that instance unless an external persistent database is configured. Deployment and
-live front-end-header verification are separate operator steps documented in
-[`docs/deploy_cloud_run.md`](docs/deploy_cloud_run.md).
+for the lifetime of that instance unless an external persistent database is configured. The public demo
+runs on Azure Container Apps with no payment card (Azure for Students plus the Consumption free grant);
+the steps and live checks are in [`docs/deploy_azure_container_apps.md`](docs/deploy_azure_container_apps.md).
+[`docs/deploy_cloud_run.md`](docs/deploy_cloud_run.md) documents the same image on Cloud Run, which needs a
+billing account. CI publishes the tested image to `ghcr.io/mykolalen/appstore-review-analysis`.
 
 Stop/restart without deleting the named volume:
 
